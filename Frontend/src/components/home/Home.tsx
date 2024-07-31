@@ -7,7 +7,7 @@ import BestItemsSlider from "./BestItemsSlider";
 import img from "../../assets/playstation-5-with-dualsense-front-product-shot-01-ps5-en-30jul20-800x800.png";
 import InstaCallToAction from "./InstaCallToAction";
 
-const Home = () => {
+const Home:React.FC = () => {
   const CardIthem = [
     {
       id: 1,

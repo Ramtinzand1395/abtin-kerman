@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../assets/4062c9fc8b3a999778ed824b24631ab0.jpg";
 import { MdMenu } from "react-icons/md";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 // const headerVarient = {
 //   start: {
 //     opacity: 0,
@@ -20,7 +20,10 @@ import { motion } from "framer-motion";
 //     transition: { duration: 1 },
 //   },
 // };
-const CenterHederMobile = ({setOpenMenu}) => {
+interface CenterHederMobileProps {
+  setOpenMenu: (open: boolean) => void;
+}
+const CenterHederMobile:React.FC<CenterHederMobileProps>  = ({setOpenMenu}) => {
   return (
     <div className="grid grid-cols-2 my-2 mx-2 gap-5">
       {/* Logo */}

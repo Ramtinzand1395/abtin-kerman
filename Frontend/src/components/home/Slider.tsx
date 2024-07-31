@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import SliderpageTest from "./SliderpageTest";
 import './SliderCss.css';
-const Slider = () => {
+const Slider:React.FC = () => {
   return (
     <Swiper
       navigation={true}

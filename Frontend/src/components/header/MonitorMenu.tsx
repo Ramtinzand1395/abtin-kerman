@@ -15,7 +15,7 @@ const headerVariant = {
     transition: { duration: 0.5, type: "tween" },
   },
 };
-const MonitorMenu = () => {
+const MonitorMenu:React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <div className="flex items-center container mx-auto justify-between p-4 my-10 border-t-2 border-b-2  border-black">

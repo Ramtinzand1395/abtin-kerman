@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../../assets/4062c9fc8b3a999778ed824b24631ab0.jpg";
 import { FaTractor } from "react-icons/fa";
 
-const CenterHederMonitor = () => {
+const CenterHederMonitor:React.FC = () => {
   return (
     <div className="container mx-auto flex items-center justify-between gap-5 my-2">
       {/* Logo */}

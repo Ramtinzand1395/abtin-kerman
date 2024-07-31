@@ -1,7 +1,21 @@
 import React from "react";
 import Card from "../utils/Card";
+interface CardItem {
+  id: number;
+  OpenTags?: boolean;
+  OpenDiscount?: boolean;
+  discount?: number;
+  title: string;
+  price: number;
+  btnText: string;
+  image: string;
+}
 
-const MostSell = ({CardIthem , title}) => {
+interface MostSellProps {
+  CardIthem: CardItem[];
+  title: string;
+}
+const MostSell:React.FC<MostSellProps> = ({CardIthem , title}) => {
 
   return (
     <div className="">

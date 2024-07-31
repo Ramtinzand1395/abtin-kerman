@@ -3,7 +3,7 @@ import { BsBasket3Fill } from "react-icons/bs";
 import { CiMobile3 } from "react-icons/ci";
 import { FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-const Topheader = () => {
+const Topheader:React.FC = () => {
   return (
     <div className="bg-black p-2 flex items-center justify-around text-xs">
       <div className=" items-center hidden md:flex">

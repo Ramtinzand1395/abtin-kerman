@@ -1,7 +1,7 @@
 import React from "react";
 import test from "../../assets/4062c9fc8b3a999778ed824b24631ab0.jpg";
 
-const SliderpageTest = () => {
+const SliderpageTest:React.FC = () => {
   return (
     <div className="grid grid-cols-2 gap-2">
       <div className="flex items-center justify-center flex-col">

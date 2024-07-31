@@ -1,7 +1,24 @@
 import React, { useState } from "react";
-const Card = ({ title, price, btnText, OpenTag, OpenDiscount, discount , image }) => {
-  const [OpenTags, setOpenTags] = useState(OpenTag);
-  const [OpenDiscounts, setOpenDiscounts] = useState(OpenDiscount);
+interface CardItemProps {
+  OpenTag?: boolean;
+  OpenDiscount?: boolean;
+  discount?: number;
+  title: string;
+  price: number;
+  btnText: string;
+  image: string;
+}
+const Card: React.FC<CardItemProps> = ({
+  title,
+  price,
+  btnText,
+  OpenTag,
+  OpenDiscount,
+  discount,
+  image,
+}) => {
+  const [OpenTags, ] = useState(OpenTag);
+  const [OpenDiscounts, ] = useState(OpenDiscount);
   return (
     <div className="bg-gray-100 rounded-md h-[60vh] flex flex-col items-center  p-2 relative ">
       {OpenTags && (
@@ -11,7 +28,7 @@ const Card = ({ title, price, btnText, OpenTag, OpenDiscount, discount , image }
           </div>
           {OpenDiscounts && (
             <div className="bg-red-400 w-auto h-auto py-1 px-3 my-3 text-center">
-              <span>{discount} {" "} درصد</span>
+              <span>{discount} درصد</span>
             </div>
           )}
         </div>

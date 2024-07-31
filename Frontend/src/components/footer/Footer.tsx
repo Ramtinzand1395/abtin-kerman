@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../assets/4062c9fc8b3a999778ed824b24631ab0.jpg";
 
-const Footer = () => {
+const Footer:React.FC = () => {
   return (
     <div className="bg-gray-700 grid grid-cols-6 gap-10 h-[60vh] p-10">
       <div className="col-span-3 text-white flex flex-col items-start justify-evenly">

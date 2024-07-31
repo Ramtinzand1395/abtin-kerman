@@ -1,8 +1,12 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import HeaderContainer from "../components/header/HeaderContainer";
 import Footer from "../components/footer/Footer";
 
-const MainLayout = ({ children }) => {
+interface MainLayoutProps {
+  children: ReactNode;
+}
+
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
     <div>
       <HeaderContainer />

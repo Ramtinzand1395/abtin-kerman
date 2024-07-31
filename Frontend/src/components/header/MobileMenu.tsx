@@ -2,7 +2,12 @@ import React from "react";
 import { MdClose } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 
-const MobileMenu = ({ OpenMenu, setOpenMenu }) => {
+interface MobileMenuProps {
+  OpenMenu: boolean;
+  setOpenMenu: (open: boolean) => void;
+}
+
+const MobileMenu: React.FC<MobileMenuProps> = ({  setOpenMenu }) => {
   return (
     <AnimatePresence>
       <motion.div
