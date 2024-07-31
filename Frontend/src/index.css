@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "vazir", Courier, monospace;
+}
+
+.fixedImage {
+  background-image: url("./assets/_24c0f808-1d10-4db6-85a5-ed48e14014cf.jpg");
+  background-size: contain; /* or contain, or specific dimensions */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+}
