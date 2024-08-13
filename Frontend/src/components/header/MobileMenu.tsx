@@ -1,18 +1,33 @@
 import React from "react";
 import { MdClose } from "react-icons/md";
-import { AnimatePresence, motion } from "framer-motion";
-
+import {  motion } from "framer-motion";
+const headerVariant = {
+  hidden: {
+    width: "0vw",
+    transitionEnd: {
+      display: "none",
+    },
+  },
+  visible: {
+    display: "block",
+    opacity: 1,
+    width: "60vw",
+    transition: { duration: 0.5, type: "tween" },
+  },
+};
 interface MobileMenuProps {
   OpenMenu: boolean;
   setOpenMenu: (open: boolean) => void;
 }
 
-const MobileMenu: React.FC<MobileMenuProps> = ({  setOpenMenu }) => {
+const MobileMenu: React.FC<MobileMenuProps> = ({  setOpenMenu , OpenMenu }) => {
+ 
   return (
-    <AnimatePresence>
       <motion.div
-        exit={{ x: [1000, 500, 2000, -1000], transition: { duration: 2 } }}
-        className="bg-white w-[60vw] h-full fixed top-0 right-0 z-10"
+      initial="hidden"
+      animate={OpenMenu ? "visible" : "hidden"}
+      variants={headerVariant}
+        className="bg-white h-[100vh] absolute top-10 right-0 z-10"
       >
         <MdClose onClick={() => setOpenMenu(false)} />
         <ul>
@@ -23,7 +38,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({  setOpenMenu }) => {
           <li>ایتم اول</li>
         </ul>
       </motion.div>
-    </AnimatePresence>
   );
 };
 

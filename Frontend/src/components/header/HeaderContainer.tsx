@@ -5,22 +5,22 @@ import CenterHederMonitor from "./CenterHederMonitor";
 import MonitorMenu from "./MonitorMenu";
 import MobileMenu from "./MobileMenu";
 
-const HeaderContainer:React.FC = () => {
+const HeaderContainer: React.FC = () => {
   const [OpenMenu, setOpenMenu] = useState(false);
   return (
     <div>
       <Topheader />
-      <div className="block md:hidden">
+      <div className="block md:hidden relative">
         <CenterHederMobile setOpenMenu={setOpenMenu} />
       </div>
       <div className=" hidden md:block">
         <CenterHederMonitor />
       </div>
-      {OpenMenu && (
-        <div className="block md:hidden">
-            <MobileMenu setOpenMenu={setOpenMenu} OpenMenu={OpenMenu} />
-        </div>
-      )}
+
+      <div className="block md:hidden">
+        <MobileMenu setOpenMenu={setOpenMenu} OpenMenu={OpenMenu} />
+      </div>
+
       <div className=" hidden md:block">
         <MonitorMenu />
       </div>
