@@ -5,7 +5,7 @@ import { FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 const Topheader:React.FC = () => {
   return (
-    <div className="bg-black p-2 flex items-center justify-around text-xs">
+    <div className="bg-primary p-2 flex items-center justify-around text-xs">
       <div className=" items-center hidden md:flex">
         <MdEmail color="white" className="ml-2" size={20} />
         <p className="text-white">پشتیبانی:admin@info.com</p>

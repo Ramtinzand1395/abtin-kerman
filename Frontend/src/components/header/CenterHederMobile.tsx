@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/4062c9fc8b3a999778ed824b24631ab0.jpg";
+import logo from "../../assets/atari-seeklogo.svg";
 import { MdMenu } from "react-icons/md";
 // import { motion } from "framer-motion";
 // const headerVarient = {

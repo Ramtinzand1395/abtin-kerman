@@ -1,12 +1,14 @@
 import React from "react";
 import ps5 from "../../assets/playstation-5-with-dualsense-front-product-shot-01-ps5-en-30jul20-800x800.png";
+import ps52 from "../../assets/5893448966048171566.jpg";
+
 const ThreeBoxes: React.FC = () => {
   const BoxData = [
     {
       id: 1,
       title: "هدفون ها",
       subtitle: "تا 15% تخفیف",
-      image: ps5,
+      image: ps52,
     },
     {
       id: 2,
@@ -26,7 +28,7 @@ const ThreeBoxes: React.FC = () => {
       {BoxData.map((data) => (
         <div
           key={data.id}
-          className="w-full h-[25vh] bg-[#5cc1b8] rounded-lg p-5 flex items-center justify-between"
+          className="w-full h-[25vh] bg-[#062348] rounded-lg p-5 flex items-center justify-between"
         >
           <div className="flex flex-col items-start justify-evenly h-full text-white">
             <h5 className="font-bold text-2xl">{data.title}</h5>

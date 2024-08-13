@@ -1,19 +1,23 @@
 import React from "react";
-import test from "../../assets/4062c9fc8b3a999778ed824b24631ab0.jpg";
+import "./SliderCss.css";
 
-const SliderpageTest:React.FC = () => {
+const SliderpageTest: React.FC = ({ img }) => {
   return (
-    <div className="grid grid-cols-2 gap-2">
-      <div className="flex items-center justify-center flex-col">
-        <h3 className="font-bold text-lg">جدید ترین مدل ها</h3>
-        <button
-          className="rounded relative inline-flex group items-center justify-center px-3.5 py-2 m-1 cursor-pointer border-b-4 border-l-2 active:border-purple-600 active:shadow-none shadow-lg bg-gradient-to-tr from-purple-600 to-purple-500 border-purple-700 text-white"
-        >
-          <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-32 group-hover:h-32 opacity-10"></span>
-          <span className="relative">Button Text</span>
+    <div className="">
+      <div className="absolute bottom-10 right-10">
+        <button className="relative inline-block text-lg group">
+          <span className="relative z-10 block px-5 py-3 overflow-hidden font-medium leading-tight text-gray-800 transition-colors duration-300 ease-out border-2 border-gray-900 rounded-lg group-hover:text-white">
+            <span className="absolute inset-0 w-full h-full px-5 py-3 rounded-lg bg-gray-50"></span>
+            <span className="absolute left-0 w-48 h-48 -ml-2 transition-all duration-300 origin-top-right -rotate-90 -translate-x-full translate-y-12 bg-primary group-hover:-rotate-180 ease"></span>
+            <span className="relative">مشاهده بیشتر</span>
+          </span>
+          <span
+            className="absolute bottom-0 right-0 w-full h-12 -mb-1 -mr-1 transition-all duration-200 ease-linear bg-primary rounded-lg group-hover:mb-0 group-hover:mr-0"
+            data-rounded="rounded-lg"
+          ></span>
         </button>
       </div>
-      <img className="" src={test} alt="" />
+      <img className="" src={img} alt="" />
     </div>
   );
 };
