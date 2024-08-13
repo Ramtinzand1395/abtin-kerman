@@ -1,7 +1,9 @@
 import React from "react";
 import "./SliderCss.css";
-
-const SliderpageTest: React.FC = ({ img }) => {
+interface SliderpageTestProps {
+  img: string;
+}
+const SliderpageTest: React.FC<SliderpageTestProps> = ({ img }) => {
   return (
     <div className="">
       <div className="absolute bottom-10 right-10">
