@@ -3,7 +3,7 @@ import logo from "../../assets/4062c9fc8b3a999778ed824b24631ab0.jpg";
 
 const Footer:React.FC = () => {
   return (
-    <div className="bg-gray-700 grid grid-cols-6 gap-10 h-[60vh] p-10">
+    <div className="bg-gray-700 grid grid-cols-3 md:grid-cols-6  gap-10 h-auto md:h-[60vh] p-10 text-xs md:text-base">
       <div className="col-span-3 text-white flex flex-col items-start justify-evenly">
         {" "}
         <div className="flex items-center text-2xl">
@@ -18,7 +18,7 @@ const Footer:React.FC = () => {
           سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای
           متنوع با هدف بهبود ابزارهای کاربردی می باشد.
         </p>
-        <div className="w-32 h-[2px] bg-[#5cc1b9]"></div>
+        <div className="w-20 md:w-32 h-[2px] bg-[#5cc1b9] my-5"></div>
         <div className="flex flex-col">
           <span>شماره تماس: 12345</span>
           <span>ایمیل پشتیبانی: support@domain.ir</span>{" "}
@@ -27,7 +27,7 @@ const Footer:React.FC = () => {
       </div>
       <div className="flex-col flex items-start justify-evenly text-white">
         <h3>نحوه سفارش</h3>
-        <div className="w-32 h-[2px] bg-[#5cc1b9]"></div>
+        <div className="w-20 md:w-32 h-[2px] bg-[#5cc1b9] my-5"></div>
 
         <p>چطور سفارش بدم؟</p>
         <p>شرایط ارسال چطوره؟</p>
@@ -37,8 +37,8 @@ const Footer:React.FC = () => {
         <p>آیا امکان عودت وجود داره؟</p>
       </div>
       <div className="flex-col flex items-start justify-evenly text-white">
-        <h3>درباره کرمان آتاری</h3>
-        <div className="w-32 h-[2px] bg-[#5cc1b9]"></div>
+        <h3 className="whitespace-nowrap">درباره کرمان آتاری</h3>
+        <div className="w-20 md:w-32 h-[2px] bg-[#5cc1b9] my-5"></div>
         <p> درباره ما</p>
         <p>تماس با ما</p>
         <p>روش های ارسال کالا</p>
@@ -48,7 +48,7 @@ const Footer:React.FC = () => {
       </div>{" "}
       <div className="flex-col flex items-start justify-evenly text-white">
         <h3>اعتماد</h3>
-        <div className="w-32 h-[2px] bg-[#5cc1b9]"></div>
+        <div className="w-20 md:w-32 h-[2px] bg-[#5cc1b9] my-5"></div>
         <p> نماد الکترونیکی</p>
         <p>ضمانت بازگشت وجه</p>
         <p>باشگاه مشتریان</p>

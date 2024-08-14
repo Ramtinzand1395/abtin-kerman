@@ -55,7 +55,7 @@ const MonitorMenu: React.FC = () => {
             initial="hidden"
             animate={isHovered.menu1 ? "visible" : "hidden"}
             variants={headerVariant}
-            className="bg-white border-b-2 border-gray-600 w-[95vw] mx-0 absolute right-0 top-11 z-10 cursor-pointer"
+            className="bg-white border-b-2 border-gray-600 w-[95vw]  absolute right-0 top-11 z-10 cursor-pointer"
           >
             <div className={`flex items-start justify-around`}>
               <ul className="">
@@ -116,7 +116,7 @@ const MonitorMenu: React.FC = () => {
             initial="hidden"
             animate={isHovered.menu2 ? "visible" : "hidden"}
             variants={headerVariant}
-            className="bg-white border-b-2 border-gray-600 w-[95vw] mx-0 absolute right-0 top-11 z-10 cursor-pointer"
+            className="bg-white border-b-2 border-gray-600 w-[95vw]  absolute right-0 top-11 z-10 cursor-pointer"
           >
             <div className={`flex items-start justify-around`}>
               <ul className="">
@@ -203,7 +203,7 @@ const MonitorMenu: React.FC = () => {
             initial="hidden"
             animate={isHovered.menu3 ? "visible" : "hidden"}
             variants={headerVariant}
-            className="bg-white border-b-2 border-gray-600 w-[95vw] mx-0 absolute right-0 top-11 z-10 cursor-pointer"
+            className="bg-white border-b-2 border-gray-600 w-[95vw]  absolute right-0 top-11 z-10 cursor-pointer"
           >
             <div className={`flex items-start justify-around`}>
               <ul className="">

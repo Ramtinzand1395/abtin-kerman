@@ -3,7 +3,7 @@ import { FaInstagram } from "react-icons/fa";
 import img from "../../assets/Firefly 20231028180948.png";
 const InstaCallToAction: React.FC = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-6 gap-5 h-[40vh] my-10">
+    <div className="grid grid-cols-1 md:grid-cols-6 gap-5 h-auto md:h-[40vh] my-10">
       {/* image */}
       <div className="md:col-span-4">
         <img

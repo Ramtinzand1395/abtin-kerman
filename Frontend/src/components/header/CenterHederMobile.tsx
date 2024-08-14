@@ -19,8 +19,8 @@ const CenterHederMobile: React.FC<CenterHederMobileProps> = ({
   return (
     <div className="mx-2">
       <div
-        className={`flex items-center justify-between my-2 ${
-          StickyMobileNavbar ? "fixed bg-white w-full top-0 z-10 p-4" : "block"
+        className={`flex items-center justify-between  ${
+          StickyMobileNavbar ? "fixed bg-primary text-white w-full top-0 z-10 p-4" : "block"
         }`}
       >
         {/* Menu */}

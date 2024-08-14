@@ -97,7 +97,7 @@ const Home:React.FC = () => {
     },
   ];
   return (
-    <div className="md:container mx-2 md:mx-auto">
+    <div className="md:container md:mx-auto mx-2">
       <Slider />
       <ThreeBoxes />
       <MostSell CardIthem={CardIthem} title={"محصولات پر فروش"}/>
