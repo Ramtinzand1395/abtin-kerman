@@ -11,8 +11,8 @@ import "swiper/css/scrollbar";
 import SliderpageTest from "./SliderpageTest";
 import "./SliderCss.css";
 
-import test from "../../assets/5893448966048171566.jpg";
-import test2 from "../../assets/5895700765861856085.jpg";
+import test from "../../assets/Top-Slider1.jpg";
+import test2 from "../../assets/5902176975248802860.jpg";
 const Slider: React.FC = () => {
   const SliderImage = [
     {
