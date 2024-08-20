@@ -11,7 +11,7 @@ import "swiper/css/scrollbar";
 import img from "../../assets/_24c0f808-1d10-4db6-85a5-ed48e14014cf.jpg";
 import "./BestSlider.css";
 import Card from "../utils/Card";
-const BestItemsSlider:React.FC = () => {
+const BestItemsSlider: React.FC = () => {
   const CardIthem = [
     {
       id: 1,
@@ -89,7 +89,7 @@ const BestItemsSlider:React.FC = () => {
         scrollbar={{ draggable: true }}
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
-        className="w-full h-[50vh] bg-gray-200 "
+        className=" "
       >
         {CardIthem.map((card) => (
           <SwiperSlide>

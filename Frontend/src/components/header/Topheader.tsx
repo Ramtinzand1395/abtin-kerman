@@ -3,6 +3,7 @@ import { BsBasket3Fill } from "react-icons/bs";
 import { CiMobile3 } from "react-icons/ci";
 import { FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { Link } from "react-router-dom";
 const Topheader: React.FC = () => {
   return (
     <div className="bg-primary p-2 flex items-center justify-around text-xs mb-2">
@@ -26,7 +27,9 @@ const Topheader: React.FC = () => {
       </div>
       <div className="flex items-center">
         <FaUser color="white" className="ml-2" size={20} />
-        <p className="text-white">ورود/ثبت نام</p>
+        <Link to={"/login"}>
+          <p className="text-white">ورود/ثبت نام</p>
+        </Link>
       </div>
     </div>
   );

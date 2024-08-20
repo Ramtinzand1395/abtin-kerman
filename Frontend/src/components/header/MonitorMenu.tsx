@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 const headerVariant = {
   hidden: {
     opacity: 0,
@@ -40,11 +41,16 @@ const MonitorMenu: React.FC = () => {
   return (
     <div
       className={`flex items-center  justify-between p-4  border-t-2 border-b-2  border-black ${
-        StickyNavbar ? "fixed top-0 my-0 z-10 bg-white w-full" : "block my-10"
+        StickyNavbar
+          ? "fixed top-0 my-0 z-10 bg-primary text-white w-full"
+          : "block my-10"
       }`}
     >
       {/* menu */}
       <ul className="flex items-center justify-around w-full whitespace-nowrap relative">
+        <Link to={"/"}>
+          <li className="cursor-pointer">خانه</li>
+        </Link>
         <li
           onMouseEnter={() => setIsHovered({ ...isHovered, menu1: true })}
           onMouseLeave={() => setIsHovered({ ...isHovered, menu1: false })}

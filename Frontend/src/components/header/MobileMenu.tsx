@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { motion } from "framer-motion";
 import { FaArrowDown } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 const OpenMenuVariant = {
   hidden: {
     width: "0vw",
@@ -59,9 +60,17 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ setOpenMenu, OpenMenu }) => {
           />
         </div>
         <ul className="flex flex-col items-center ">
+          <Link to={"/"}>
+            <li className="flex items-center mb-4 text-base justify-between w-32">خانه</li>
+          </Link>
           <li
             onClick={() =>
-              setIsHovered({ ...isHovered, menu1: !isHovered.menu1 , menu2:false ,menu3:false })
+              setIsHovered({
+                ...isHovered,
+                menu1: !isHovered.menu1,
+                menu2: false,
+                menu3: false,
+              })
             }
             className="cursor-pointer"
           >
@@ -126,7 +135,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ setOpenMenu, OpenMenu }) => {
           </li>
           <li
             onClick={() =>
-              setIsHovered({ ...isHovered, menu2: !isHovered.menu2 , menu1:false ,menu3:false })
+              setIsHovered({
+                ...isHovered,
+                menu2: !isHovered.menu2,
+                menu1: false,
+                menu3: false,
+              })
             }
             className="cursor-pointer"
           >
@@ -216,7 +230,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ setOpenMenu, OpenMenu }) => {
           </li>
           <li
             onClick={() =>
-              setIsHovered({ ...isHovered, menu3: !isHovered.menu3 , menu1:false ,menu2:false })
+              setIsHovered({
+                ...isHovered,
+                menu3: !isHovered.menu3,
+                menu1: false,
+                menu2: false,
+              })
             }
             className="cursor-pointer"
           >
@@ -281,12 +300,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ setOpenMenu, OpenMenu }) => {
             </button>
           </li>
         </ul>
-      <div className="mt-5 mx-2 md:mx-10 ">
-        <p className="font-bold  text-primary">
-          برای تهیه بازی به صورت آفلاین برای ایکس باکس یا پلی استیشن به صورت
-          حضوری مراجعه فرمایید.
-        </p>
-      </div>
+        <div className="mt-5 mx-2 md:mx-10 ">
+          <p className="font-bold  text-primary">
+            برای تهیه بازی به صورت آفلاین برای ایکس باکس یا پلی استیشن به صورت
+            حضوری مراجعه فرمایید.
+          </p>
+        </div>
       </motion.div>
     </div>
   );
