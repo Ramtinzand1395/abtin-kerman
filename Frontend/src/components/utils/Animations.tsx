@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { motion, useInView, useAnimation } from "framer-motion";
-const Animations = ({ children }) => {
+interface AnimationsProps {
+  children: React.ReactNode;
+}
+const Animations: React.FC<AnimationsProps> = ({ children }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const mainControls = useAnimation();

@@ -61,18 +61,18 @@ const MonitorMenu: React.FC = () => {
             initial="hidden"
             animate={isHovered.menu1 ? "visible" : "hidden"}
             variants={headerVariant}
-            className="bg-white border-b-2 border-gray-600 w-[95vw]  absolute right-0 top-11 z-10 cursor-pointer"
+            className="bg-white border-b-2 border-gray-600 w-[95vw]  absolute right-0 top-11 z-20 cursor-pointer"
           >
             <div className={`flex items-start justify-around`}>
               <ul className="">
                 <li className="font-bold font-tanha my-3 text-secondery">
-                  پلی استیشن
+                  <Link to={"/products/playstations"}>پلی استیشن</Link>
                 </li>
                 <li className="text-gray-600 mb-2 hover:text-primary hover:scale-105">
-                  پلی استیشن 5
+                  <Link to={"/products/playstation-5"}>پلی استیشن 5</Link>
                 </li>
                 <li className="text-gray-600 mb-2 hover:text-primary hover:scale-105">
-                  پلی استیشن 4
+                  <Link to={"/products/playstation-4"}>پلی استیشن 4</Link>
                 </li>
               </ul>
               <ul>

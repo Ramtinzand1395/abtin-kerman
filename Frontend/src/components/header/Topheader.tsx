@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsBasket3Fill } from "react-icons/bs";
 import { CiMobile3 } from "react-icons/ci";
 import { FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { Link } from "react-router-dom";
+import LoginModall from "../loginModall/LoginModall";
 const Topheader: React.FC = () => {
+  const [OpenModall, setOpenModall] = useState(false);
+
   return (
     <div className="bg-primary p-2 flex items-center justify-around text-xs mb-2">
       <div className=" items-center hidden md:flex">
@@ -27,9 +29,10 @@ const Topheader: React.FC = () => {
       </div>
       <div className="flex items-center">
         <FaUser color="white" className="ml-2" size={20} />
-        <Link to={"/login"}>
-          <p className="text-white">ورود/ثبت نام</p>
-        </Link>
+        <p onClick={() => setOpenModall(true)} className="text-white cursor-pointer">
+          ورود/ثبت نام
+        </p>
+        {OpenModall && <LoginModall setOpenModall={setOpenModall} />}
       </div>
     </div>
   );

@@ -273,3 +273,14 @@
   width: 40px;
 }
 /* Login ends */
+/* No Arrrows */
+.no-arrows {
+  /* Remove the default arrow buttons */
+  -moz-appearance: textfield;
+}
+
+.no-arrows::-webkit-outer-spin-button,
+.no-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

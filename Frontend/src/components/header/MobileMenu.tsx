@@ -50,7 +50,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ setOpenMenu, OpenMenu }) => {
         initial="hidden"
         animate={OpenMenu ? "visible" : "hidden"}
         variants={OpenMenuVariant}
-        className="bg-white border-l-2 border-black h-[100vh] fixed overflow-y-auto top-0 rigth-0 z-10"
+        className="bg-white border-l-2 border-black h-[100vh] fixed overflow-y-auto top-0 rigth-0 z-20"
       >
         <div className="flex justify-end p-4">
           <MdClose
@@ -61,7 +61,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ setOpenMenu, OpenMenu }) => {
         </div>
         <ul className="flex flex-col items-center ">
           <Link to={"/"}>
-            <li className="flex items-center mb-4 text-base justify-between w-32">خانه</li>
+            <li className="flex items-center mb-4 text-base justify-between w-32">
+              خانه
+            </li>
           </Link>
           <li
             onClick={() =>
@@ -87,13 +89,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ setOpenMenu, OpenMenu }) => {
               <div className={`flex flex-col items-start justify-around`}>
                 <ul className="">
                   <li className="font-bold font-tanha my-3 text-secondery">
-                    پلی استیشن
+                    <Link to={"/products/playstations"}>پلی استیشن</Link>
                   </li>
                   <li className="text-gray-600 mb-2 hover:text-primary hover:scale-105">
-                    پلی استیشن 5
+                    <Link to={"/products/playstation-5"}>پلی استیشن 5</Link>
                   </li>
                   <li className="text-gray-600 mb-2 hover:text-primary hover:scale-105">
-                    پلی استیشن 4
+                    <Link to={"/products/playstation-4"}>پلی استیشن 4</Link>
                   </li>
                 </ul>
                 <ul>

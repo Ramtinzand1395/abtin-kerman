@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 interface CardItemProps {
   OpenTag?: boolean;
   OpenDiscount?: boolean;
@@ -17,16 +17,14 @@ const Card: React.FC<CardItemProps> = ({
   discount,
   image,
 }) => {
-  const [OpenTags, ] = useState(OpenTag);
-  const [OpenDiscounts, ] = useState(OpenDiscount);
   return (
-    <div className="bg-gray-100 rounded-md h-[60vh] flex flex-col items-center  p-2 relative ">
-      {OpenTags && (
+    <div className="bg-gray-300 rounded-md h-[60vh] flex flex-col items-center  p-2 relative ">
+      {OpenTag && (
         <div className="absolute top-0 right-0 font-normal text-xs text-white">
           <div className="bg-teal-500 w-auto h-auto py-1 px-3">
             <span>تضمین کیفیت</span>
           </div>
-          {OpenDiscounts && (
+          {OpenDiscount && (
             <div className="bg-red-400 w-auto h-auto py-1 px-3 my-3 text-center">
               <span>{discount} درصد</span>
             </div>

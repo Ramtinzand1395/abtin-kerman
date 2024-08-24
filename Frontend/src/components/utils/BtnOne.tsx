@@ -1,6 +1,6 @@
 import React from "react";
 
-const BtnOne = () => {
+const BtnOne: React.FC = () => {
   return (
     <button className="relative inline-block md:text-lg group text-baseّ  ">
       <span className="relative z-10 block md:px-5 md:py-3 px-3.5 py-2.5 overflow-hidden font-medium leading-tight text-gray-800 transition-colors duration-300 ease-out border-2 border-gray-900 rounded-lg group-hover:text-white">
