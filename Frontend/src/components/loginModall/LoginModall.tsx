@@ -1,8 +1,10 @@
 import React from "react";
 import { MdClose } from "react-icons/md";
 import LoginBtn from "../utils/LoginBtn";
-
-const LoginModall = ({ setOpenModall }) => {
+interface LoginModallProps {
+  setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const LoginModall: React.FC<LoginModallProps> = ({ setOpenModall }) => {
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // Stop event propagation to prevent closing the modal when clicked inside
     event.stopPropagation();
