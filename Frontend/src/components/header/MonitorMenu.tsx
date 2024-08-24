@@ -42,7 +42,7 @@ const MonitorMenu: React.FC = () => {
     <div
       className={`flex items-center  justify-between p-4  border-t-2 border-b-2  border-black ${
         StickyNavbar
-          ? "fixed top-0 my-0 z-10 bg-primary text-white w-full"
+          ? "fixed top-0 my-0 z-20 bg-primary text-white w-full"
           : "block my-10"
       }`}
     >
