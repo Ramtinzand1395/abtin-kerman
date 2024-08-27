@@ -4,8 +4,25 @@ import { CiMobile3 } from "react-icons/ci";
 import { FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import LoginModall from "../loginModall/LoginModall";
+import DropDown from "../utils/DropDown";
+import { FiEdit } from "react-icons/fi";
 const Topheader: React.FC = () => {
   const [OpenModall, setOpenModall] = useState(false);
+  // !GET USER
+  const userJson = localStorage.getItem("User");
+  const User = userJson ? JSON.parse(userJson) : null;  // !DROP ITHEMS
+  const DropdownIthem = {
+    text1: "ویرایش حساب کاربری",
+    icon1: FiEdit,
+    link1: `/dashboard/${User?._id}`,
+    text2: "ویرایش حساب کاربری",
+    icon2: FiEdit,
+    text3: "ویرایش حساب کاربری",
+    icon3: FiEdit,
+    text4: "ویرایش حساب کاربری",
+    icon4: FiEdit,
+    title: "خوش آمدید",
+  };
 
   return (
     <div className="bg-primary p-2 flex items-center justify-around text-xs mb-2">
@@ -27,13 +44,30 @@ const Topheader: React.FC = () => {
           سبد خرید
         </p>
       </div>
-      <div className="flex items-center">
-        <FaUser color="white" className="ml-2" size={20} />
-        <p onClick={() => setOpenModall(true)} className="text-white cursor-pointer">
-          ورود/ثبت نام
-        </p>
-        {OpenModall && <LoginModall setOpenModall={setOpenModall} />}
-      </div>
+      {/* CHANGE ICON TO DASHBOARD */}
+      {User ? (
+        <div className="">
+          {/* <p className="text-white">
+
+خوش آمدید رامتین
+          </p>
+        <div className="flex flex-col gap-4 items-start justify-around w-auto">
+          <button>ویرایش حساب کابری</button>
+        </div> */}
+          <DropDown DropdownIthem={DropdownIthem} />
+        </div>
+      ) : (
+        <div className="flex items-center">
+          <FaUser color="white" className="ml-2" size={20} />
+          <p
+            onClick={() => setOpenModall(true)}
+            className="text-white cursor-pointer"
+          >
+            ورود/ثبت نام
+          </p>
+          {OpenModall && <LoginModall setOpenModall={setOpenModall} />}
+        </div>
+      )}
     </div>
   );
 };

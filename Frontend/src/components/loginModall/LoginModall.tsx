@@ -10,7 +10,7 @@ const LoginModall: React.FC<LoginModallProps> = ({ setOpenModall }) => {
     event.stopPropagation();
   };
   return (
-    <div>
+    <>
       <div
         onClick={() => setOpenModall(false)}
         className="bg-gray-700 bg-opacity-60 z-10 w-full h-full fixed top-0 left-0 flex items-center justify-center"
@@ -39,7 +39,7 @@ const LoginModall: React.FC<LoginModallProps> = ({ setOpenModall }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
