@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/home/Home";
 import MainLayout from "./layouts/MainLayout";
@@ -7,8 +7,23 @@ import SingleProductPage from "./components/Products/SingleProductPage";
 import DashboardLayout from "./layouts/DashboardLayout";
 import UserInformation from "./components/dashboard/UserInformation";
 import Products from "./components/dashboard/Products";
+import axios from "axios";
 
 const App: React.FC = () => {
+  // const [user, setuser] = useState(null);
+  // const getUser = async () => {
+  //   try {
+  //     const url = " http://localhost:5000/auth/login/success";
+  //     const { data } = await axios.get(url, { withCredentials: true });
+  //     setuser(data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  // useEffect(()=>{
+  //   getUser();
+  // },[])
+  // console.log(user,"user")
   return (
     <div className="">
       <Routes>
@@ -47,7 +62,7 @@ const App: React.FC = () => {
             </DashboardLayout>
           }
         />
-         <Route
+        <Route
           path="/dashboard/product-management/:userId"
           element={
             <DashboardLayout>

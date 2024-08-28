@@ -1,6 +1,7 @@
 import React from "react";
 import { MdClose } from "react-icons/md";
 import LoginBtn from "../utils/LoginBtn";
+import { GoogleLogin } from "@react-oauth/google";
 interface LoginModallProps {
   setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -9,6 +10,16 @@ const LoginModall: React.FC<LoginModallProps> = ({ setOpenModall }) => {
     // Stop event propagation to prevent closing the modal when clicked inside
     event.stopPropagation();
   };
+  // // ! googleAuth
+  // const googleAuth =() =>{
+  //   window.open("http://localhost:5000/auth/google/callback"),
+  //   "_self"
+  // };
+  // const logout =() =>{
+  //   window.open("http://localhost:5000/auth/logout"),
+  //   "_self"
+  // };
+  // const client_Id = "776628364639-ldnc8nnj8t0mfgrqldcijddfeaip3se8.apps.googleusercontent.com"
   return (
     <>
       <div
@@ -36,6 +47,25 @@ const LoginModall: React.FC<LoginModallProps> = ({ setOpenModall }) => {
               title="login"
             />
             <LoginBtn />
+            {/* !GOOGLE BTN */}
+            {/* <button onClick={googleAuth}>
+              ورود به حساب کاربری google
+            </button>
+            <button onClick={logout}>
+              خروج
+            </button> */}
+            <div className="">
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  console.log(credentialResponse, "res");
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+                useOneTap
+              />
+              ;
+            </div>
           </div>
         </div>
       </div>
