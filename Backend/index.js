@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const connectDB = require("./config/db");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
-const passportSetup = require("./passport");
+// const passportSetup = require("./passport");
 const app = express();
 
 //* Load Config
@@ -42,7 +42,7 @@ app.use(express.json());
 
 app.use("/api", require("./routes/userRoutes"));
 app.use("/api", require("./routes/uploadRoutes"));
-app.use("/auth", require("./routes/LoginRoutes"));
+// app.use("/auth", require("./routes/LoginRoutes"));
 
 const port = process.env.PORT || 5000;
 const server = app.listen(port, () =>

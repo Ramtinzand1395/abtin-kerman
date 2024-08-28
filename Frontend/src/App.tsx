@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React  from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/home/Home";
 import MainLayout from "./layouts/MainLayout";
@@ -7,7 +7,7 @@ import SingleProductPage from "./components/Products/SingleProductPage";
 import DashboardLayout from "./layouts/DashboardLayout";
 import UserInformation from "./components/dashboard/UserInformation";
 import Products from "./components/dashboard/Products";
-import axios from "axios";
+// import axios from "axios";
 
 const App: React.FC = () => {
   // const [user, setuser] = useState(null);
