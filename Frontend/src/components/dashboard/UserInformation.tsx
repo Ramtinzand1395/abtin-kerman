@@ -1,9 +1,8 @@
 import React from "react";
 
-const UserInformation = () => {
+const UserInformation: React.FC = () => {
   return (
     <div className=" w-full md:container md:mx-auto mx-2">
-
       <div className=" border-2 shadow-lg p-5 my-10">
         <h2 className="font-tanha font-bold text-lg border-b-2">
           اطلاعات حساب کاربری
