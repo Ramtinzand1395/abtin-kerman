@@ -11,27 +11,32 @@ import "swiper/css/scrollbar";
 import SliderpageTest from "./SliderpageTest";
 import "./SliderCss.css";
 
-import test from "../../assets/Firefly 20231028180948.png";
-import test2 from "../../assets/5902176975248802860.jpg";
-import test3 from "../../assets/baner 2 copy.png";
+import test from "../../assets/abtin.png";
+import test2 from "../../assets/abtin 2.png";
+import test3 from "../../assets/abtin 3.png";
 
 const Slider: React.FC = () => {
   const SliderImage = [
     {
       id: 1,
       img: test,
-      btn:"مشاهده"
+      btn:"مشاهده",
+      text:"جدیدترین بازی ها"
     },
     {
       id: 2,
       img: test2,
-      btn:"مشاه333333ده"
+      btn:"مشاه333333ده",
+      text:"انواع  کنسول های بازی"
+
 
     },
     {
       id: 2,
       img: test3,
-      btn:"مشاه333333ده"
+      btn:"مشاه333333ده",
+      text:"جدیدترین بازی ها"
+
 
     },
   ];
@@ -43,15 +48,15 @@ const Slider: React.FC = () => {
       slidesPerView={1}
       loop={true}
       autoplay={{
-        delay: 3500,
+        delay: 5000,
         disableOnInteraction: false,
       }}
       scrollbar={{ draggable: true }}
-      className="mySwiper"
+      className="mySwiper md:mx-auto md:container mx-2"
     >
       {SliderImage.map((img) => (
         <SwiperSlide>
-          <SliderpageTest img={img.img} />
+          <SliderpageTest img={img.img} text={img.text} />
         </SwiperSlide>
       ))}
     </Swiper>

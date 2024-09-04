@@ -37,7 +37,7 @@ const CenterHederMonitor:React.FC = () => {
         </div>
         <div className="flex flex-col gap-5 mr-5 whitespace-nowrap text-sm">
           <p>سرویس ارسال اکسپرس</p>
-          <p>ارسال رایگان بالای 50 هزارتومان</p>
+          <p>ارسال رایگان در شهر کرمان</p>
         </div>
       </div>
     </div>

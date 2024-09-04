@@ -10,7 +10,7 @@ const Topheader: React.FC = () => {
   const [OpenModall, setOpenModall] = useState(false);
   // !GET USER
   const userJson = localStorage.getItem("User");
-  const User = userJson ? JSON.parse(userJson) : null;  // !DROP ITHEMS
+  const User = userJson ? JSON.parse(userJson) : null; // !DROP ITHEMS
   const DropdownIthem = {
     text1: "ویرایش حساب کاربری",
     icon1: FiEdit,
@@ -19,8 +19,10 @@ const Topheader: React.FC = () => {
     icon2: FiEdit,
     text3: "ویرایش حساب کاربری",
     icon3: FiEdit,
-    text4: "ویرایش حساب کاربری",
+    text4: "خروج",
     icon4: FiEdit,
+    link4: "exite",
+
     title: "خوش آمدید",
   };
 

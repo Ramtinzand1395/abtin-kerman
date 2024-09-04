@@ -1,26 +1,47 @@
 import React from "react";
-import ps5 from "../../assets/playstation-5-with-dualsense-front-product-shot-01-ps5-en-30jul20-800x800.png";
 import Animations from "../utils/Animations";
+import box1 from "../../assets/Box1.png";
+import box2 from "../../assets/Box2.png";
+import box3 from "../../assets/Box3.png";
+import box4 from "../../assets/Box4.png";
 
 const ThreeBoxes: React.FC = () => {
+  // const BoxData = [
+  //   {
+  //     id: 1,
+  //     title: "هدفون ها",
+  //     subtitle: "تا 15% تخفیف",
+  //     image: ps5,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "کامپیوتر ها",
+  //     subtitle: "تا 15% تخفیف",
+  //     image: ps5,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "گجت ها ها",
+  //     subtitle: "تا 15% تخفیف",
+  //     image: ps5,
+  //   },
+  // ];
   const BoxData = [
     {
       id: 1,
-      title: "هدفون ها",
-      subtitle: "تا 15% تخفیف",
-      image: ps5,
+      image: box1,
     },
     {
       id: 2,
-      title: "کامپیوتر ها",
-      subtitle: "تا 15% تخفیف",
-      image: ps5,
+      image: box2,
     },
     {
       id: 3,
-      title: "گجت ها ها",
-      subtitle: "تا 15% تخفیف",
-      image: ps5,
+      image: box3,
+    },
+    {
+      id: 4,
+      image: box4,
     },
   ];
   //? OLD MOTION
@@ -43,9 +64,26 @@ const ThreeBoxes: React.FC = () => {
   // }, [isInView]);
   return (
     <>
-      {BoxData.map((data) => (
-        <Animations>
-          <div
+      <Animations>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 my-10">
+          {BoxData.map((data) => (
+            <img
+              key={data.id}
+              className="w-full h-full rounded-lg"
+              src={data.image}
+              alt=""
+            />
+          ))}
+        </div>
+      </Animations>
+    </>
+  );
+};
+
+export default ThreeBoxes;
+
+{
+  /* <div
             key={data.id}
             className="w-full h-[25vh] bg-[#062348] rounded-lg p-5 flex items-center justify-between"
           >
@@ -56,11 +94,5 @@ const ThreeBoxes: React.FC = () => {
             <div className="">
               <img className="w-40 h-40" src={data.image} alt="" />
             </div>
-          </div>
-        </Animations>
-      ))}
-    </>
-  );
-};
-
-export default ThreeBoxes;
+          </div> */
+}

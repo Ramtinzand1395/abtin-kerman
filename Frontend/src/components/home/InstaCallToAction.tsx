@@ -13,7 +13,7 @@ const InstaCallToAction: React.FC = () => {
         />
       </div>
       {/* Insta */}
-      <div className="bg-[#5cc1b9] rounded-2xl text-white w-full h-[40vh]  md:h-full md:col-span-2 flex flex-col items-center justify-evenly p-2 text-center">
+      <div className="bg-primary rounded-2xl text-white w-full h-[40vh]  md:h-full md:col-span-2 flex flex-col items-center justify-evenly p-2 text-center">
         <FaInstagram size={50} />
         <h4 className="font-bold text-lg">ما را در اینستاگرام دنبال کنید</h4>
         <p>

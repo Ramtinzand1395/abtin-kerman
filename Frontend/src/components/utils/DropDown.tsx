@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FiChevronDown } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { googleLogout } from "@react-oauth/google";
 interface OptionProps {
   text: string;
   Icon: React.ComponentType;
@@ -27,6 +28,7 @@ interface DropdownProps {
     text4: string;
     title: string;
     link1: string;
+    link4: string;
   };
 }
 const wrapperVariants = {
@@ -84,9 +86,20 @@ const DropdownIthem: React.FC<DropdownProps> = ({ DropdownIthem }) => {
         <motion.span variants={actionIconVariants}>
           <Icon />
         </motion.span>
-        <Link to={link}>
-          <span>{text}</span>
-        </Link>
+        {link === "exite" ? (
+          <span
+            onClick={() => {
+              googleLogout();
+              localStorage.removeItem("User");
+            }}
+          >
+            {text}
+          </span>
+        ) : (
+          <Link to={link}>
+            <span>{text}</span>
+          </Link>
+        )}
       </motion.li>
     );
   };
@@ -127,11 +140,12 @@ const DropdownIthem: React.FC<DropdownProps> = ({ DropdownIthem }) => {
             text={DropdownIthem.text3}
             link={DropdownIthem.link1}
           />
+
           <Option
             setOpen={setOpen}
             Icon={DropdownIthem.icon4}
             text={DropdownIthem.text4}
-            link={DropdownIthem.link1}
+            link={DropdownIthem.link4}
           />
         </motion.ul>
       </motion.div>

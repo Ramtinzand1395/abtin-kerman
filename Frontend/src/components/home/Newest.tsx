@@ -1,7 +1,7 @@
 import React from "react";
 import Animations from "../utils/Animations";
 import LeftAnimation from "../utils/LeftAnimation";
-import Card from "../utils/Card";
+import ShopingCard from "../utils/ShopingCard";
 interface CardItem {
   id: number;
   OpenTags?: boolean;
@@ -11,6 +11,7 @@ interface CardItem {
   price: number;
   btnText: string;
   image: string;
+  description:string;
 }
 
 interface Newestprops {
@@ -27,7 +28,7 @@ const Newest: React.FC<Newestprops> = ({ CardIthem, title }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-10 ">
         {CardIthem.map((card) => (
           <LeftAnimation>
-            <Card
+            <ShopingCard
               title={card.title}
               price={card.price}
               btnText={card.btnText}
@@ -35,6 +36,7 @@ const Newest: React.FC<Newestprops> = ({ CardIthem, title }) => {
               OpenDiscount={card.OpenDiscount}
               discount={card.discount}
               image={card.image}
+              description={card.description}
             />
           </LeftAnimation>
         ))}

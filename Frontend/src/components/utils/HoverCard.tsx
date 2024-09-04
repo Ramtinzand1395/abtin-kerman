@@ -11,7 +11,7 @@ interface HoverCardprops {
 const HoverCard: React.FC<HoverCardprops> = ({ card }) => {
   return (
     <>
-      <div className=" h-[50vh]">
+      <div className=" h-[80vh]">
         <a href="https://www.mythrillfiction.com/force-mage">
           <div className="card">
             <div className="wrapper">
@@ -21,10 +21,10 @@ const HoverCard: React.FC<HoverCardprops> = ({ card }) => {
                 className="cover-image rounded-2xl"
               />
             </div>
-            <p className="title text-center font-bold text-2xl text-white">
+            <p className="title text-center font-bold text-2xl text-white text-balance align-text-bottom">
               {card.title}
             </p>
-            <img title="character" src={card.image2} className="character h-[40vh]" />
+            <img title="character" src={card.image2} className="character " />
           </div>
         </a>
       </div>

@@ -2,24 +2,14 @@ import React from "react";
 import { MdClose } from "react-icons/md";
 import LoginBtn from "../utils/LoginBtn";
 import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 interface LoginModallProps {
   setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const LoginModall: React.FC<LoginModallProps> = ({ setOpenModall }) => {
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    // Stop event propagation to prevent closing the modal when clicked inside
     event.stopPropagation();
   };
-  // // ! googleAuth
-  // const googleAuth =() =>{
-  //   window.open("http://localhost:5000/auth/google/callback"),
-  //   "_self"
-  // };
-  // const logout =() =>{
-  //   window.open("http://localhost:5000/auth/logout"),
-  //   "_self"
-  // };
-  // const client_Id = "776628364639-ldnc8nnj8t0mfgrqldcijddfeaip3se8.apps.googleusercontent.com"
   return (
     <>
       <div
@@ -55,16 +45,22 @@ const LoginModall: React.FC<LoginModallProps> = ({ setOpenModall }) => {
               خروج
             </button> */}
             <div className="">
-              <GoogleLogin
+            <GoogleLogin
                 onSuccess={(credentialResponse) => {
-                  console.log(credentialResponse, "res");
+                  const credential = credentialResponse.credential;
+                  if (credential) {
+                    const decodedToken = jwtDecode(credential);
+                    console.log(decodedToken);
+                    localStorage.setItem("User", JSON.stringify(decodedToken));
+                  } else {
+                    console.log("Credential is undefined");
+                  }
                 }}
                 onError={() => {
                   console.log("Login Failed");
                 }}
                 useOneTap
               />
-              ;
             </div>
           </div>
         </div>

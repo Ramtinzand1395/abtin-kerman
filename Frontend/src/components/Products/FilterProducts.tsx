@@ -13,7 +13,7 @@ const FilterProducts: React.FC = () => {
     icon3: FiEdit,
     text4: "ویرایش حساب کاربری",
     icon4: FiEdit,
-    title: "خوش آمدید",
+    title: "مرتب سازی بر اساس",
   };
   return (
     <div className="flex items-center justify-between">
