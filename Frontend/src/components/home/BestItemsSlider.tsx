@@ -90,7 +90,7 @@ const BestItemsSlider: React.FC = () => {
         className=" "
       >
         {CardIthem.map((card) => (
-          <SwiperSlide>
+          <SwiperSlide key={card.id}>
             <Card
               title={card.title}
               price={card.price}

@@ -54,7 +54,7 @@ const Slider: React.FC = () => {
       className="mySwiper md:mx-auto md:container mx-2"
     >
       {SliderImage.map((img) => (
-        <SwiperSlide>
+        <SwiperSlide key={img.id}>
           <SliderpageTest img={img.img}  topText={img.topText} bottomText={img.bottomText} />
         </SwiperSlide>
       ))}

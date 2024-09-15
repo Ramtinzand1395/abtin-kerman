@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BsBasket3Fill } from "react-icons/bs";
 import { CiMobile3 } from "react-icons/ci";
 import { FaUser } from "react-icons/fa";
@@ -6,10 +6,18 @@ import { MdEmail } from "react-icons/md";
 import LoginModall from "../loginModall/LoginModall";
 import DropDown from "../utils/DropDown";
 import { FiEdit } from "react-icons/fi";
+
+interface UserType {
+  _id: string;
+  createdAt: string;
+  email: string;
+  isAdmin: string;
+  profile: string;
+}
+
 const Topheader: React.FC = () => {
   const [OpenModall, setOpenModall] = useState(false);
-  const [User, setUser] = useState(null);
-  console.log(User,"user")
+  const [User, setUser] = useState<UserType | null>(null);
 
   // !DROP ITHEMS
   const DropdownIthem = {
@@ -50,7 +58,11 @@ const Topheader: React.FC = () => {
       {/* CHANGE ICON TO DASHBOARD */}
       {User ? (
         <div className="">
-          <DropDown setUser={setUser} DropdownIthem={DropdownIthem} setOpenModall={setOpenModall} />
+          <DropDown
+            setUser={setUser}
+            DropdownIthem={DropdownIthem}
+            setOpenModall={setOpenModall}
+          />
         </div>
       ) : (
         <div className="flex items-center">
@@ -61,7 +73,9 @@ const Topheader: React.FC = () => {
           >
             ورود/ثبت نام
           </p>
-          {OpenModall && <LoginModall setUser={setUser} setOpenModall={setOpenModall} />}
+          {OpenModall && (
+            <LoginModall setUser={setUser} setOpenModall={setOpenModall} />
+          )}
         </div>
       )}
     </div>

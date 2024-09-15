@@ -27,7 +27,7 @@ const Newest: React.FC<Newestprops> = ({ CardIthem, title }) => {
       <div className="w-full h-[4px] my-10 bg-black"></div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-10 ">
         {CardIthem.map((card) => (
-          <LeftAnimation>
+          <LeftAnimation key={card.id}>
             <ShopingCard
               title={card.title}
               price={card.price}

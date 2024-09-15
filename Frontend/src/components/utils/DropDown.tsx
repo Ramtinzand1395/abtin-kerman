@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-// import {
-//   FiEdit,
-//   FiChevronDown,
-//   FiTrash,
-//   FiShare,
-//   FiPlusSquare,
-// } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { FiChevronDown } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { googleLogout } from "@react-oauth/google";
+interface UserType {
+  _id: string;
+  createdAt: string;
+  email: string;
+  isAdmin: string;
+  profile: string;
+}
 interface OptionProps {
   text: string;
   Icon: React.ComponentType;
@@ -30,6 +30,8 @@ interface DropdownProps {
     link1: string;
     link4: string;
   };
+  setUser: React.Dispatch<React.SetStateAction<UserType| null>>;
+  setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const wrapperVariants = {
   open: {
@@ -74,7 +76,11 @@ const actionIconVariants = {
   open: { scale: 1, y: 0 },
   closed: { scale: 0, y: -7 },
 };
-const DropdownIthem: React.FC<DropdownProps> = ({ DropdownIthem, setUser ,setOpenModall}) => {
+const DropdownIthem: React.FC<DropdownProps> = ({
+  DropdownIthem,
+  setUser,
+  setOpenModall,
+}) => {
   const [open, setOpen] = useState(false);
   const Option: React.FC<OptionProps> = ({ text, Icon, setOpen, link }) => {
     return (

@@ -5,9 +5,16 @@ import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { LoginService } from "../../services/Userservice";
 import { toast } from "react-toastify";
+interface UserType {
+  _id: string;
+  createdAt: string;
+  email: string;
+  isAdmin: string;
+  profile: string;
+}
 interface LoginModallProps {
   setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
-  setUser: React.Dispatch<React.SetStateAction<string>>;
+  setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
 }
 const LoginModall: React.FC<LoginModallProps> = ({
   setOpenModall,
@@ -29,9 +36,8 @@ const LoginModall: React.FC<LoginModallProps> = ({
       if (status === 201 || status === 200) {
         toast.success(data.message);
       }
-console.log(data)
       localStorage.setItem("User", JSON.stringify(data.user));
-      setUser(JSON.stringify(data.user));
+      setUser(data.user);
     } catch (err) {
       console.log(err);
     }

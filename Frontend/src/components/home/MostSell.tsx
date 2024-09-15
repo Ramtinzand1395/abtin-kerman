@@ -36,7 +36,7 @@ const MostSell: React.FC<MostSellProps> = ({ title }) => {
       image2: hover5,
     },
     {
-      id: 3,
+      id: 4,
       title: "Wukong",
       image1: hover8,
       image2: hover7,
@@ -50,7 +50,7 @@ const MostSell: React.FC<MostSellProps> = ({ title }) => {
       {/* <div className="w-full h-[4px] my-10 bg-black"></div> */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-10 ">
         {hovercars.map((card) => (
-          <LeftAnimation>
+          <LeftAnimation key={card.id}>
             <HoverCard card={card} />
           </LeftAnimation>
         ))}
