@@ -21,9 +21,9 @@ const HoverCard: React.FC<HoverCardprops> = ({ card }) => {
                 className="cover-image rounded-2xl"
               />
             </div>
-            <p className="title text-center font-bold text-2xl text-white text-balance align-text-bottom">
+            {/* <p className="title text-center font-bold text-2xl text-white text-balance align-text-bottom">
               {card.title}
-            </p>
+            </p> */}
             <img title="character" src={card.image2} className="character " />
           </div>
         </a>

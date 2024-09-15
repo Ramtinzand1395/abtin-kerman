@@ -74,7 +74,7 @@ const actionIconVariants = {
   open: { scale: 1, y: 0 },
   closed: { scale: 0, y: -7 },
 };
-const DropdownIthem: React.FC<DropdownProps> = ({ DropdownIthem }) => {
+const DropdownIthem: React.FC<DropdownProps> = ({ DropdownIthem, setUser ,setOpenModall}) => {
   const [open, setOpen] = useState(false);
   const Option: React.FC<OptionProps> = ({ text, Icon, setOpen, link }) => {
     return (
@@ -91,6 +91,8 @@ const DropdownIthem: React.FC<DropdownProps> = ({ DropdownIthem }) => {
             onClick={() => {
               googleLogout();
               localStorage.removeItem("User");
+              setUser(null);
+              setOpenModall(false);
             }}
           >
             {text}

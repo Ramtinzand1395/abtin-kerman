@@ -17,7 +17,7 @@ const BestItemsSlider: React.FC = () => {
       id: 1,
       OpenTags: false,
       OpenDiscount: false,
-      title: "بامپر فلزی نیلکین آیفون Nillkin Barde Metal Case iPhone 7 Plus",
+      title: "بامپر فلزی نیلکین آیفون ",
       price: 120000,
       btnText: "افزودن به سبد خرید",
       image: img,
@@ -87,8 +87,6 @@ const BestItemsSlider: React.FC = () => {
           disableOnInteraction: false,
         }}
         scrollbar={{ draggable: true }}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
         className=" "
       >
         {CardIthem.map((card) => (
@@ -104,9 +102,6 @@ const BestItemsSlider: React.FC = () => {
             />
           </SwiperSlide>
         ))}
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
       </Swiper>
     </div>
   );

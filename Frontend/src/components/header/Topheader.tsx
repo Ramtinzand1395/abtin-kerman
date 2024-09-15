@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsBasket3Fill } from "react-icons/bs";
 import { CiMobile3 } from "react-icons/ci";
 import { FaUser } from "react-icons/fa";
@@ -8,9 +8,10 @@ import DropDown from "../utils/DropDown";
 import { FiEdit } from "react-icons/fi";
 const Topheader: React.FC = () => {
   const [OpenModall, setOpenModall] = useState(false);
-  // !GET USER
-  const userJson = localStorage.getItem("User");
-  const User = userJson ? JSON.parse(userJson) : null; // !DROP ITHEMS
+  const [User, setUser] = useState(null);
+  console.log(User,"user")
+
+  // !DROP ITHEMS
   const DropdownIthem = {
     text1: "ویرایش حساب کاربری",
     icon1: FiEdit,
@@ -49,14 +50,7 @@ const Topheader: React.FC = () => {
       {/* CHANGE ICON TO DASHBOARD */}
       {User ? (
         <div className="">
-          {/* <p className="text-white">
-
-خوش آمدید رامتین
-          </p>
-        <div className="flex flex-col gap-4 items-start justify-around w-auto">
-          <button>ویرایش حساب کابری</button>
-        </div> */}
-          <DropDown DropdownIthem={DropdownIthem} />
+          <DropDown setUser={setUser} DropdownIthem={DropdownIthem} setOpenModall={setOpenModall} />
         </div>
       ) : (
         <div className="flex items-center">
@@ -67,7 +61,7 @@ const Topheader: React.FC = () => {
           >
             ورود/ثبت نام
           </p>
-          {OpenModall && <LoginModall setOpenModall={setOpenModall} />}
+          {OpenModall && <LoginModall setUser={setUser} setOpenModall={setOpenModall} />}
         </div>
       )}
     </div>

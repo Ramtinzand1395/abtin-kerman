@@ -20,24 +20,23 @@ const Slider: React.FC = () => {
     {
       id: 1,
       img: test,
-      btn:"مشاهده",
-      text:"جدیدترین بازی ها"
+      btn: "مشاهده",
+      topText: "انواع کنسول های ",
+      bottomText: "بازی",
     },
     {
       id: 2,
       img: test2,
-      btn:"مشاه333333ده",
-      text:"انواع  کنسول های بازی"
-
-
+      btn: "مشاه333333ده",
+      topText: "جدیدترین  ",
+      bottomText: "بازی",
     },
     {
-      id: 2,
+      id: 3,
       img: test3,
-      btn:"مشاه333333ده",
-      text:"جدیدترین بازی ها"
-
-
+      btn: "مشاه333333ده",
+      topText: "به روز ترین  ",
+      bottomText: "خبر ها",
     },
   ];
   return (
@@ -56,7 +55,7 @@ const Slider: React.FC = () => {
     >
       {SliderImage.map((img) => (
         <SwiperSlide>
-          <SliderpageTest img={img.img} text={img.text} />
+          <SliderpageTest img={img.img}  topText={img.topText} bottomText={img.bottomText} />
         </SwiperSlide>
       ))}
     </Swiper>

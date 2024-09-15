@@ -3,12 +3,38 @@ import { MdClose } from "react-icons/md";
 import LoginBtn from "../utils/LoginBtn";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { LoginService } from "../../services/Userservice";
+import { toast } from "react-toastify";
 interface LoginModallProps {
   setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
+  setUser: React.Dispatch<React.SetStateAction<string>>;
 }
-const LoginModall: React.FC<LoginModallProps> = ({ setOpenModall }) => {
+const LoginModall: React.FC<LoginModallProps> = ({
+  setOpenModall,
+  setUser,
+}) => {
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
+  };
+  const CheckUser = async (credential: string) => {
+    try {
+      const decodedToken = jwtDecode(credential) as {
+        email: string;
+        picture: string;
+      };
+      const { data, status } = await LoginService({
+        email: decodedToken.email,
+        profile: decodedToken.picture,
+      });
+      if (status === 201 || status === 200) {
+        toast.success(data.message);
+      }
+console.log(data)
+      localStorage.setItem("User", JSON.stringify(data.user));
+      setUser(JSON.stringify(data.user));
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <>
@@ -37,21 +63,12 @@ const LoginModall: React.FC<LoginModallProps> = ({ setOpenModall }) => {
               title="login"
             />
             <LoginBtn />
-            {/* !GOOGLE BTN */}
-            {/* <button onClick={googleAuth}>
-              ورود به حساب کاربری google
-            </button>
-            <button onClick={logout}>
-              خروج
-            </button> */}
             <div className="">
-            <GoogleLogin
+              <GoogleLogin
                 onSuccess={(credentialResponse) => {
                   const credential = credentialResponse.credential;
                   if (credential) {
-                    const decodedToken = jwtDecode(credential);
-                    console.log(decodedToken);
-                    localStorage.setItem("User", JSON.stringify(decodedToken));
+                    CheckUser(credential);
                   } else {
                     console.log("Credential is undefined");
                   }
