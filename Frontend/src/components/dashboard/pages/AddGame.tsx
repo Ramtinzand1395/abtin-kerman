@@ -5,7 +5,7 @@ import {
   addGameService,
   getCategoriesService,
   getTagService,
-} from "../../../services/Userservice";
+} from "../../../services/ApiServices";
 import { toast } from "react-toastify";
 import { MdAdd } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";

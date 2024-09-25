@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   getCategoriesService,
   getTagService,
-} from "../../../services/Userservice";
+} from "../../../services/ApiServices";
 import { Category, GameData, Tag } from "../../../types";
 interface EditTagProps {
   GameData: GameData;

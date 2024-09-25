@@ -7,7 +7,7 @@ interface AddImageModallProps {
 }
 import { GameData, Image } from "../../types";
 // *
-import { GetImageService } from "../../services/Userservice";
+import { GetImageService } from "../../services/ApiServices";
 import { MdClose } from "react-icons/md";
 
 const AddImageModall: React.FC<AddImageModallProps> = ({

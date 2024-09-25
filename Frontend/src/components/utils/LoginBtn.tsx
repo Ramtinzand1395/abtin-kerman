@@ -1,5 +1,5 @@
 import React from "react";
-import { SmsService } from "../../services/Userservice";
+import { SmsService } from "../../services/ApiServices";
 // import TrezSmsClient from "trez-sms-client"
 // const client = new TrezSmsClient("ramtinzand", "Ramtin1995d");
 const LoginBtn: React.FC = () => {

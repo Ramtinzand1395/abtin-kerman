@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import {
   GetImageService,
   UploadImageService,
-} from "../../../services/Userservice";
+} from "../../../services/ApiServices";
 import { Image } from "../../../types";
 
 const Gallery: React.FC = () => {

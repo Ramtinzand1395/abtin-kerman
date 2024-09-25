@@ -7,7 +7,7 @@ import {
   delTagService,
   getCategoriesService,
   getTagService,
-} from "../../../services/Userservice";
+} from "../../../services/ApiServices";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import { Category, Tag } from "../../../types";

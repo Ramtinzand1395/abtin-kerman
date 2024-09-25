@@ -3,7 +3,7 @@ import { MdClose } from "react-icons/md";
 import LoginBtn from "../utils/LoginBtn";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import { LoginService } from "../../services/Userservice";
+import { LoginService } from "../../services/ApiServices";
 import { toast } from "react-toastify";
 interface UserType {
   _id: string;

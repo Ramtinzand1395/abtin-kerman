@@ -4,7 +4,7 @@ import BtnTow from "../../utils/BtnTow";
 import EditeGameDataTab from "./EditeGameDataTab";
 import InputTabs from "./InputTabs";
 import EditeImageTab from "./EditeImageTab";
-import { updateGameService } from "../../../services/Userservice";
+import { updateGameService } from "../../../services/ApiServices";
 import { toast } from "react-toastify";
 import EditTag from "./EditTag";
 import { GameData } from "../../../types";

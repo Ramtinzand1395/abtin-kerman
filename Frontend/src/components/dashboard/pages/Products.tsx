@@ -3,7 +3,7 @@ import EditeProductModall from "../editeGame/EditeProductModall";
 import {
   deleteGameService,
   getGameService,
-} from "../../../services/Userservice";
+} from "../../../services/ApiServices";
 import { toast } from "react-toastify";
 import { GameData } from "../../../types";
 import BtnTow from "../../utils/BtnTow";
