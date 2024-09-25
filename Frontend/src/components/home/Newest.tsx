@@ -36,7 +36,7 @@ const Newest: React.FC<Newestprops> = ({ CardIthem, title }) => {
               OpenDiscount={card.OpenDiscount}
               discount={card.discount}
               image={card.image}
-              description={card.description}
+              // description={card.description}
             />
           </LeftAnimation>
         ))}

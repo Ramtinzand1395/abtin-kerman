@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Category, GameData, Tag } from "../types";
+import { GameData } from "../types";
 interface LoginData {
   email: string;
   profile: string;
@@ -38,7 +38,7 @@ export const SmsService = () => {
 // !UploadServices
 // @desc  create OR add User
 // @route PUT http://localhost:5000/api/login
-export const UploadImageService = (formData: string) => {
+export const UploadImageService = (formData: FormData) => {
   const url = `${SERVER_URL}/upload-image`;
   return axios.post(url, formData);
 };
@@ -80,7 +80,7 @@ export const deleteGameService = (id: string) => {
 // !TAGS  Services
 //? @desc  create OR add User
 //? @route PUT http://localhost:5000/api/login
-export const addTagService = (data: Tag) => {
+export const addTagService = (data: string) => {
   const url = `${SERVER_URL}/add-tag`;
   return axios.post(url, { tagName: data });
 };
@@ -102,7 +102,7 @@ export const delTagService = (id: string) => {
 // !Categories  Services
 //? @desc  create OR add User
 //? @route PUT http://localhost:5000/api/login
-export const addCategoriesService = (data: Category) => {
+export const addCategoriesService = (data: string) => {
   const url = `${SERVER_URL}/add-Categories`;
   return axios.post(url, { categoryName: data });
 };
