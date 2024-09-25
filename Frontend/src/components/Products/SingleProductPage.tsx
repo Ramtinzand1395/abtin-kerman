@@ -1,12 +1,15 @@
 import React from "react";
 import img from "../../assets/Hover/Spider-man.jpg";
-import BtnOne from "../utils/BtnOne";
 import Tabs from "../utils/Tabs";
 import ProductInformationTab from "./ProductInformationTab";
 import ProductReturnTermsTab from "./ProductReturnTermsTab";
 import ConnectedProducts from "./ConnectedProducts";
 import BtnTow from "../utils/BtnTow";
+
 const SingleProductPage: React.FC = () => {
+const test = ()=>{
+  console.log("first")
+}
   return (
     // <div className="md:container md:mx-auto mx-2">
     //   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 bg-slate-100 mt-10 p-5">
@@ -123,6 +126,7 @@ const SingleProductPage: React.FC = () => {
             <BtnTow
               ButtonColor="bg-blue-500 hover:from-blue-500 hover:to-blue-400 hover:ring-blue-400"
               ButtonText="افزودن به سبد خرید"
+              onClick={()=>test()}
             />
           </div>
         </div>

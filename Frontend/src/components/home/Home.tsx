@@ -5,7 +5,6 @@ import MostSell from "./MostSell";
 import Discount from "./Discount";
 // import BestItemsSlider from "./BestItemsSlider";
 import img from "../../assets/Hover/GodOfWar.jpg";
-import InstaCallToAction from "./InstaCallToAction";
 import Newest from "./Newest";
 import BestItemsSlider from "./BestItemsSlider";
 
@@ -27,8 +26,7 @@ const Home: React.FC = () => {
       OpenTags: true,
       OpenDiscount: true,
       discount: 50,
-      title:
-        "Nillkin Barde Metal Case iPhone",
+      title: "Nillkin Barde Metal Case iPhone",
       price: 120000,
       btnText: "افزودن به سبد خرید",
       image: img,

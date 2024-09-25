@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { Category, GameData, Tag } from "../types";
 interface LoginData {
   email: string;
   profile: string;
@@ -37,7 +38,7 @@ export const SmsService = () => {
 // !UploadServices
 // @desc  create OR add User
 // @route PUT http://localhost:5000/api/login
-export const UploadImageService = (formData) => {
+export const UploadImageService = (formData: string) => {
   const url = `${SERVER_URL}/upload-image`;
   return axios.post(url, formData);
 };
@@ -51,7 +52,7 @@ export const GetImageService = () => {
 // !GAME  Services
 //? @desc  create game
 //? @route POST http://localhost:5000/api/login
-export const addGameService = (data) => {
+export const addGameService = (data: GameData) => {
   const url = `${SERVER_URL}/add-game`;
   return axios.post(url, data);
 };
@@ -64,13 +65,13 @@ export const getGameService = () => {
 };
 //? @desc  update game
 //? @route PUT http://localhost:5000/api/update-game
-export const updateGameService = (data) => {
+export const updateGameService = (data: GameData) => {
   const url = `${SERVER_URL}/update-game`;
   return axios.put(url, data);
 };
 //? @desc  delete game
 //? @route DELETE http://localhost:5000/api/update-game
-export const deleteGameService = (id) => {
+export const deleteGameService = (id: string) => {
   const url = `${SERVER_URL}/delete-game`;
   return axios.delete(url, {
     data: { gameId: id }, // The correct way to send data in axios.delete
@@ -79,7 +80,7 @@ export const deleteGameService = (id) => {
 // !TAGS  Services
 //? @desc  create OR add User
 //? @route PUT http://localhost:5000/api/login
-export const addTagService = (data) => {
+export const addTagService = (data: Tag) => {
   const url = `${SERVER_URL}/add-tag`;
   return axios.post(url, { tagName: data });
 };
@@ -92,7 +93,7 @@ export const getTagService = () => {
 };
 //? @desc  create OR add User
 //? @route PUT http://localhost:5000/api/login
-export const delTagService = (id) => {
+export const delTagService = (id: string) => {
   const url = `${SERVER_URL}/del-tag`;
   return axios.delete(url, {
     data: { tagId: id }, // The correct way to send data in axios.delete
@@ -101,7 +102,7 @@ export const delTagService = (id) => {
 // !Categories  Services
 //? @desc  create OR add User
 //? @route PUT http://localhost:5000/api/login
-export const addCategoriesService = (data) => {
+export const addCategoriesService = (data: Category) => {
   const url = `${SERVER_URL}/add-Categories`;
   return axios.post(url, { categoryName: data });
 };
@@ -114,7 +115,7 @@ export const getCategoriesService = () => {
 };
 //? @desc  create OR add User
 //? @route PUT http://localhost:5000/api/login
-export const delCatService = (id) => {
+export const delCatService = (id: string) => {
   const url = `${SERVER_URL}/del-cat`;
   return axios.delete(url, {
     data: { catId: id }, // The correct way to send data in axios.delete

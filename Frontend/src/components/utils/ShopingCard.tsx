@@ -1,5 +1,4 @@
 import React from "react";
-import BtnTow from "./BtnTow";
 interface CardItemProps {
   OpenTag?: boolean;
   OpenDiscount?: boolean;
@@ -8,14 +7,12 @@ interface CardItemProps {
   price: number;
   btnText: string;
   image: string;
-  description: string;
+  // description: string;
 }
 const ShopingCard: React.FC<CardItemProps> = ({
   title,
   price,
-  btnText,
   image,
-  description,
 }) => {
   return (
     <div className="flex flex-col p-5  rounded-lg hover:scale-105 ease-in-out transition-all duration-150  hover:bg-gray-100 cursor-pointer">

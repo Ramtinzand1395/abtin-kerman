@@ -10,7 +10,6 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import img from "../../assets/_24c0f808-1d10-4db6-85a5-ed48e14014cf.jpg";
 import "./BestSlider.css";
-import Card from "../utils/Card";
 import ShopingCard from "../utils/ShopingCard";
 import Animations from "../utils/Animations";
 const BestItemsSlider: React.FC = () => {
