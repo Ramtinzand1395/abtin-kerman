@@ -1,6 +1,36 @@
 import React from "react";
-
+import { SmsService } from "../../services/Userservice";
+// import TrezSmsClient from "trez-sms-client"
+// const client = new TrezSmsClient("ramtinzand", "Ramtin1995d");
 const LoginBtn: React.FC = () => {
+  const sendSms = async () => {
+    try {
+      console.log("first");
+      const { data, status } = await SmsService();
+      console.log(data);
+      console.log(status);
+      // client
+      // .autoSendCode("09138433385", "کد ورود به برنامه کرمان آتاری")
+      // .then((messageId) => {
+      //   console.log("Sent Message ID: " + messageId);
+      // })
+      // .catch((error) => console.log(error));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+//   const TrezSmsClient = require("trez-sms-client");
+// const client = new TrezSmsClient("ramtinzand", "Ramtin1995d");
+// exports.sendSms = () => {
+//     console.log("first")
+//   client
+//     .autoSendCode("09138433385", "کد ورود به برنامه کرمان آتاری")
+//     .then((messageId) => {
+//       console.log("Sent Message ID: " + messageId);
+//     })
+//     .catch((error) => console.log(error));
+// };
   return (
     <div>
       <button className="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group">
@@ -37,7 +67,10 @@ const LoginBtn: React.FC = () => {
             ></path>
           </svg>
         </span>
-        <span className="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">
+        <span
+          onClick={() => sendSms()}
+          className="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white"
+        >
           ارسال پیامک
         </span>
       </button>

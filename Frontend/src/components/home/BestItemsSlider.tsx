@@ -11,6 +11,8 @@ import "swiper/css/scrollbar";
 import img from "../../assets/_24c0f808-1d10-4db6-85a5-ed48e14014cf.jpg";
 import "./BestSlider.css";
 import Card from "../utils/Card";
+import ShopingCard from "../utils/ShopingCard";
+import Animations from "../utils/Animations";
 const BestItemsSlider: React.FC = () => {
   const CardIthem = [
     {
@@ -57,7 +59,11 @@ const BestItemsSlider: React.FC = () => {
     },
   ];
   return (
-    <div className="my-10">
+    <div className="mt-10">
+        <Animations>
+        <h2 className="font-bold text-lg lg:text-2xl mt-10 mb-2">جدید ترین محصولات</h2>{" "}
+      </Animations>
+      <div className="w-full h-[8px] rounded-3xl border-2 border-gray-500 mb-2"></div>{" "}
       <Swiper
         navigation={true}
         modules={[Navigation, Autoplay]}
@@ -77,7 +83,7 @@ const BestItemsSlider: React.FC = () => {
           },
           // when window width is >= 1440px
           1440: {
-            slidesPerView: 4,
+            slidesPerView: 5,
           },
         }}
         loop={true}
@@ -89,9 +95,10 @@ const BestItemsSlider: React.FC = () => {
         scrollbar={{ draggable: true }}
         className=" "
       >
+       
         {CardIthem.map((card) => (
           <SwiperSlide key={card.id}>
-            <Card
+            <ShopingCard
               title={card.title}
               price={card.price}
               btnText={card.btnText}

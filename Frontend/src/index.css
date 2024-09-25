@@ -10,8 +10,8 @@
 
 .fixedImage {
   background-image: url("./assets/Off picture.png");
-  background-size: 100%; /* or contain, or specific dimensions */
-  background-position: center;
+  background-size: 80%; /* or contain, or specific dimensions */
+  background-position: left;
   background-repeat: no-repeat;
   background-attachment: fixed;
   width: 100%;
@@ -107,7 +107,7 @@
 
 .card:hover .character {
   opacity: 1;
-  transform: translate3d(0%, -10%, -800px);
+  transform: translate3d(0%, 2%, -1000px);
   z-index: 10;
 
 }

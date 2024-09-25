@@ -3,11 +3,17 @@ import React from "react";
 interface BtnTowProps {
   ButtonText: string;
   ButtonColor: string;
+  onClick: () => void;
 }
 
-const BtnTow: React.FC<BtnTowProps> = ({ ButtonText, ButtonColor }) => {
+const BtnTow: React.FC<BtnTowProps> = ({
+  ButtonText,
+  ButtonColor,
+  onClick,
+}) => {
   return (
     <button
+      onClick={() => onClick()}
       className={`relative rounded px-5 py-2.5 overflow-hidden group ${ButtonColor} hover:bg-gradient-to-r text-white hover:ring-2 hover:ring-offset-2  transition-all ease-out duration-300`}
     >
       {" "}

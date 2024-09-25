@@ -11,9 +11,9 @@ import "swiper/css/scrollbar";
 import SliderpageTest from "./SliderpageTest";
 import "./SliderCss.css";
 
-import test from "../../assets/abtin.png";
-import test2 from "../../assets/abtin 2.png";
-import test3 from "../../assets/abtin 3.png";
+import test from "../../assets/Hero/ps5-Hero.jpg";
+import test2 from "../../assets/Hero/redDead-Hero.jpg";
+import test3 from "../../assets/Hero/gta-Hero.jpg";
 
 const Slider: React.FC = () => {
   const SliderImage = [
@@ -21,22 +21,22 @@ const Slider: React.FC = () => {
       id: 1,
       img: test,
       btn: "مشاهده",
-      topText: "انواع کنسول های ",
-      bottomText: "بازی",
+      topText:  "انواع کنسول های بازی ",
+      bottomText: "از جدیدترین کنسول های بازی روز دنیا تا کنسول های کلاسیک ",
     },
     {
       id: 2,
       img: test2,
       btn: "مشاه333333ده",
-      topText: "جدیدترین  ",
-      bottomText: "بازی",
+      topText: "جدیدترین بازی ها    ",
+      bottomText: "جدیدترین بازی ها  هم به صورت دیسک هم به صورت اکانت های ظرفیتی ",
     },
     {
       id: 3,
       img: test3,
       btn: "مشاه333333ده",
-      topText: "به روز ترین  ",
-      bottomText: "خبر ها",
+      topText: " آخرین اخبار دنیای بازی",
+      bottomText: " با مطالعه وبلاگ از آخرین آپدیت ها و اخبار روز دنیای بازی مطلع شوید.",
     },
   ];
   return (
@@ -51,7 +51,7 @@ const Slider: React.FC = () => {
         disableOnInteraction: false,
       }}
       scrollbar={{ draggable: true }}
-      className="mySwiper md:mx-auto md:container mx-2"
+      className="mySwiper md:mx-auto md:container mx-2 rounded-lg"
     >
       {SliderImage.map((img) => (
         <SwiperSlide key={img.id}>

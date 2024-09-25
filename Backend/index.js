@@ -4,6 +4,7 @@ const dotEnv = require("dotenv");
 const cors = require("cors");
 // const { Server } = require("socket.io");
 const connectDB = require("./config/db");
+
 // const cookieSession = require("cookie-session");
 // const passport = require("passport");
 // const passportSetup = require("./passport");
@@ -23,7 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/api", require("./routes/userRoutes"));
-// app.use("/api", require("./routes/uploadRoutes"));
+app.use("/api", require("./routes/adminRoutes"));
 // app.use("/auth", require("./routes/LoginRoutes"));
 
 const port = process.env.PORT || 5000;

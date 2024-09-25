@@ -8,7 +8,7 @@ interface CardItemProps {
   price: number;
   btnText: string;
   image: string;
-  description:string;
+  description: string;
 }
 const ShopingCard: React.FC<CardItemProps> = ({
   title,
@@ -18,8 +18,8 @@ const ShopingCard: React.FC<CardItemProps> = ({
   description,
 }) => {
   return (
-    <div className="flex flex-col border-2 p-5  rounded-lg hover:scale-105 ease-in-out transition-all duration-150 border-black hover:bg-gray-100 cursor-pointer">
-      <img src={image} className="w-full h-60 mb-5" alt="" />
+    <div className="flex flex-col p-5  rounded-lg hover:scale-105 ease-in-out transition-all duration-150  hover:bg-gray-100 cursor-pointer">
+      {/* <img src={image} className="w-full h-60 mb-5" alt="" />
       <div className="font-bold text-lg">{title}</div>
       <span className="mb-5 font-tanha text-xs my-5">
       {description}
@@ -32,7 +32,13 @@ const ShopingCard: React.FC<CardItemProps> = ({
         <BtnTow
           ButtonColor="bg-blue-500 hover:from-blue-500 hover:to-blue-400 hover:ring-blue-400"
           ButtonText={btnText}
-        />
+        /> */}
+      <img src={image} className="w-full h-60 mb-5 " alt="" />
+      <div className="font-bold text-base md:text-xl font-tanha text-primary h-[6vh] md:h-[8vh]">{title}</div>
+      <div className="flex items-center text-xs md:text-sm my-3 ">
+        <div className="mb-5">از {price} </div>
+        <div className="mb-5"> تا {price} تومان </div>
+      </div>
     </div>
   );
 };

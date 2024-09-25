@@ -11,7 +11,7 @@ interface CardItem {
   price: number;
   btnText: string;
   image: string;
-  description:string;
+  description: string;
 }
 
 interface Newestprops {
@@ -22,10 +22,10 @@ const Newest: React.FC<Newestprops> = ({ CardIthem, title }) => {
   return (
     <div>
       <Animations>
-        <h2 className="font-bold text-lg lg:text-4xl my-10">{title}</h2>
+        <h2 className="font-bold text-lg lg:text-2xl mt-10 mb-2">{title}</h2>{" "}
       </Animations>
-      <div className="w-full h-[4px] my-10 bg-black"></div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-10 ">
+      <div className="w-full h-[8px] rounded-3xl border-2 border-gray-500"></div>{" "}
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 my-10 ">
         {CardIthem.map((card) => (
           <LeftAnimation key={card.id}>
             <ShopingCard

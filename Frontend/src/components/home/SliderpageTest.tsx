@@ -14,23 +14,19 @@ const SliderpageTest: React.FC<SliderpageTestProps> = ({
   bottomText,
 }) => {
   return (
-    <div className="w-full h-[60vh] grid grid-cols-2">
+    <div className="w-full h-[60vh] ">
       <div className="">
-        <div className="absolute bottom-32 right-32">
+        <div className="absolute bottom-10 right-32">
           <BtnOne />
         </div>
-        <div className="absolute top-10 right-10">
+        {/* <div className="absolute top-10 right-16"> */}
           <SliderAnimation>
-            <h3 className="text-white font-tanha text-7xl font-bold">
-              {topText}
-            </h3>
-            <h3 className="text-white font-tanha text-7xl font-bold">
-              {bottomText}
-            </h3>
+            <h3 className="  text-6xl text-primary font-bold absolute top-16 right-16">{topText}</h3>
+            <p className=" font-tanha text-xl text-start absolute top-44 right-20 w-96">{bottomText}</p>
           </SliderAnimation>
-        </div>
+        {/* </div> */}
       </div>
-      <img className="w-32 h-32" src={img} alt="" />
+      <img className="w-full h-full" src={img} alt="" />
     </div>
   );
 };

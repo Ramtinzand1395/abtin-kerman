@@ -5,6 +5,8 @@ const userController = require("../controller/userController");
 const router = new Router();
 
 router.post("/login", userController.handleLogin);
+router.get("/loginSms", userController.handleSms);
+
 // router.post("/login", userController.handleLogin);
 
 // router.put("/handle-about", userController.handleAbout);

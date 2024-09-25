@@ -5,8 +5,11 @@ import MainLayout from "./layouts/MainLayout";
 import ProductsPage from "./components/Products/ProductsPage";
 import SingleProductPage from "./components/Products/SingleProductPage";
 import DashboardLayout from "./layouts/DashboardLayout";
-import UserInformation from "./components/dashboard/UserInformation";
-import Products from "./components/dashboard/Products";
+import UserInformation from "./components/dashboard/pages/UserInformation";
+import Products from "./components/dashboard/pages/Products";
+import AddGame from "./components/dashboard/pages/AddGame";
+import Gallery from "./components/dashboard/pages/Gallery";
+import Tags from "./components/dashboard/pages/Tags";
 // import axios from "axios";
 
 const App: React.FC = () => {
@@ -67,6 +70,30 @@ const App: React.FC = () => {
           element={
             <DashboardLayout>
               <Products />
+            </DashboardLayout>
+          }
+        />
+          <Route
+          path="/dashboard/account-game-manneger/:userId"
+          element={
+            <DashboardLayout>
+              <AddGame />
+            </DashboardLayout>
+          }
+        />
+          <Route
+          path="/dashboard/gallery/:userId"
+          element={
+            <DashboardLayout>
+              <Gallery />
+            </DashboardLayout>
+          }
+        />
+         <Route
+          path="/dashboard/tags/:userId"
+          element={
+            <DashboardLayout>
+              <Tags />
             </DashboardLayout>
           }
         />

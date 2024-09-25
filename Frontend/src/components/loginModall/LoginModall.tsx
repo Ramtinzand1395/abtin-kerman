@@ -62,13 +62,15 @@ const LoginModall: React.FC<LoginModallProps> = ({
             <p className="text-white text-base text-center md:text-xl">
               برای ورود/ثبت نام شماره موبایل خود را وارد نمایید :
             </p>
-            <input
-              type="number"
-              className="my-5 rounded-lg px-10 py-3 no-arrows"
-              placeholder="09131432045"
-              title="login"
-            />
-            <LoginBtn />
+            <div className=" flex items-center">
+              <LoginBtn  />
+              <input
+                type="number"
+                className="my-5 mr-5 rounded-lg px-10 py-3 no-arrows"
+                placeholder="09131432045"
+                title="login"
+              />
+            </div>
             <div className="">
               <GoogleLogin
                 onSuccess={(credentialResponse) => {

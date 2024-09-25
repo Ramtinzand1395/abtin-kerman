@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const { sendSms } = require("../utils/Send-Msg");
 
 exports.handleLogin = async (req, res, next) => {
   try {
@@ -10,6 +11,16 @@ exports.handleLogin = async (req, res, next) => {
       await User.create(req.body);
       res.status(201).json({ message: "عضویت موفقیت آمیز بود", user });
     }
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.handleSms = async (req, res, next) => {
+  try {
+    const response = sendSms();
+    console.log(response);
+    res.status(201).send("ok");
   } catch (err) {
     next(err);
   }

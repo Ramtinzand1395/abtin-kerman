@@ -30,12 +30,7 @@ const Chip: React.FC<ChipProps> = ({ text, selected, setSelected }) => {
     </button>
   );
 };
-const tabs = [
-  "مشخصات محصول",
-  "شرایط عودت کالا",
-  "شرایط گارانتی محصول",
-  "نظرات",
-];
+const tabs = [" توضیحات", " توضیحات تکمیلی ", "نظرات"];
 const Tabs: React.FC<TabsProps> = ({
   ProductInformationTab,
   ProductReturnTermsTab,
@@ -53,11 +48,11 @@ const Tabs: React.FC<TabsProps> = ({
           />
         ))}
       </div>
-      {selected === "مشخصات محصول" ? (
+      {selected === " توضیحات" ? (
         <div className="">
           <ProductInformationTab />
         </div>
-      ) : selected === "شرایط عودت کالا" ? (
+      ) : selected === " توضیحات تکمیلی " ? (
         <div className="">
           <ProductReturnTermsTab />
         </div>

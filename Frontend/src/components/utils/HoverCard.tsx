@@ -11,8 +11,8 @@ interface HoverCardprops {
 const HoverCard: React.FC<HoverCardprops> = ({ card }) => {
   return (
     <>
-      <div className=" h-[80vh]">
-        <a href="https://www.mythrillfiction.com/force-mage">
+      <div className=" h-[50vh] md:h-[60vh]">
+        <div>
           <div className="card">
             <div className="wrapper">
               <img
@@ -26,7 +26,7 @@ const HoverCard: React.FC<HoverCardprops> = ({ card }) => {
             </p> */}
             <img title="character" src={card.image2} className="character " />
           </div>
-        </a>
+        </div>
       </div>
     </>
   );
