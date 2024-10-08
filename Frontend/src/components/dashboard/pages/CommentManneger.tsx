@@ -107,7 +107,7 @@ const CommentManneger: React.FC = () => {
               className="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 text-start "
             >
               <td className="whitespace-nowrap px-6 py-4 font-medium">
-                {comment.relatedData.title}
+                {comment?.relatedData?.title}
               </td>{" "}
               <td className="whitespace-nowrap px-6 py-4 font-medium">
                 {comment.user.email}
@@ -129,7 +129,7 @@ const CommentManneger: React.FC = () => {
                 <BtnTow
                   ButtonColor="bg-green-500 hover:from-green-500 hover:to-green-400 hover:ring-green-400"
                   ButtonText={"تایید"}
-                  onClick={() => handleConfirmComment(comment._id)}
+                  onClick={() => comment._id && handleConfirmComment(comment._id)}
                 />
               </td>
             </tr>

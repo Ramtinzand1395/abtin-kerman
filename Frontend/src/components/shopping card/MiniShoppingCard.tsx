@@ -4,8 +4,10 @@ import { useShopingcard } from "../context/ShopingCard";
 import { FaTrash } from "react-icons/fa";
 import BtnTow from "../utils/BtnTow";
 import { Link } from "react-router-dom";
-
-const MiniShoppingCard = ({ setOpenMiniShoppingcard }) => {
+interface MiniShoppingCardProps {
+  setOpenMiniShoppingcard: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const MiniShoppingCard: React.FC<MiniShoppingCardProps> = ({ setOpenMiniShoppingcard }) => {
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // Stop event propagation to prevent closing the modal when clicked inside
     event.stopPropagation();
