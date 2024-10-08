@@ -24,28 +24,27 @@ const Newest: React.FC<Newestprops> = ({ title }) => {
   return (
     <div>
       <Animations>
-        <h2 className="font-bold text-lg lg:text-2xl mt-10 mb-2">{title}</h2>{" "}
+        <div className="flex items-center mt-10 mb-2">
+          <h2 className="font-bold text-lg lg:text-2xl whitespace-nowrap ml-5">
+            {title}
+          </h2>{" "}
+          <div className="w-full h-[8px] rounded-3xl bg-primary"></div>{" "}
+        </div>
       </Animations>
-      <div className="w-full h-[8px] rounded-3xl border-2 border-gray-500"></div>{" "}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 my-10 ">
-        {Games.map((game) => (
-          <LeftAnimation key={game._id}>
+      <LeftAnimation>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 my-10 ">
+          {Games.map((game) => (
             <AccountsGames
-              // info={game}
               primaryImage={game.primaryImage}
               additionalImages={game.additionalImages}
               title={game.title}
               info={game.info}
               _id={game._id}
-              // OpenTag={game.OpenTags}
-              // OpenDiscount={game.OpenDiscount}
-              // discount={game.discount}
-              // image={game.image}
-              // description={card.description}
+              key={game._id}
             />
-          </LeftAnimation>
-        ))}
-      </div>
+          ))}
+        </div>
+      </LeftAnimation>
     </div>
   );
 };

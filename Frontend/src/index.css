@@ -43,7 +43,7 @@ p {
 
 .fixedImage {
   background-image: url("./assets/Off picture.png");
-  background-size: 80%; /* or contain, or specific dimensions */
+  background-size: 60%; /* or contain, or specific dimensions */
   background-position: left;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -154,4 +154,40 @@ p {
 .no-arrows::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+/* ? shaow */
+.shadowhand {
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+/* ? hover card */
+.divhover {
+  position: relative; /* Ensures proper positioning of child elements */
+  overflow: hidden; /* Prevents overflow of images */
+}
+
+.primaryImage {
+  display: block; /* Ensures the image is displayed */
+  height: 50vh; /* Set your desired height */
+  opacity: 1; /* Fully visible */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth transition for opacity and transform */
+}
+
+.secondImage {
+  display: block; /* Change to block so it can be animated */
+  height: 0; /* Start with height 0 */
+  opacity: 0; /* Start with 0 opacity */
+  transition: height 0.5s ease, opacity 0.5s ease, transform 0.5s ease; /* Smooth transitions */
+  transform: translateY(10px); /* Start slightly lower */
+}
+
+.divhover:hover .primaryImage {
+  opacity: 0; /* Fade out the primary image */
+  transform: translateY(-10px); /* Move the primary image up */
+}
+
+.divhover:hover .secondImage {
+  height: 50vh; /* Full height on hover */
+  opacity: 1; /* Fade in the second image */
+  transform: translateY(0); /* Move to its original position */
 }
