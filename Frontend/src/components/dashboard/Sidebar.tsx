@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./sidebar.css";
 // import { sidebarItems } from "./DashData";
 import { Link } from "react-router-dom";
-import { FaHome, FaPowerOff, FaTags } from "react-icons/fa";
+import { FaComment, FaHome, FaPowerOff, FaProductHunt, FaTags } from "react-icons/fa";
 import { MdManageAccounts } from "react-icons/md";
 import { IoIosListBox } from "react-icons/io";
 import { IoGameControllerOutline } from "react-icons/io5";
@@ -63,6 +63,20 @@ const Sidebar: React.FC = () => {
       icon: <FaTags  size={30} />,
       helperTxt: "دسته بندی و تگ ها",
       path: `/dashboard/tags/${User?._id}`,
+    },
+    {
+      id: 8,
+      label: "ساخت محول جدید",
+      icon: <FaProductHunt   size={30} />,
+      helperTxt: "ساخت محول جدید",
+      path: `/dashboard/create-product/${User?._id}`,
+    },
+    {
+      id:9,
+      label: "مدیرین نظرات",
+      icon: <FaComment   size={30} />,
+      helperTxt: "مدیرین نظرات",
+      path: `/dashboard/comment-manegment/${User?._id}`,
     },
   ];
 

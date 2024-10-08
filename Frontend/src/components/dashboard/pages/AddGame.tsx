@@ -11,7 +11,7 @@ import { MdAdd } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import SearchTags from "../searchTag/SearchTags";
 import SearchCats from "../searchTag/SearchCats";
-import { GameData } from "../../../types";
+import { GameData, Image } from "../../../types";
 const AddGame: React.FC = () => {
   const [platform, setPlatform] = useState("");
   const [capacity, setCapacity] = useState("");
@@ -22,7 +22,8 @@ const AddGame: React.FC = () => {
   const [GameData, setGameData] = useState<GameData>({
     info: [],
     title: "",
-    image: [],
+    primaryImage: null,
+    additionalImages: [],
     company: "",
     region: "",
     multiplayer: false,
@@ -72,11 +73,19 @@ const AddGame: React.FC = () => {
       console.log(err);
     }
   };
-  const removeImage = (url: string) => {
-    setGameData((prevData) => ({
-      ...prevData,
-      image: prevData.image.filter((img) => img.direction !== url), // Filter out the clicked image
+  const removePrimaryImage = () => {
+    setGameData((prev) => ({
+      ...prev,
+      primaryImage: null,
     }));
+  };
+  const removeAdditionalImage = (image: Image) => {
+    setGameData((prev) => {
+      const updatedImages = prev.additionalImages.filter(
+        (img) => img._id !== image._id
+      );
+      return { ...prev, additionalImages: updatedImages };
+    });
   };
   const [Tags, setTags] = useState([]);
   const [categories, setcategories] = useState([]);
@@ -122,6 +131,7 @@ const AddGame: React.FC = () => {
             <MdAdd />
           </span>
         </label>
+
         {OpenAddImageModall && (
           <AddImageModall
             setGameData={setGameData}
@@ -129,19 +139,41 @@ const AddGame: React.FC = () => {
             setOpenAddImageModall={setOpenAddImageModall}
           />
         )}
-        {GameData.image.length > 0 && (
-          <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8 gap-5">
-            {GameData.image.map((img, index) => (
-              <div className="">
-                <img
-                  key={index}
-                  onClick={() => removeImage(img.direction)}
-                  className="w-full h-[20vh] rounded-lg"
-                  src={`http://localhost:5000/${img.direction}`}
-                  alt=""
-                />
-              </div>
-            ))}
+        <label className="font-bold">عکس اصلی</label>
+        {GameData.primaryImage?._id ? (
+          <div className="">
+            <img
+              onClick={() => removePrimaryImage()}
+              className="w-[20vh] h-[20vh] rounded-lg"
+              src={`http://localhost:5000/${GameData.primaryImage.direction}`}
+              alt=""
+            />
+          </div>
+        ) : (
+          <div>
+            <p>هنوز عکس اصلی انتخاب نشده</p>
+          </div>
+        )}
+        <label className="font-bold">عکس های فرعی</label>
+        {GameData.additionalImages.length > 0 ? (
+          <div className="">
+            <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8 gap-5">
+              {GameData.additionalImages.map((img, index) => (
+                <div className="">
+                  <img
+                    key={index}
+                    onClick={() => removeAdditionalImage(img)}
+                    className="w-full h-[20vh] rounded-lg"
+                    src={`http://localhost:5000/${img.direction}`}
+                    alt=""
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div>
+            <p>هنوز عکس فرعی انتخاب نشده</p>
           </div>
         )}
       </div>
@@ -153,7 +185,7 @@ const AddGame: React.FC = () => {
           <select
             value={platform}
             onChange={(e) => setPlatform(e.target.value)}
-            className="px-16 py-2 rounded-lg border-primary border-2 ml-5"
+            className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
             title="یک کزینه را انتخاب "
           >
             <option value=""> یک کزینه را انتخاب کنید</option>
@@ -218,7 +250,7 @@ const AddGame: React.FC = () => {
           <select
             value={inStock ? "true" : "false"}
             onChange={(e) => setInStock(e.target.value === "true")} // Convert the string to a boolean
-            className="px-16 py-2 rounded-lg border-primary border-2 ml-5"
+            className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
             title="وضعیت موجودی"
           >
             <option value=""> یک کزینه را انتخاب کنید</option>
@@ -261,7 +293,7 @@ const AddGame: React.FC = () => {
             onChange={handleGameDataChange}
             name="company"
             value={GameData.company}
-            className="px-16 py-2 rounded-lg border-primary border-2 ml-5"
+            className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
             type="text"
             title="company"
           />
@@ -273,7 +305,7 @@ const AddGame: React.FC = () => {
           <select
             value={GameData.multiplayer ? "true" : "false"}
             onChange={handleGameDataChange}
-            className="px-16 py-2 rounded-lg border-primary border-2 ml-5"
+            className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
             title=" multiplayer  "
             name="multiplayer"
           >
@@ -290,7 +322,7 @@ const AddGame: React.FC = () => {
             onChange={handleGameDataChange}
             name="region"
             value={GameData.region}
-            className="px-16 py-2 rounded-lg border-primary border-2 ml-5"
+            className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
             title="region"
           />
         </div>
@@ -302,7 +334,7 @@ const AddGame: React.FC = () => {
             onChange={handleGameDataChange}
             name="title"
             value={GameData.title}
-            className="px-16 py-2 rounded-lg border-primary border-2 ml-5"
+            className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
             title="title"
           />
         </div>
@@ -329,7 +361,7 @@ const AddGame: React.FC = () => {
         <div className="">
           <button
             onClick={() => handleAddGame()}
-            className="px-16 py-2 rounded-lg border-primary border-2 ml-5"
+            className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
           >
             ساخت بازی جدید
           </button>

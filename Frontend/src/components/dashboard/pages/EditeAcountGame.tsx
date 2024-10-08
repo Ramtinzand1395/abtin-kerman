@@ -112,7 +112,7 @@ const Products: React.FC = () => {
                     >
                       <td className="whitespace-nowrap px-6 py-4 font-medium">
                         <img
-                          src={`http://localhost:5000/${data.image[0].direction}`}
+                          src={`http://localhost:5000/${data.primaryImage?.direction}`}
                           className="w-14 h-14 rounded-full"
                           alt=""
                         />

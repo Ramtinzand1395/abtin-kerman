@@ -26,7 +26,7 @@ const MonitorMenu: React.FC = () => {
   });
   const [StickyNavbar, setStickyNavbar] = useState(false);
   const ChangeNavbar = () => {
-    if (window.scrollY >= 150) {
+    if (window.scrollY >= 500) {
       setStickyNavbar(true);
     } else {
       setStickyNavbar(false);

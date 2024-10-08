@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { GameData, Tag } from "../../../types";
+import { Product, Tag } from "../../../types";
 interface SearchTagsProps {
-  GameData: GameData ;
-  setGameData: React.Dispatch<React.SetStateAction<GameData >>;
+  Product: Product;
+  setProduct: React.Dispatch<React.SetStateAction<Product>>;
   Tags: Tag[];
 }
-const SearchTags: React.FC<SearchTagsProps> = ({
-  setGameData,
+const SearchTagsProducts: React.FC<SearchTagsProps> = ({
+  setProduct,
   Tags,
-  GameData,
+  Product,
 }) => {
   const [SearchTherm, setSearchTherm] = useState("");
 
   const handleAddTag = (tag: Tag) => {
-    setGameData((prevData) => ({
+    setProduct((prevData) => ({
       ...prevData,
       tags: [...(prevData.tags ?? []), tag],
     }));
@@ -22,9 +22,7 @@ const SearchTags: React.FC<SearchTagsProps> = ({
   const filteredTags = Tags?.filter(
     (tag: Tag) =>
       tag.tagName.toLowerCase().includes(SearchTherm.toLowerCase()) &&
-      !GameData?.tags?.some(
-        (selectedTag) => selectedTag.tagName === tag.tagName
-      )
+      !Product?.tags?.some((selectedTag) => selectedTag.tagName === tag.tagName)
   ).slice(0, 3);
   return (
     <div className="">
@@ -61,4 +59,4 @@ const SearchTags: React.FC<SearchTagsProps> = ({
   );
 };
 
-export default SearchTags;
+export default SearchTagsProducts;

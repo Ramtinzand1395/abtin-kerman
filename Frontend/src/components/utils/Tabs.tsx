@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import CommentsTab from "./CommentsTab";
+import { GameData, Product } from "../../types";
 interface ChipProps {
   text: string;
   selected: boolean;
@@ -8,6 +10,7 @@ interface ChipProps {
 interface TabsProps {
   ProductInformationTab: React.FC;
   ProductReturnTermsTab: React.FC;
+  Product:Product | GameData;
 }
 const Chip: React.FC<ChipProps> = ({ text, selected, setSelected }) => {
   return (
@@ -34,8 +37,10 @@ const tabs = [" توضیحات", " توضیحات تکمیلی ", "نظرات"];
 const Tabs: React.FC<TabsProps> = ({
   ProductInformationTab,
   ProductReturnTermsTab,
+  Product,
 }) => {
   const [selected, setSelected] = useState(tabs[0]);
+  console.log(Product,"ww")
   return (
     <div className="bg-slate-100 rounded-t-lg p-5">
       <div className="px-4 my-5 flex items-center flex-wrap gap-2">
@@ -58,7 +63,7 @@ const Tabs: React.FC<TabsProps> = ({
         </div>
       ) : (
         <div className="">
-          <ProductReturnTermsTab />
+          <CommentsTab Product={Product}/>
         </div>
       )}
     </div>

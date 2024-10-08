@@ -1,3 +1,5 @@
+const Comment = require("../models/Comment");
+const Games = require("../models/Games");
 const User = require("../models/User");
 const { sendSms } = require("../utils/Send-Msg");
 
@@ -25,6 +27,19 @@ exports.handleSms = async (req, res, next) => {
     next(err);
   }
 };
+// ? COMMENTS
+exports.handleAddComments = async (req, res, next) => {
+  try {
+    const createdComment = await Comment.create(req.body);
+    res.status(201).json({
+      message: "نظر شما بعد از تایید ادمین اضافه میشود.",
+      data: createdComment,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // exports.handleLogin = async (req, res, next) => {
 //   const { username, password } = req.body;
 

@@ -9,7 +9,7 @@ const CenterHederMobile: React.FC<CenterHederMobileProps> = ({
 }) => {
   const [StickyMobileNavbar, setStickyMobileNavbar] = useState(false);
   const ChangeMobileNavbar = () => {
-    if (window.scrollY >= 20) {
+    if (window.scrollY >= 150) {
       setStickyMobileNavbar(true);
     } else {
       setStickyMobileNavbar(false);

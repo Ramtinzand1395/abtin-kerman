@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // import Swiper core and required modules
@@ -10,57 +10,28 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import img from "../../assets/_24c0f808-1d10-4db6-85a5-ed48e14014cf.jpg";
 import "./BestSlider.css";
-import ShopingCard from "../utils/ShopingCard";
 import Animations from "../utils/Animations";
+import {  getProductsService } from "../../services/ApiServices";
+import ShopingCard from "../utils/ShopingCard";
 const BestItemsSlider: React.FC = () => {
-  const CardIthem = [
-    {
-      id: 1,
-      OpenTags: false,
-      OpenDiscount: false,
-      title: "بامپر فلزی نیلکین آیفون ",
-      price: 120000,
-      btnText: "افزودن به سبد خرید",
-      image: img,
-    },
-    {
-      id: 2,
-      OpenTags: true,
-      OpenDiscount: true,
-      discount: 50,
-      title: "بامپر فلزی نیلکین آیفون Nillkin Barde Metal Case iPhone 7 Plus",
-      price: 120000,
-      btnText: "افزودن به سبد خرید",
-      image: img,
-    },
-    {
-      id: 3,
-      title: "بامپر فلزی نیلکین آیفون ",
-      price: 120000,
-      btnText: "افزودن به سبد خرید",
-      image: img,
-    },
-    {
-      id: 4,
-      OpenTags: true,
-      title: "بامپر فلزی نیلکین آیفون Nillkin Barde Metal Case iPhone 7 Plus",
-      price: 120000,
-      btnText: "افزودن به سبد خرید",
-      image: img,
-    },
-    {
-      id: 5,
-      OpenTags: true,
-      title: "بامپر فلزی نیلکین آیفون Nillkin Barde Metal Case iPhone 7 Plus",
-      price: 120000,
-      btnText: "افزودن به سبد خرید",
-      image: img,
-    },
-  ];
+  const [Products, setProducts] = useState([]);
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const { data } = await getProductsService();
+        setProducts(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getProducts();
+  }, []);
   return (
-    <div className="mt-10">
-        <Animations>
-        <h2 className="font-bold text-lg lg:text-2xl mt-10 mb-2">جدید ترین محصولات</h2>{" "}
+    <div className="my-10">
+      <Animations>
+        <h2 className="font-bold text-lg lg:text-2xl mt-10 mb-2">
+          جدید ترین محصولات
+        </h2>{" "}
       </Animations>
       <div className="w-full h-[8px] rounded-3xl border-2 border-gray-500 mb-2"></div>{" "}
       <Swiper
@@ -78,7 +49,7 @@ const BestItemsSlider: React.FC = () => {
           },
           // when window width is >= 1024px
           1024: {
-            slidesPerView: 3,
+            slidesPerView: 5,
           },
           // when window width is >= 1440px
           1440: {
@@ -92,19 +63,15 @@ const BestItemsSlider: React.FC = () => {
           disableOnInteraction: false,
         }}
         scrollbar={{ draggable: true }}
-        className=" "
       >
-       
-        {CardIthem.map((card) => (
-          <SwiperSlide key={card.id}>
+        {Products.map((product) => (
+          <SwiperSlide key={product._id}>
             <ShopingCard
-              title={card.title}
-              price={card.price}
-              btnText={card.btnText}
-              OpenTag={card.OpenTags}
-              OpenDiscount={card.OpenDiscount}
-              discount={card.discount}
-              image={card.image}
+              title={product.title}
+              price={product.price}
+              primaryImage={product.primaryImage}
+              additionalImages={product.additionalImages}
+              _id={product._id}
             />
           </SwiperSlide>
         ))}

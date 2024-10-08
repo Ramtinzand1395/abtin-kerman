@@ -7,6 +7,8 @@ const router = new Router();
 router.post("/login", userController.handleLogin);
 router.get("/loginSms", userController.handleSms);
 
+router.post("/add-comment", userController.handleAddComments);
+// router.get("/get-comment", userController.handleGetComments);
 // router.post("/login", userController.handleLogin);
 
 // router.put("/handle-about", userController.handleAbout);

@@ -1,24 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Animations from "../utils/Animations";
 import LeftAnimation from "../utils/LeftAnimation";
-import ShopingCard from "../utils/ShopingCard";
-interface CardItem {
-  id: number;
-  OpenTags?: boolean;
-  OpenDiscount?: boolean;
-  discount?: number;
-  title: string;
-  price: number;
-  btnText: string;
-  image: string;
-  description: string;
-}
+import { GameData } from "../../types";
+import { getGameService } from "../../services/ApiServices";
+import AccountsGames from "../utils/AccountsGames";
 
 interface Newestprops {
-  CardIthem: CardItem[];
   title: string;
 }
-const Newest: React.FC<Newestprops> = ({ CardIthem, title }) => {
+const Newest: React.FC<Newestprops> = ({ title }) => {
+  const [Games, setGames] = useState<GameData[]>([]);
+  useEffect(() => {
+    const getGames = async () => {
+      try {
+        const { data } = await getGameService();
+        setGames(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getGames();
+  }, []);
   return (
     <div>
       <Animations>
@@ -26,16 +28,19 @@ const Newest: React.FC<Newestprops> = ({ CardIthem, title }) => {
       </Animations>
       <div className="w-full h-[8px] rounded-3xl border-2 border-gray-500"></div>{" "}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 my-10 ">
-        {CardIthem.map((card) => (
-          <LeftAnimation key={card.id}>
-            <ShopingCard
-              title={card.title}
-              price={card.price}
-              btnText={card.btnText}
-              OpenTag={card.OpenTags}
-              OpenDiscount={card.OpenDiscount}
-              discount={card.discount}
-              image={card.image}
+        {Games.map((game) => (
+          <LeftAnimation key={game._id}>
+            <AccountsGames
+              // info={game}
+              primaryImage={game.primaryImage}
+              additionalImages={game.additionalImages}
+              title={game.title}
+              info={game.info}
+              _id={game._id}
+              // OpenTag={game.OpenTags}
+              // OpenDiscount={game.OpenDiscount}
+              // discount={game.discount}
+              // image={game.image}
               // description={card.description}
             />
           </LeftAnimation>

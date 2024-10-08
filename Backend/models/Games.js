@@ -1,35 +1,50 @@
 const mongoose = require("mongoose");
 
 const infoSchema = new mongoose.Schema({
-  platform: { type: String, required: true }, // Example: 'ps5'
-  capacity: { type: String, required: true }, // Example: 'ظرفیت دو'
-  price: { type: Number, required: true }, // Example: 23
-  qty: { type: Number, required: true }, // Example: 23
-  inStock: { type: Boolean, default: true }, // Example: true
+  platform: { type: String, required: true },
+  capacity: { type: String, required: true },
+  price: { type: Number, required: true },
+  qty: { type: Number, required: true },
+  inStock: { type: Boolean, default: true },
 });
 
 const gameSchema = new mongoose.Schema({
-  title: { type: String, required: true }, // Example: 'آهنگ جدید پیشرو'
-  company: { type: String, required: true }, // Example: 'develoaper'
-  region: { type: String, required: true }, // Example: 'کرمان'
-  image: [
+  title: { type: String, required: true },
+  company: { type: String, required: true },
+  region: { type: String, required: true },
+  primaryImage: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Image",
+    required: true,
+  },
+  additionalImages: [
     {
-      type: mongoose.Schema.Types.ObjectId, // Refers to Category by its ObjectId
-      ref: "Image", // Reference to the Category model
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Image",
     },
-  ], // Array of image paths
-  multypalyer: { type: Boolean, default: false }, // Example: false
-  info: { type: [infoSchema], required: true }, // Nested info array
+  ],
+  multiplayer: { type: Boolean, default: false },
+  info: { type: [infoSchema], required: true },
   categories: [
     {
-      type: mongoose.Schema.Types.ObjectId, // Refers to Category by its ObjectId
-      ref: "Category", // Reference to the Category model
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
     },
   ],
   tags: [
     {
-      type: mongoose.Schema.Types.ObjectId, // Refers to Category by its ObjectId
-      ref: "Tag", // Reference to the Category model
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tag",
+    },
+  ],
+  sellOne: {
+    type: Boolean,
+    default: true,
+  },
+  comments:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
     },
   ],
   createdAt: {

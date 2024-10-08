@@ -6,6 +6,8 @@ import { MdEmail } from "react-icons/md";
 import LoginModall from "../loginModall/LoginModall";
 import DropDown from "../utils/DropDown";
 import { FiEdit } from "react-icons/fi";
+import { useShopingcard } from "../context/ShopingCard";
+import MiniShoppingCard from "../shopping card/MiniShoppingCard";
 
 interface UserType {
   _id: string;
@@ -34,9 +36,13 @@ const Topheader: React.FC = () => {
 
     title: "خوش آمدید",
   };
-
+  const { CardItems, OpenMiniShoppingcard, setOpenMiniShoppingcard } =
+    useShopingcard();
   return (
     <div className="bg-primary p-2 flex items-center justify-around text-xs mb-2">
+      {OpenMiniShoppingcard && (
+        <MiniShoppingCard setOpenMiniShoppingcard={setOpenMiniShoppingcard} />
+      )}
       <div className=" items-center hidden md:flex">
         <MdEmail color="white" className="ml-2" size={20} />
         <p className="text-white">پشتیبانی:kermanatari.ir@gmail.com</p>
@@ -44,16 +50,6 @@ const Topheader: React.FC = () => {
       <div className=" items-center hidden md:flex">
         <CiMobile3 color="white" className="ml-2" size={20} />
         <p className="text-white">پیگیری سفارش:09383077225</p>
-      </div>
-      <div className="flex items-center">
-        <BsBasket3Fill color="white" className="ml-2" size={20} />
-        <p className="text-white">
-          {" "}
-          <span className="bg-white p-1 w-5 h-5 rounded-full text-black mx-2">
-            0
-          </span>
-          سبد خرید
-        </p>
       </div>
       {/* CHANGE ICON TO DASHBOARD */}
       {User ? (
@@ -76,6 +72,18 @@ const Topheader: React.FC = () => {
           {OpenModall && (
             <LoginModall setUser={setUser} setOpenModall={setOpenModall} />
           )}
+          <div className="flex items-center mr-10">
+            <button
+              onClick={() => setOpenMiniShoppingcard(true)}
+              className="text-white cursor-pointer flex  items-center"
+            >
+              {" "}
+              <span className="bg-white p-1 w-5 h-5 rounded-full text-black mx-2 flex justify-center items-center">
+                {CardItems.length > 0 ? CardItems.length : 0}
+              </span>
+              <BsBasket3Fill color="white" className="ml-2" size={20} />
+            </button>
+          </div>
         </div>
       )}
     </div>

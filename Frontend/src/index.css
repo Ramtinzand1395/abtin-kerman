@@ -1,6 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Setting clamp for each heading tag */
+h1 {
+  font-size: clamp(2rem, 5vw + 1rem, 3rem);
+  font-weight: bolder;
+  color: #062348;
+}
+
+h2 {
+  font-size: clamp(1.75rem, 4vw + 1rem, 2.5rem);
+  font-weight: bold;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw + 0.75rem, 2rem);
+  font-weight: bold;
+}
+
+h4 {
+  font-size: clamp(1.25rem, 2.5vw + 0.5rem, 1.5rem);
+}
+
+h5 {
+  font-size: clamp(1.1rem, 2vw + 0.5rem, 1rem);
+}
+
+h6 {
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 0.75rem);
+}
+
+/* Setting clamp for paragraph tags */
+p {
+  font-size: clamp(0.25rem, 0.75vw + 0.5rem, 1rem);
+}
 * {
   margin: 0;
   padding: 0;
@@ -109,7 +142,6 @@
   opacity: 1;
   transform: translate3d(0%, 2%, -1000px);
   z-index: 10;
-
 }
 
 /* No Arrrows */
@@ -123,4 +155,3 @@
   -webkit-appearance: none;
   margin: 0;
 }
-
