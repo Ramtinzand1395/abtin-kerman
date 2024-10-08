@@ -2,26 +2,22 @@ import React from "react";
 import BtnTow from "../utils/BtnTow";
 import { useShopingcard } from "../context/ShopingCard";
 import ConnectedProducts from "../Products/ConnectedProducts";
-import { FaLocationDot, FaLocationPin, FaMapLocation } from "react-icons/fa6";
-import { FaLocationArrow } from "react-icons/fa";
+import { FaLocationDot} from "react-icons/fa6";
 
-const ShopingCardPage = () => {
-  const { CardItems, removeFromCard } = useShopingcard();
+const ShopingCardPage: React.FC = () => {
+  const { CardItems , setOpenMiniShoppingcard } = useShopingcard();
   console.log(CardItems);
   return (
     <div className="md:container md:mx-auto mx-2">
-        <div className="border-2 mb-10 p-5 rounded-lg">
-            <h3 className="text-gray-600 text-xs font-tanha">
-            آدرس تحویل سفارش
-            </h3>
-            <p className="flex items-center my-5">
-                <FaLocationDot className="ml-5" size={20} />
-            کرمان بلوار جمهوری اسلامی شهرک بانک صادرات اندیشه ۸ انتهای کوچه سمت راست درب سفید طبقه اول
-            </p>
-            <button>
-                تغییر یا ویرایش آدرس
-            </button>
-        </div>
+      <div className="border-2 mb-10 p-5 rounded-lg">
+        <h3 className="text-gray-600 text-xs font-tanha">آدرس تحویل سفارش</h3>
+        <p className="flex items-center my-5">
+          <FaLocationDot className="ml-5" size={20} />
+          کرمان بلوار جمهوری اسلامی شهرک بانک صادرات اندیشه ۸ انتهای کوچه سمت
+          راست درب سفید طبقه اول
+        </p>
+        <button>تغییر یا ویرایش آدرس</button>
+      </div>
       <div className="grid grid-cols-12 gap-5">
         <div className="col-span-12 md:col-span-9 border-2 rounded-lg p-5 mb-10">
           <p className=" mb-2">سبد خرید</p>
@@ -36,9 +32,9 @@ const ShopingCardPage = () => {
                 alt=""
               />
               <div className="mx-5">
-                 <p className="my-4">{item.title}</p>
+                <p className="my-4">{item.title}</p>
                 <p className="my-4">{item.capacity}</p>
-                <p className="my-4">{item.platform}</p> 
+                <p className="my-4">{item.platform}</p>
                 <p className="my-4 font-bold text-xl">{item.price} تومان</p>
               </div>
             </div>

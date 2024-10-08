@@ -10,13 +10,14 @@ type shopingcardProps = {
   children: ReactNode;
 };
 type shopingcardContext = {
-  getItemqty: (id: number) => number;
-  InceraseCardQty: (id: number) => void;
-  DecreaseCardQty: (id: number) => void;
+  // getItemqty: (id: number) => number;
+  // InceraseCardQty: (id: number) => void;
+  // DecreaseCardQty: (id: number) => void;
   removeFromCard: (id: string) => void;
   CardItems: cardItem[];
   OpenMiniShoppingcard: boolean;
   setOpenMiniShoppingcard: React.Dispatch<React.SetStateAction<boolean>>;
+  testaccountGame: (data: cardItem) => void; // Add this line
 };
 type cardItem = {
   platform: string;
@@ -39,10 +40,10 @@ export const ShopingcardProvider = ({ children }: shopingcardProps) => {
     localStorage.setItem("cardItems", JSON.stringify(CardItems));
     console.log("first");
   }, [CardItems]);
-  const getItemqty = (id: number) => {
-    return CardItems;
-    // console.log(id)
-  };
+  // const getItemqty = (id: number) => {
+  //   return CardItems;
+  //   console.log(id)
+  // };
   // const InceraseCardQty = (id: string) => {
   //   setCardItems((prev) => {
   //     if (prev.find((item) => item.id === id) == null) {
@@ -78,7 +79,7 @@ export const ShopingcardProvider = ({ children }: shopingcardProps) => {
       return prev.filter((item) => item._id !== id);
     });
   };
-  const testaccountGame = (data) => {
+  const testaccountGame = (data:cardItem) => {
     if (!CardItems.some((item) => item._id === data._id)) {
       setCardItems((prev) => [...prev, data]);
     }
@@ -87,7 +88,7 @@ export const ShopingcardProvider = ({ children }: shopingcardProps) => {
   return (
     <ShopingCardContext.Provider
       value={{
-        getItemqty,
+        // getItemqty,
         // InceraseCardQty,
         // DecreaseCardQty,
         testaccountGame,

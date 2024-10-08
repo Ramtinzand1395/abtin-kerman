@@ -3,8 +3,9 @@ import { Image } from "../../types";
 import { Link } from "react-router-dom";
 interface CardItemProps {
   title: string;
-  price: string;
-  primaryImage: Image;
+  price: number;
+  primaryImage: Image | null;
+  additionalImages?:Image[];
   _id: string;
   // description: string;
 }

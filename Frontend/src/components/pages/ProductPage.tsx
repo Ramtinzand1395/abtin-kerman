@@ -17,6 +17,7 @@ const ProductPage: React.FC = () => {
 
   useEffect(() => {
     const getProduct = async () => {
+      if (!productId) return;
       try {
         const { data } = await getProductService(productId);
         setProduct(data);
@@ -117,7 +118,9 @@ const ProductPage: React.FC = () => {
             <p className="font-tanha mb-2">تحویل : 5 روز کاری</p>
           </div>
           <div className="flex flex-col">
-            <p className="font-semibold  text-xl mb-2">{Product?.price} تومان</p>
+            <p className="font-semibold  text-xl mb-2">
+              {Product?.price} تومان
+            </p>
             <BtnIcon
               ButtonColor="bg-purple-500 group-hover:bg-purple-600"
               ButtonText={"افزودن به سبد خرید"}
@@ -127,11 +130,13 @@ const ProductPage: React.FC = () => {
           </div>
         </div>
       </div>
-      <Tabs
-        ProductInformationTab={ProductInformationTab}
-        ProductReturnTermsTab={ProductReturnTermsTab}
-        Product={Product}
-      />
+      {Product && (
+        <Tabs
+          ProductInformationTab={ProductInformationTab}
+          ProductReturnTermsTab={ProductReturnTermsTab}
+          Product={Product}
+        />
+      )}
       <ConnectedProducts />
     </div>
   );

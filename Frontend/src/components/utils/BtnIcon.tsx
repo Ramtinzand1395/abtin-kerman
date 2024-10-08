@@ -1,6 +1,16 @@
-import React from "react";
-
-const BtnIcon = ({ ButtonText, ButtonColor, onClick, ButtonIcon }) => {
+import React, { ReactNode } from "react";
+interface BtnIconProps {
+  ButtonText: string;
+  ButtonColor: string;
+  onClick: () => void;
+  ButtonIcon: ReactNode;
+}
+const BtnIcon: React.FC<BtnIconProps> = ({
+  ButtonText,
+  ButtonColor,
+  onClick,
+  ButtonIcon,
+}) => {
   return (
     <button
       onClick={() => onClick()}

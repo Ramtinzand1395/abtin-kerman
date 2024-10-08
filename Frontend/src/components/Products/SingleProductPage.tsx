@@ -15,6 +15,7 @@ const SingleProductPage: React.FC = () => {
   const [game, setgame] = useState<GameData | null>(null);
   const { gameId } = useParams();
   useEffect(() => {
+    if (!gameId) return;
     const getGame = async () => {
       try {
         const { data } = await getGameSingleService(gameId);
@@ -25,7 +26,7 @@ const SingleProductPage: React.FC = () => {
     };
     getGame();
   }, []);
-  console.log(game)
+  console.log(game);
   const sortedPrices = game?.info
     ? [...game.info].sort((a, b) => a.price - b.price)
     : [];
@@ -87,7 +88,7 @@ const SingleProductPage: React.FC = () => {
     // }
     // testaccountGame(userCardItem);
     // setOpenMiniShoppingcard(true);
-    console.log("first")
+    console.log("first");
   };
   // useEffect(() => {
   //   if (userCardItem.platform.length > 0 && userCardItem.capacity.length > 0) {
@@ -180,12 +181,13 @@ const SingleProductPage: React.FC = () => {
 
       {/* Secont tabs */}
       <div className="border-2 border-gray-500 my-10">
-        <Tabs
-          ProductInformationTab={ProductInformationTab}
-          ProductReturnTermsTab={ProductReturnTermsTab}
-          Product={game}
-
-        />
+        {game && (
+          <Tabs
+            ProductInformationTab={ProductInformationTab}
+            ProductReturnTermsTab={ProductReturnTermsTab}
+            Product={game} // Ensure game is not null before passing
+          />
+        )}
       </div>
       <div className="my-10">
         <ConnectedProducts />

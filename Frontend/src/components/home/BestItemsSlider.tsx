@@ -8,13 +8,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import img from "../../assets/_24c0f808-1d10-4db6-85a5-ed48e14014cf.jpg";
 import "./BestSlider.css";
 import Animations from "../utils/Animations";
-import {  getProductsService } from "../../services/ApiServices";
+import { getProductsService } from "../../services/ApiServices";
 import ShopingCard from "../utils/ShopingCard";
+import { Product } from "../../types";
 const BestItemsSlider: React.FC = () => {
-  const [Products, setProducts] = useState([]);
+  const [Products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     const getProducts = async () => {
       try {
