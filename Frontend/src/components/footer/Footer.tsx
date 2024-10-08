@@ -8,7 +8,7 @@ const Footer:React.FC = () => {
         {" "}
         <div className="flex items-center ">
           <img src={logo} className="w-[5vw] h-[5vw] rounded-full" alt="Logo" />
-          <h2 className="font-bold mr-2 text-white whitespace-nowrap">
+          <h2 className="font-bold mb-5 md:mb-0 mr-2 text-white whitespace-nowrap">
             کرمان آتاری
           </h2>
         </div>
