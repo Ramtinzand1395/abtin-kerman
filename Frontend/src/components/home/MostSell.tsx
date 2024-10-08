@@ -44,17 +44,21 @@ const MostSell: React.FC<MostSellProps> = ({ title }) => {
   ];
   return (
     <div>
-      <Animations>
-        <h2 className="font-bold text-lg lg:text-2xl mt-10 mb-2">{title}</h2>
+     <Animations>
+        <div className="flex items-center mt-10 mb-2">
+          <h2 className="font-bold text-lg lg:text-2xl whitespace-nowrap ml-5">
+            {title}
+          </h2>{" "}
+          <div className="w-full h-[8px] rounded-3xl bg-primary"></div>{" "}
+        </div>
       </Animations>
-      <div className="w-full h-[8px] rounded-3xl border-2 border-gray-500"></div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 my-10 ">
-        {hovercars.map((card) => (
-          <LeftAnimation key={card.id}>
-            <HoverCard card={card} />
-          </LeftAnimation>
-        ))}
-      </div>
+      <LeftAnimation>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 my-10 ">
+          {hovercars.map((card) => (
+            <HoverCard key={card.id} card={card} />
+          ))}
+        </div>
+      </LeftAnimation>
     </div>
   );
 };

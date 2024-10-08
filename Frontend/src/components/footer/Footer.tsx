@@ -6,7 +6,7 @@ const Footer:React.FC = () => {
     <div className="bg-gray-700 grid grid-cols-3 md:grid-cols-6  gap-10 h-auto md:h-[60vh] p-10 text-xs md:text-base">
       <div className="col-span-3 text-white flex flex-col items-start justify-evenly">
         {" "}
-        <div className="flex items-center text-2xl">
+        <div className="flex items-center ">
           <img src={logo} className="w-[5vw] h-[5vw] rounded-full" alt="Logo" />
           <h2 className="font-bold mr-2 text-white whitespace-nowrap">
             کرمان آتاری
