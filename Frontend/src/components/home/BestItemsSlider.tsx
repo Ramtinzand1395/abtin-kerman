@@ -66,13 +66,15 @@ const BestItemsSlider: React.FC = () => {
       >
         {Products.map((product) => (
           <SwiperSlide key={product._id}>
-            <ShopingCard
-              title={product.title}
-              price={product.price}
-              primaryImage={product.primaryImage}
-              additionalImages={product.additionalImages}
-              _id={product._id}
-            />
+            {product._id && (
+              <ShopingCard
+                title={product.title}
+                price={product.price}
+                primaryImage={product.primaryImage}
+                additionalImages={product.additionalImages}
+                _id={product._id}
+              />
+            )}
           </SwiperSlide>
         ))}
       </Swiper>
