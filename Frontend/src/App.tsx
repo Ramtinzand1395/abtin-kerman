@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/pages/home/Home";
 import MainLayout from "./layouts/MainLayout";
-import SingleProductPage from "./components/pages/Products/AccountGame";
 import DashboardLayout from "./layouts/DashboardLayout";
 import UserInformation from "./components/dashboard/pages/UserInformation";
 import Products from "./components/dashboard/pages/EditeAcountGame";
@@ -38,7 +37,7 @@ const App: React.FC = () => {
             </MainLayout>
           }
         />
-         <Route
+        <Route
           path="/games/:category"
           element={
             <MainLayout>
