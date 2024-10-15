@@ -28,6 +28,7 @@ const Ckeditor = () => {
     e: EventInfo<string, unknown>,
     editor: Editor
   ) => {
+    console.log(e)
     const data = editor.getData();
     setWeblogData((prev) => ({
       ...prev,
