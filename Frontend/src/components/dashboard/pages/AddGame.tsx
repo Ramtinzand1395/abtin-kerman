@@ -12,7 +12,7 @@ import { FaTrash } from "react-icons/fa";
 import SearchTags from "../searchTag/SearchTags";
 import SearchCats from "../searchTag/SearchCats";
 import { GameData, Image } from "../../../types";
-import ProductAdditionalExplanations from "../CkEditor/ProductAdditionalExplanations";
+import AccountGameAdditionalExplanations from "../CkEditor/AccountGameAdditionalExplanations";
 const AddGame: React.FC = () => {
   const [platform, setPlatform] = useState("");
   const [capacity, setCapacity] = useState("");
@@ -427,7 +427,7 @@ const AddGame: React.FC = () => {
             ))}
           </ul>
         </div>
-        <ProductAdditionalExplanations setProduct={setGameData} />
+        <AccountGameAdditionalExplanations setGameData={setGameData} />
 
         <div className="">
           <button

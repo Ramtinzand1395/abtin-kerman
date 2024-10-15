@@ -2,22 +2,22 @@ import React from "react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { Editor } from "@ckeditor/ckeditor5-core";
-import "ckeditor5/ckeditor5.css";
-import { Product } from "../../../types";
 import { EventInfo } from "ckeditor5";
-interface ProductAdditionalExplanationsProps {
-  setProduct: React.Dispatch<React.SetStateAction<Product>>;
+import "ckeditor5/ckeditor5.css";
+import { GameData } from "../../../types";
+interface AccountGameAdditionalExplanationsProps {
+  setGameData: React.Dispatch<React.SetStateAction<GameData>>;
 }
-const ProductAdditionalExplanations: React.FC<
-  ProductAdditionalExplanationsProps
-> = ({ setProduct }) => {
+const AccountGameAdditionalExplanations: React.FC<
+  AccountGameAdditionalExplanationsProps
+> = ({ setGameData }) => {
   const handleCkeditorState = (
     e: EventInfo<string, unknown>,
     editor: Editor
   ) => {
     const data = editor.getData();
     console.log(e);
-    setProduct((prev) => ({
+    setGameData((prev) => ({
       ...prev,
       additionalExplanations: data,
     }));
@@ -44,4 +44,4 @@ const ProductAdditionalExplanations: React.FC<
   );
 };
 
-export default ProductAdditionalExplanations;
+export default AccountGameAdditionalExplanations;
