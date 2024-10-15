@@ -12,7 +12,7 @@ import Tags from "./components/dashboard/pages/Tags";
 import ShopingCardPage from "./components/shopping card/ShopingCardPage";
 import CreateProduct from "./components/dashboard/pages/CreateProduct";
 import CommentManneger from "./components/dashboard/pages/CommentManneger";
-import Ckeditor from "./components/utils/Ckeditor";
+import Ckeditor from "./components/utils/editor/Ckeditor";
 import ProductPage from "./components/pages/Products/product/ProductPage";
 import AllProducts from "./components/pages/Products/product/AllProducts";
 import AccountGame from "./components/pages/Products/AccountGame";

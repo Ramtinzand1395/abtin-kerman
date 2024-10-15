@@ -16,7 +16,6 @@ const AccountGameAdditionalExplanations: React.FC<
     editor: Editor
   ) => {
     const data = editor.getData();
-    console.log(e);
     setGameData((prev) => ({
       ...prev,
       additionalExplanations: data,

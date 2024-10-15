@@ -26,13 +26,15 @@ const EditeProductModall: React.FC<EditeProductModallProps> = ({
   const [GameData, setGameData] = useState<GameData>({
     info: SelectedProduct?.info || [], // Default to an empty array
     title: SelectedProduct?.title || "", // Default to an empty string
-    primaryImage: SelectedProduct?.primaryImage|| null , // Default to an empty array
+    primaryImage: SelectedProduct?.primaryImage || null, // Default to an empty array
     additionalImages: SelectedProduct?.additionalImages || [], // Default to an empty array
     company: SelectedProduct?.company || "", // Default to an empty string
     region: SelectedProduct?.region || "", // Default to an empty string
     multiplayer: SelectedProduct?.multiplayer || false, // Default to false
     categories: SelectedProduct?.categories || [], // Default to an empty array
     tags: SelectedProduct?.tags || [], // Default to an empty array
+    Specifications: SelectedProduct?.Specifications || [],
+    additionalExplanations: SelectedProduct?.additionalExplanations || "",
   });
   const handleGameDataChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>

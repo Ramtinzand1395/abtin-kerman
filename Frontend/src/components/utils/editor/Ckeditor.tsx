@@ -1,13 +1,14 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 
 import "ckeditor5/ckeditor5.css";
-import { createBlogService } from "../../services/ApiServices";
+import { createBlogService } from "../../../services/ApiServices";
 import { toast } from "react-toastify";
-import AddImageModall from "../dashboard/AddImageModall";
 import { MdAdd } from "react-icons/md";
-import { Weblog } from "../../types";
+import { Weblog } from "../../../types";
+import EditorImageModall from "./EditorImageModall";
+import { Editor, EventInfo } from "ckeditor5";
 const Ckeditor = () => {
   const [WeblogData, setWeblogData] = useState<Weblog>({
     title: "",
@@ -23,14 +24,17 @@ const Ckeditor = () => {
       [name]: value,
     }));
   };
-  const handleCkeditorState = (e, editor) => {
+  const handleCkeditorState = (
+    e: EventInfo<string, unknown>,
+    editor: Editor
+  ) => {
     const data = editor.getData();
     setWeblogData((prev) => ({
       ...prev,
       body: data,
     }));
   };
-  const handleAddBlog = async (e) => {
+  const handleAddBlog = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const { data } = await createBlogService(WeblogData);
@@ -80,9 +84,9 @@ const Ckeditor = () => {
           </span>
         </label>
         {OpenAddImageModall && (
-          <AddImageModall
-            setGameData={setWeblogData}
-            GameData={WeblogData}
+          <EditorImageModall
+            setWeblogData={setWeblogData}
+            WeblogData={WeblogData}
             setOpenAddImageModall={setOpenAddImageModall}
           />
         )}
