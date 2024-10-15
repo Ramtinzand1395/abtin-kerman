@@ -12,13 +12,15 @@ import { FaTrash } from "react-icons/fa";
 import SearchTags from "../searchTag/SearchTags";
 import SearchCats from "../searchTag/SearchCats";
 import { GameData, Image } from "../../../types";
+import ProductAdditionalExplanations from "../CkEditor/ProductAdditionalExplanations";
 const AddGame: React.FC = () => {
   const [platform, setPlatform] = useState("");
   const [capacity, setCapacity] = useState("");
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [inStock, setInStock] = useState(false);
-
+  const [newKeySpecifications, setnewKeySpecifications] = useState("");
+  const [newValueSpecifications, setnewValueSpecifications] = useState("");
   const [GameData, setGameData] = useState<GameData>({
     info: [],
     title: "",
@@ -29,6 +31,8 @@ const AddGame: React.FC = () => {
     multiplayer: false,
     categories: [],
     tags: [],
+    Specifications: [],
+    additionalExplanations: "",
   });
 
   const [OpenAddImageModall, setOpenAddImageModall] = useState(false);
@@ -40,7 +44,20 @@ const AddGame: React.FC = () => {
       [e.target.name]: e.target.value,
     });
   };
-
+  // ? Add Spesofics
+  const handleAddSpecifications = () => {
+    if (newKeySpecifications && newValueSpecifications) {
+      setnewKeySpecifications("");
+      setnewValueSpecifications("");
+      setGameData((prev) => ({
+        ...prev,
+        Specifications: [
+          ...prev.Specifications,
+          { key: newKeySpecifications, value: newValueSpecifications },
+        ],
+      }));
+    }
+  };
   // Handles the addition of a new entry to the info array
   const handleAddInfo = () => {
     const newInfo = {
@@ -358,6 +375,60 @@ const AddGame: React.FC = () => {
             </p>
           ))}
         </div>
+        <div className="">
+          <label>اطلاعات فنی</label>
+          <div className="flex items-center">
+            <div className="flex flex-col">
+              <label>Quantity</label>
+
+              <input
+                type="text"
+                placeholder="Key"
+                value={newKeySpecifications}
+                onChange={(e) => setnewKeySpecifications(e.target.value)}
+                className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label>Quantity</label>
+
+              <input
+                type="text"
+                placeholder="Value"
+                value={newValueSpecifications}
+                onChange={(e) => setnewValueSpecifications(e.target.value)}
+                className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
+              />
+            </div>
+            {/* <BtnTow
+                  ButtonColor="bg-green-500 hover:from-green-500 hover:to-green-400 hover:ring-green-400 flex items-center"
+                  ButtonText={"+"}
+                  onClick={() => handleAddFeature()}
+                /> */}
+            <button
+              onClick={() => handleAddSpecifications()}
+              className="bg-green-500 hover:bg-green-600 px-3.5 py-2 rounded-md text-white"
+              type="button"
+            >
+              +
+            </button>
+          </div>
+          <ul>
+            {GameData.Specifications?.map((feature, index) => (
+              <li key={index}>
+                <strong>{feature.key}</strong>: {feature.value}
+                <button
+                // You can add an onClick handler here to delete or update the feature
+                // onClick={() => updateFeature(feature.key, '')}
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <ProductAdditionalExplanations setProduct={setGameData} />
+
         <div className="">
           <button
             onClick={() => handleAddGame()}

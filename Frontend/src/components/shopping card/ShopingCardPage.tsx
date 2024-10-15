@@ -1,12 +1,12 @@
 import React from "react";
 import BtnTow from "../utils/BtnTow";
 import { useShopingcard } from "../context/ShopingCard";
-import ConnectedProducts from "../Products/ConnectedProducts";
+import ConnectedProducts from "../utils/ConnectedProducts";
 import { FaLocationDot} from "react-icons/fa6";
 
 const ShopingCardPage: React.FC = () => {
   const { CardItems , setOpenMiniShoppingcard } = useShopingcard();
-  console.log(CardItems);
+  // console.log(CardItems);
   return (
     <div className="md:container md:mx-auto mx-2">
       <div className="border-2 mb-10 p-5 rounded-lg">

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const moment = require("moment-jalaali");
 const productSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -9,6 +9,15 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  additionalExplanations: {
+    type: String,
+  },
+  Specifications: [
+    {
+      key: { type: String },
+      value: { type: String },
+    },
+  ],
   features: [
     {
       key: { type: String, required: true },
@@ -23,7 +32,7 @@ const productSchema = new mongoose.Schema({
     ref: "Image",
     required: true,
   },
-  comments:[
+  comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
@@ -54,8 +63,8 @@ const productSchema = new mongoose.Schema({
   quantity: { type: Number, required: true },
   inStock: { type: Boolean, default: true },
   createdAt: {
-    type: Date,
-    default: Date.now,
+    type: String, 
+    default: () => moment().format('jYYYY/jM/jD HH:mm:ss'), 
   },
 });
 

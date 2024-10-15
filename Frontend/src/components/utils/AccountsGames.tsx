@@ -1,5 +1,5 @@
 import React from "react";
-import { GameDataInfo, Image } from "../../types";
+import { GameDataInfo, Image, Tag } from "../../types";
 import { Link } from "react-router-dom";
 
 interface CardItemProps {
@@ -8,6 +8,7 @@ interface CardItemProps {
   additionalImages: Image[];
   info: GameDataInfo[];
   _id?: string;
+  tags: Tag[];
 }
 
 const AccountsGames: React.FC<CardItemProps> = ({
@@ -16,6 +17,7 @@ const AccountsGames: React.FC<CardItemProps> = ({
   additionalImages,
   info,
   _id,
+  tags,
 }) => {
   const sortedPrices = info ? [...info].sort((a, b) => a.price - b.price) : [];
   const hasMultiplePrices = info && info.length > 1;
@@ -41,8 +43,7 @@ const AccountsGames: React.FC<CardItemProps> = ({
           {hasMultiplePrices ? (
             <>
               <p className="my-2">
-              از {sortedPrices[0].price}
-             {" "} _{" "}
+                از {sortedPrices[0].price} _{" "}
                 {sortedPrices[sortedPrices.length - 1].price} تومان
               </p>
             </>
@@ -53,6 +54,14 @@ const AccountsGames: React.FC<CardItemProps> = ({
               </div>
             ))
           )}
+        </div>
+        <div className="flex items-center mb-2">
+          {tags?.map((tag) => (
+            <span key={tag._id} className="text-sm px-2 text-gray-500">
+              {tag.tagName}
+              {"#"}
+            </span>
+          ))}
         </div>
       </div>
     </Link>

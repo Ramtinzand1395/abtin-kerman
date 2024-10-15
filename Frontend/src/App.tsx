@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "./components/home/Home";
+import Home from "./components/pages/home/Home";
 import MainLayout from "./layouts/MainLayout";
-// import ProductsPage from "./components/Products/ProductsPage";
-import SingleProductPage from "./components/Products/SingleProductPage";
+import SingleProductPage from "./components/pages/Products/AccountGame";
 import DashboardLayout from "./layouts/DashboardLayout";
 import UserInformation from "./components/dashboard/pages/UserInformation";
 import Products from "./components/dashboard/pages/EditeAcountGame";
@@ -12,25 +11,14 @@ import Gallery from "./components/dashboard/pages/Gallery";
 import Tags from "./components/dashboard/pages/Tags";
 import ShopingCardPage from "./components/shopping card/ShopingCardPage";
 import CreateProduct from "./components/dashboard/pages/CreateProduct";
-import ProductPage from "./components/pages/ProductPage";
 import CommentManneger from "./components/dashboard/pages/CommentManneger";
-// import axios from "axios";
+import Ckeditor from "./components/utils/Ckeditor";
+import ProductPage from "./components/pages/Products/product/ProductPage";
+import AllProducts from "./components/pages/Products/product/AllProducts";
+import AccountGame from "./components/pages/Products/AccountGame";
+import AllAcountGames from "./components/pages/Products/AllAcountGames";
 
 const App: React.FC = () => {
-  // const [user, setuser] = useState(null);
-  // const getUser = async () => {
-  //   try {
-  //     const url = " http://localhost:5000/auth/login/success";
-  //     const { data } = await axios.get(url, { withCredentials: true });
-  //     setuser(data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  // useEffect(()=>{
-  //   getUser();
-  // },[])
-  // console.log(user,"user")
   useEffect(() => {
     const card = localStorage.getItem("cardItems");
 
@@ -50,28 +38,19 @@ const App: React.FC = () => {
             </MainLayout>
           }
         />
-        {/* ! بعدل اسم مسیر ها و اسم کامپوننت ها به بازی تغغی بده */}
-        {/* <Route
-          path="/products/:product"
+         <Route
+          path="/games/:category"
           element={
             <MainLayout>
-              <ProductsPage />
+              <AllAcountGames />
             </MainLayout>
           }
-        /> */}
-        {/* <Route
-          path="/product/:productName"
-          element={
-            <MainLayout>
-              <SingleProductPage />
-            </MainLayout>
-          }
-        /> */}
+        />
         <Route
           path="/accountgame/:gameId"
           element={
             <MainLayout>
-              <SingleProductPage />
+              <AccountGame />
             </MainLayout>
           }
         />
@@ -83,7 +62,16 @@ const App: React.FC = () => {
             </MainLayout>
           }
         />
-         <Route
+        {/* PRODUCT & PRODUCTS RPUTES */}
+        <Route
+          path="/products/:category"
+          element={
+            <MainLayout>
+              <AllProducts />
+            </MainLayout>
+          }
+        />
+        <Route
           path="/product/:productId"
           element={
             <MainLayout>
@@ -140,11 +128,19 @@ const App: React.FC = () => {
             </DashboardLayout>
           }
         />
-         <Route
+        <Route
           path="/dashboard/comment-manegment/:userId"
           element={
             <DashboardLayout>
               <CommentManneger />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/dashboard/weblog/:userId"
+          element={
+            <DashboardLayout>
+              <Ckeditor />
             </DashboardLayout>
           }
         />

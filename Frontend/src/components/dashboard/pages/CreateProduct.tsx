@@ -6,12 +6,12 @@ import {
   getTagService,
 } from "../../../services/ApiServices";
 import { MdAdd } from "react-icons/md";
-import BtnTow from "../../utils/BtnTow";
 import { toast } from "react-toastify";
 import { Product } from "../../../types";
 import AddImageModallProduct from "../AddImageModallProduct";
 import SearchTagsProducts from "../searchTag/SearchTagsProducts";
 import SearchCatsProducts from "../searchTag/SearchCatsProducts";
+import ProductAdditionalExplanations from "../CkEditor/ProductAdditionalExplanations";
 
 const CreateProduct: React.FC = () => {
   // *features
@@ -25,6 +25,7 @@ const CreateProduct: React.FC = () => {
     title: "",
     price: 0,
     features: [],
+    Specifications: [],
     description: "",
     primaryImage: null, // Set initial value
     additionalImages: [], // Set initial value
@@ -32,6 +33,7 @@ const CreateProduct: React.FC = () => {
     categories: [],
     sellOne: false,
     quantity: 1,
+    additionalExplanations: "",
   });
   // * TAGS & CATS
   const [Tags, setTags] = useState([]);
@@ -46,7 +48,7 @@ const CreateProduct: React.FC = () => {
       [name]: value,
     }));
   };
-console.log(Product)
+
   const handleAddFeature = () => {
     if (newKey && newValue) {
       setNewKey("");
@@ -54,6 +56,22 @@ console.log(Product)
       setProduct((prev) => ({
         ...prev,
         features: [...prev.features, { key: newKey, value: newValue }],
+      }));
+    }
+  };
+  const [newKeySpecifications, setnewKeySpecifications] = useState("");
+  const [newValueSpecifications, setnewValueSpecifications] = useState("");
+
+  const handleAddSpecifications = () => {
+    if (newKeySpecifications && newValueSpecifications) {
+      setnewKeySpecifications("");
+      setnewValueSpecifications("");
+      setProduct((prev) => ({
+        ...prev,
+        Specifications: [
+          ...prev.Specifications,
+          { key: newKeySpecifications, value: newValueSpecifications },
+        ],
       }));
     }
   };
@@ -93,7 +111,6 @@ console.log(Product)
       console.log(err);
     }
   };
-
   return (
     <div className=" w-full md:container md:mx-auto mx-2 my-10">
       <h1>ساخت محصول</h1>
@@ -235,50 +252,111 @@ console.log(Product)
                   </p>
                 ))}
             </div>
-
             <div className="">
-              <div className="flex items-center">
-                <div className="flex flex-col">
-                  <label>Quantity</label>
+              <div className="">
+                <label>مشخصات اصلی</label>
+                <div className="flex items-center">
+                  <div className="flex flex-col">
+                    <label>Quantity</label>
 
-                  <input
-                    type="text"
-                    placeholder="Key"
-                    value={newKey}
-                    onChange={(e) => setNewKey(e.target.value)}
-                    className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label>Quantity</label>
+                    <input
+                      type="text"
+                      placeholder="Key"
+                      value={newKey}
+                      onChange={(e) => setNewKey(e.target.value)}
+                      className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label>Quantity</label>
 
-                  <input
-                    type="text"
-                    placeholder="Value"
-                    value={newValue}
-                    onChange={(e) => setNewValue(e.target.value)}
-                    className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
-                  />
-                </div>
-                <BtnTow
+                    <input
+                      type="text"
+                      placeholder="Value"
+                      value={newValue}
+                      onChange={(e) => setNewValue(e.target.value)}
+                      className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
+                    />
+                  </div>
+                  {/* <BtnTow
                   ButtonColor="bg-green-500 hover:from-green-500 hover:to-green-400 hover:ring-green-400 flex items-center"
                   ButtonText={"+"}
                   onClick={() => handleAddFeature()}
-                />
+                /> */}
+                  <button
+                    onClick={() => handleAddFeature()}
+                    className="bg-green-500 hover:bg-green-600 px-3.5 py-2 rounded-md text-white"
+                    type="button"
+                  >
+                    +
+                  </button>
+                </div>
+                <ul>
+                  {Product.features?.map((feature, index) => (
+                    <li key={index}>
+                      <strong>{feature.key}</strong>: {feature.value}
+                      <button
+                      // You can add an onClick handler here to delete or update the feature
+                      // onClick={() => updateFeature(feature.key, '')}
+                      >
+                        Delete
+                      </button>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul>
-                {Product.features?.map((feature, index) => (
-                  <li key={index}>
-                    <strong>{feature.key}</strong>: {feature.value}
-                    <button
-                    // You can add an onClick handler here to delete or update the feature
-                    // onClick={() => updateFeature(feature.key, '')}
-                    >
-                      Delete
-                    </button>
-                  </li>
-                ))}
-              </ul>
+              <div className="">
+                <label>اطلاعات فنی</label>
+                <div className="flex items-center">
+                  <div className="flex flex-col">
+                    <label>Quantity</label>
+
+                    <input
+                      type="text"
+                      placeholder="Key"
+                      value={newKeySpecifications}
+                      onChange={(e) => setnewKeySpecifications(e.target.value)}
+                      className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label>Quantity</label>
+
+                    <input
+                      type="text"
+                      placeholder="Value"
+                      value={newValueSpecifications}
+                      onChange={(e) => setnewValueSpecifications(e.target.value)}
+                      className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
+                    />
+                  </div>
+                  {/* <BtnTow
+                  ButtonColor="bg-green-500 hover:from-green-500 hover:to-green-400 hover:ring-green-400 flex items-center"
+                  ButtonText={"+"}
+                  onClick={() => handleAddFeature()}
+                /> */}
+                  <button
+                    onClick={() => handleAddSpecifications()}
+                    className="bg-green-500 hover:bg-green-600 px-3.5 py-2 rounded-md text-white"
+                    type="button"
+                  >
+                    +
+                  </button>
+                </div>
+                <ul>
+                  {Product.Specifications?.map((feature, index) => (
+                    <li key={index}>
+                      <strong>{feature.key}</strong>: {feature.value}
+                      <button
+                      // You can add an onClick handler here to delete or update the feature
+                      // onClick={() => updateFeature(feature.key, '')}
+                      >
+                        Delete
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
             <div className="col-span-3">
               {/* <BtnTow
@@ -286,6 +364,7 @@ console.log(Product)
                 ButtonText={"ساخت محصول"}
                 onClick={(e) => handleCreateProduct(e)}
               /> */}
+              <ProductAdditionalExplanations setProduct={setProduct} />
               <button type="submit">"ساخت محصول"</button>
             </div>
           </div>

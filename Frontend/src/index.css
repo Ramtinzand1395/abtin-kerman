@@ -9,12 +9,12 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(1.75rem, 4vw + 1rem, 2.5rem);
+  font-size: clamp(1.5rem, 2vw + 0.5rem, 2.5rem);
   font-weight: bold;
 }
 
 h3 {
-  font-size: clamp(1.5rem, 3vw + 0.75rem, 2rem);
+  font-size: clamp(1.25rem, 2vw + 0.25rem, 2rem);
   font-weight: bold;
 }
 

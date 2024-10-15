@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import "./sidebar.css";
 // import { sidebarItems } from "./DashData";
 import { Link } from "react-router-dom";
-import { FaComment, FaHome, FaPowerOff, FaProductHunt, FaTags } from "react-icons/fa";
+import { FaComment, FaHome, FaPowerOff, FaProductHunt, FaTags, FaWineBottle } from "react-icons/fa";
 import { MdManageAccounts } from "react-icons/md";
 import { IoIosListBox } from "react-icons/io";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { GrGallery } from "react-icons/gr";
-import { SiRockstargames } from "react-icons/si";
+import { SiCkeditor4, SiRockstargames } from "react-icons/si";
 
 const Sidebar: React.FC = () => {
   const userJson = localStorage.getItem("User");
@@ -77,6 +77,13 @@ const Sidebar: React.FC = () => {
       icon: <FaComment   size={30} />,
       helperTxt: "مدیرین نظرات",
       path: `/dashboard/comment-manegment/${User?._id}`,
+    },
+    {
+      id:10,
+      label: "مقالات",
+      icon: <SiCkeditor4   size={30} />,
+      helperTxt: "مقالات",
+      path: `/dashboard/weblog/${User?._id}`,
     },
   ];
 

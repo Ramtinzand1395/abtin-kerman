@@ -1,5 +1,7 @@
+const Categorey = require("../models/Categorey");
 const Comment = require("../models/Comment");
 const Games = require("../models/Games");
+const Products = require("../models/Products");
 const User = require("../models/User");
 const { sendSms } = require("../utils/Send-Msg");
 
@@ -39,7 +41,63 @@ exports.handleAddComments = async (req, res, next) => {
     next(err);
   }
 };
+// ? PRODUCTS PAGE DATA
+exports.handleFilterProducts = async (req, res, next) => {
+  const { category } = req.params;
+  const { pageNumber = 1, sortOrder = "lowToHigh" } = req.query;
+  const limit = 10;
+  try {
+    const foundCategory = await Categorey.findOne({ categoryName: category });
 
+    if (!foundCategory) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+    const skip = (parseInt(pageNumber, 10) - 1) * limit;
+    const sortOption = sortOrder === "lowToHigh" ? { price: 1 } : { price: -1 };
+    const filteredProducts = await Products.find({
+      categories: foundCategory._id,
+    })
+      .populate("primaryImage")
+      .populate("tags")
+      .limit(limit) // Limit the number of products
+      .skip(skip)
+      .sort(sortOption); // Skip products based on pagination
+    res.status(200).json({
+      filteredProducts,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+// ? ACCOUNTGAME PAGE DATA
+exports.handleFilterGames = async (req, res, next) => {
+  const { category } = req.params;
+  const { pageNumber = 1, sortOrder = "lowToHigh" } = req.query;
+  const limit = 10;
+  try {
+    const foundCategory = await Categorey.findOne({ categoryName: category });
+
+    if (!foundCategory) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+    const skip = (parseInt(pageNumber, 10) - 1) * limit;
+    const sortOption = sortOrder === "lowToHigh" ? { price: 1 } : { price: -1 };
+    const filteredProducts = await Games.find({
+      categories: foundCategory._id,
+    })
+      .populate("primaryImage")
+      .populate("additionalImages")
+      .populate("tags")
+      .limit(limit) // Limit the number of products
+      .skip(skip)
+      .sort(sortOption); // Skip products based on pagination
+    res.status(200).json({
+      filteredProducts,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 // exports.handleLogin = async (req, res, next) => {
 //   const { username, password } = req.body;
 

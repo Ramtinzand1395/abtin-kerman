@@ -11,6 +11,8 @@ export interface GameData {
   tags: Tag[];
   createdAt?: string;
   comments?: Comment[];
+  Specifications: Feature[];
+  additionalExplanations: string;
 }
 export interface GameDataInfo {
   platform: string;
@@ -40,7 +42,7 @@ export interface Image {
 export interface Comment {
   body: string;
   // ! این تایپ باید درست بشه
-  user: { email: string; profile: string };
+  user: User;
   relatedId?: string;
   relatedModel: string;
   isValidated?: boolean;
@@ -53,12 +55,17 @@ export interface Feature {
   key: string;
   value: string;
 }
-
+export interface User {
+  email: string;
+  profile: string;
+  _id?: string;
+}
 export interface Product {
   _id?: string;
   title: string;
   price: number;
   features: Feature[];
+  Specifications: Feature[];
   description?: string;
   primaryImage: Image | null;
   comments?: Comment[];
@@ -68,5 +75,14 @@ export interface Product {
   sellOne: boolean;
   quantity: number;
   inStock?: boolean;
-  createdAt?: Date;
+  createdAt?: string;
+  additionalExplanations?: string;
+}
+
+export interface Weblog {
+  _id?: string;
+  title: string;
+  body: string;
+  primaryImage?: Image | null;
+  createdAt?: string;
 }

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment-jalaali");
 
 
 const ImageSchema = new mongoose.Schema({
@@ -9,8 +10,8 @@ const ImageSchema = new mongoose.Schema({
     type: String,
   },
   createdAt: {
-    type: Date,
-    default: Date.now,
+    type: String, 
+    default: () => moment().format('jYYYY/jM/jD HH:mm:ss'), 
   },
 });
 

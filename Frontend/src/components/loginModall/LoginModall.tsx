@@ -5,16 +5,11 @@ import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { LoginService } from "../../services/ApiServices";
 import { toast } from "react-toastify";
-interface UserType {
-  _id: string;
-  createdAt: string;
-  email: string;
-  isAdmin: string;
-  profile: string;
-}
+import { User } from "../../types";
+
 interface LoginModallProps {
   setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
-  setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 const LoginModall: React.FC<LoginModallProps> = ({
   setOpenModall,
@@ -40,6 +35,8 @@ const LoginModall: React.FC<LoginModallProps> = ({
       setUser(data.user);
     } catch (err) {
       console.log(err);
+    }finally{
+      setOpenModall(false)
     }
   };
   return (

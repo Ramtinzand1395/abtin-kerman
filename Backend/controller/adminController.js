@@ -2,6 +2,7 @@ const multer = require("multer");
 const shortId = require("shortid");
 const Image = require("../models/Image");
 const Games = require("../models/Games");
+const Blog = require("../models/Blog");
 
 const path = require("path");
 const Tag = require("../models/Tag");
@@ -146,7 +147,7 @@ exports.GetGame = async (req, res) => {
     });
     const comments = await Comment.find({
       _id: { $in: game.comments },
-    }).populate('user', 'profile email');
+    }).populate("user", "profile email");
     const gameWithDetails = {
       ...game.toObject(),
       tags: gameTags,
@@ -210,7 +211,6 @@ exports.deleteGame = async (req, res) => {
 };
 // ? TAGS
 exports.AddTag = async (req, res) => {
-  console.log(req.body);
   try {
     const tags = await Tag.create(req.body);
     res.status(201).json({ data: tags, message: "تگ جدید اضافه شد" });
@@ -275,7 +275,6 @@ exports.DelCategory = async (req, res) => {
 // ?  PRODUCT API
 // * ADD PRODUCT
 exports.AddProduct = async (req, res) => {
-  console.log(req.body);
   try {
     const product = await Products.create(req.body);
     res.status(201).json({ data: product, message: "محصول جدید ساخته شد" });
@@ -352,7 +351,7 @@ exports.Getproduct = async (req, res) => {
     });
     const comments = await Comment.find({
       _id: { $in: product.comments },
-    }).populate('user', 'profile email');
+    }).populate("user", "profile email");
     const productWithDetails = {
       ...product.toObject(),
       tags: productTags,
@@ -445,5 +444,24 @@ exports.handleConfirmComment = async (req, res, next) => {
     });
   } catch (err) {
     next(err);
+  }
+};
+// ?BLOG
+exports.createBlog = async (req, res) => {
+  try {
+    const blog = await Blog.create(req.body);
+    res.status(201).json({ data: blog, message: "مقاله جدید ساخته شد" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
+  }
+};
+exports.Blogs = async (req, res) => {
+  try {
+    const Allblog = await Blog.find().populate("primaryImage");
+    res.status(200).json({ data: Allblog });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
   }
 };

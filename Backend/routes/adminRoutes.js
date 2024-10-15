@@ -1,6 +1,7 @@
 const { Router } = require("express");
 
 const adminController = require("../controller/adminController");
+const uploadController = require("../controller/uploadController");
 
 const router = new Router();
 // ?UPLOAD IMAGE
@@ -30,5 +31,10 @@ router.delete("/del-cat", adminController.DelCategory);
 router.get("/get-comments", adminController.handleGetComments);
 router.delete("/delete-comment/:commentId", adminController.handleDeleteComment);
 router.post("/confirm-comment/:commentId", adminController.handleConfirmComment);
+// ? WEBLOG
+router.post("/upload", uploadController.UploadWeblogImage);
+router.post("/create-blog", adminController.createBlog);
+router.get("/get-blogs", adminController.Blogs);
+
 
 module.exports = router;

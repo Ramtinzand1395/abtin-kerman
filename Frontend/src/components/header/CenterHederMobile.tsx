@@ -17,7 +17,7 @@ const CenterHederMobile: React.FC<CenterHederMobileProps> = ({
   };
   window.addEventListener("scroll", ChangeMobileNavbar);
   return (
-    <div className="mx-2">
+    <div className="">
       <div
         className={`flex items-center justify-between  ${
           StickyMobileNavbar ? "fixed bg-primary text-white w-full top-0 z-20 p-4" : "block"
@@ -31,10 +31,6 @@ const CenterHederMobile: React.FC<CenterHederMobileProps> = ({
         <div className="flex items-center text-2xl">
           <img src={logo} className="w-10 h-10 " alt="Logo" />
           <h2
-            //   initial="start"
-            //   animate="end"
-            //   whileHover="hover"
-            //   variants={headerVarient}
             className="font-bold mr-2"
           >
             کرمان آتاری

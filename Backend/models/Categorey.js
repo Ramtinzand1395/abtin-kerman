@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
-
+const moment = require("moment-jalaali");
 const CategorySchema = new mongoose.Schema({
   categoryName: {
     type: String,
   },
 
   createdAt: {
-    type: Date,
-    default: Date.now,
+    type: String, 
+    default: () => moment().format('jYYYY/jM/jD'), 
   },
 });
 

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Comment, GameData, Product } from "../types";
+import { Comment, GameData, Product, Weblog } from "../types";
 interface LoginData {
   email: string;
   profile: string;
@@ -186,4 +186,32 @@ export const deleteCommentService = (commentId: string) => {
 export const confirmCommentService = (commentId: string) => {
   const url = `${SERVER_URL}/confirm-comment/${commentId}`;
   return axios.post(url);
+};
+// ?BLOG
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const createBlogService = (WeblogData:Weblog) => {
+  const url = `${SERVER_URL}/create-blog`;
+  return axios.post(url, WeblogData);
+};
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const getBlogsService = () => {
+  const url = `${SERVER_URL}/get-blogs`;
+  return axios.get(url);
+};
+// ? FILTER PRODUCTS
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const getFiltredProductsService = (category:string,  pageNumber:number , sortOrder:string) => {
+  const url = `${SERVER_URL}/get-filtred-products/${category}?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
+  return axios.get(url);
+};
+// !FILTRED GAMES
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const getFiltredAccountGamesService = (category:string,  pageNumber:number , sortOrder:string) => {
+  console.log(category)
+  const url = `${SERVER_URL}/get-filtred-games/${category}?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
+  return axios.get(url);
 };

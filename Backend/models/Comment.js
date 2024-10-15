@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment-jalaali");
 
 const commentSchema = new mongoose.Schema({
   body: {
@@ -24,8 +25,8 @@ const commentSchema = new mongoose.Schema({
     default: false,
   },
   createdAt: {
-    type: Date,
-    default: Date.now,
+    type: String, 
+    default: () => moment().format('jYYYY/jM/jD HH:mm:ss'), 
   },
 });
 

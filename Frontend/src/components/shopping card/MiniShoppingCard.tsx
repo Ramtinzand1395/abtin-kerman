@@ -15,7 +15,7 @@ const MiniShoppingCard: React.FC<MiniShoppingCardProps> = ({ setOpenMiniShopping
   //   const { getItemqty } = useShopingcard();
   //   console.log(getItemqty()));
   const { CardItems, removeFromCard } = useShopingcard();
-  console.log(CardItems, "CardItems");
+  // console.log(CardItems, "CardItems");
   return (
     // <div
     //   onClick={() => setOpenMiniShoppingcard(false)}

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment-jalaali");
 
 const infoSchema = new mongoose.Schema({
   platform: { type: String, required: true },
@@ -47,9 +48,18 @@ const gameSchema = new mongoose.Schema({
       ref: "Comment",
     },
   ],
+  additionalExplanations: {
+    type: String,
+  },
+  Specifications: [
+    {
+      key: { type: String },
+      value: { type: String },
+    },
+  ],
   createdAt: {
-    type: Date,
-    default: Date.now,
+    type: String, 
+    default: () => moment().format('jYYYY/jM/jD HH:mm:ss'), 
   },
 });
 module.exports = mongoose.models.Games || mongoose.model("Games", gameSchema);

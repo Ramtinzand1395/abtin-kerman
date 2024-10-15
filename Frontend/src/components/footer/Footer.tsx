@@ -3,12 +3,12 @@ import logo from "../../assets/4062c9fc8b3a999778ed824b24631ab0.jpg";
 
 const Footer:React.FC = () => {
   return (
-    <div className="bg-gray-700 grid grid-cols-3 md:grid-cols-6  gap-10 h-auto md:h-[60vh] p-10 text-xs md:text-base">
-      <div className="col-span-3 text-white flex flex-col items-start justify-evenly">
+    <div className="bg-gray-700 grid grid-cols-1 md:grid-cols-6  gap-10 h-auto md:h-[60vh] p-10 text-xs md:text-base">
+      <div className="md:col-span-3 text-white flex flex-col items-start justify-evenly">
         {" "}
         <div className="flex items-center ">
           <img src={logo} className="w-[5vw] h-[5vw] rounded-full" alt="Logo" />
-          <h2 className="font-bold mb-5 md:mb-0 mr-2 text-white whitespace-nowrap">
+          <h2 className="font-light md:font-bold mb-5 md:mb-0 mr-2 text-white whitespace-nowrap">
             کرمان آتاری
           </h2>
         </div>
@@ -37,7 +37,7 @@ const Footer:React.FC = () => {
         <p>آیا امکان عودت وجود داره؟</p>
       </div>
       <div className="flex-col flex items-start justify-evenly text-white">
-        <h3 className="whitespace-nowrap">درباره کرمان آتاری</h3>
+        <h3 className="md:whitespace-nowrap">درباره کرمان آتاری</h3>
         <div className="w-20 md:w-32 h-[2px] bg-[#5cc1b9] my-5"></div>
         <p> درباره ما</p>
         <p>تماس با ما</p>
