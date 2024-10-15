@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-
+import { Editor } from "@ckeditor/ckeditor5-core"; 
 import "ckeditor5/ckeditor5.css";
-
-const ProductAdditionalExplanations = ({setProduct}) => {
+import { GameData, Product } from "../../../types";
+interface ProductAdditionalExplanationsProps {
+  setProduct: React.Dispatch<React.SetStateAction<GameData>> | React.Dispatch<React.SetStateAction<Product>>;
+}
+const ProductAdditionalExplanations:React.FC<ProductAdditionalExplanationsProps> = ({setProduct}) => {
   // const [WeblogData, setWeblogData] = useState("");
 
-  const handleCkeditorState = (e, editor) => {
+  const handleCkeditorState = ( editor: Editor) => {
     const data = editor.getData();
     setProduct((prev) => ({
       ...prev,
