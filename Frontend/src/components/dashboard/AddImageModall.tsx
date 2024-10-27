@@ -87,19 +87,19 @@ const AddImageModall: React.FC<AddImageModallProps> = ({
           <MdClose size={30} className="bg-red-500 rounded-full text-white " />
         </button>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
-          {Images.map((image) => (
+          {Images?.map((image) => (
             <div key={image.imageName} className="relative">
               <img
                 onClick={() => toggleAdditionalImage(image)}
                 className={`w-full h-[20vh] rounded-lg cursor-pointer p-1 ${
-                  SelectedProduct.additionalImages?.some(
+                  SelectedProduct?.additionalImages?.some(
                     (img) => img._id === image._id
                   )
                     ? "border-4 border-primary"
                     : ""
                 }`}
             //! change
-            src={`https://abtin-kerman-backend-new.vercel.app/api/${image.direction}`}
+            src={`${image.direction}`}
                 
                 // src={`http://localhost:5000/${image.direction}`}
 
@@ -114,7 +114,7 @@ const AddImageModall: React.FC<AddImageModallProps> = ({
                 <FaFire
                   size={20}
                   className={`${
-                    SelectedProduct.primaryImage?._id === image._id
+                    SelectedProduct?.primaryImage?._id === image._id
                       ? " text-red-700 "
                       : "text-gray-500"
                   }`}

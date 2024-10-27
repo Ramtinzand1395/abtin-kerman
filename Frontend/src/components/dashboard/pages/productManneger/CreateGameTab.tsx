@@ -162,8 +162,8 @@ const CreateGameTab: React.FC = () => {
 
         {OpenAddImageModall && (
           <AddImageModall
-            setGameData={setGameData}
-            GameData={GameData}
+            setSelectedProduct={setGameData}
+            SelectedProduct={GameData}
             setOpenAddImageModall={setOpenAddImageModall}
           />
         )}
@@ -175,7 +175,7 @@ const CreateGameTab: React.FC = () => {
               className="w-[20vh] h-[20vh] rounded-lg"
               // src={`http://localhost:5000/${GameData.primaryImage.direction}`}
                 //! change
-            src={`https://abtin-kerman-backend-new.vercel.app/api/${GameData.primaryImage.direction}`}
+            src={`/${GameData.primaryImage.direction}`}
               alt=""
             />
           </div>

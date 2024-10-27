@@ -73,6 +73,7 @@ exports.getImages = async (req, res) => {
 // ?  GAME API
 // * ADD GAME
 exports.AddGame = async (req, res) => {
+  console.log("ssss")
   try {
     const games = await Games.create(req.body);
     res.status(201).json({ data: games, message: "بازی جدید ساخته شد" });
