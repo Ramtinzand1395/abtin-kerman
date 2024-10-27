@@ -6,12 +6,12 @@ const Blog = require("../models/Blog");
 
 const path = require("path");
 const Tag = require("../models/Tag");
-const categorey = require("../models/categorey");
+const categorey = require("../models/Categorey");
 const Products = require("../models/Products");
 const Comment = require("../models/Comment");
-const Order = require("../models/order");
+const Order = require("../models/Order");
 const User = require("../models/User");
-const order = require("../models/order");
+// const order = require("../models/order");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
