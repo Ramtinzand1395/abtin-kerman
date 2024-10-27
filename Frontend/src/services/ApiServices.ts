@@ -17,7 +17,8 @@ interface LoginResponse {
   };
   status: number;
 }
-const SERVER_URL = "http://localhost:5000/api";
+// const SERVER_URL = "http://localhost:5000/api";
+const SERVER_URL = "https://abtin-kerman-backend-new.vercel.app/api";
 
 // @desc  create OR add User
 // @route PUT http://localhost:5000/api/login

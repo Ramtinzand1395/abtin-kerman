@@ -45,7 +45,9 @@ const ProductAdditionalExplanations: React.FC<
         }}
         config={{
           ckfinder: {
-            uploadUrl: "http://localhost:5000/api/upload", // Your API endpoint for handling image uploads
+            //! change
+            // uploadUrl: "http://localhost:5000/api/upload",
+            uploadUrl: "https://abtin-kerman-backend-new.vercel.app/api/upload",
           },
         }}
         onChange={handleCkeditorState}

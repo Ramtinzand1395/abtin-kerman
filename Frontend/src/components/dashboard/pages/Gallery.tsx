@@ -63,7 +63,9 @@ const Gallery: React.FC = () => {
         {Images?.map((url) => (
           <img
             className=""
-            src={`http://localhost:5000/${url.direction}`}
+            // src={`http://localhost:5000/${url.direction}`}
+            //! change
+            src={`${url.direction}`}
             alt=""
           />
         ))}

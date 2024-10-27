@@ -91,6 +91,14 @@ const App: React.FC = () => {
             </DashboardLayout>
           }
         />
+         <Route
+          path="/dashboard/gallery/:userId"
+          element={
+            <DashboardLayout>
+              <Gallery />
+            </DashboardLayout>
+          }
+        />
         <Route
           path="/dashboard/product-management/:userId"
           element={

@@ -48,7 +48,7 @@ exports.UploadImage = async (req, res) => {
     try {
       await Image.create({
         imageName,
-        direction: `/uploads/${imageName}`,
+        direction: `https://abtin-kerman-backend-new.vercel.app/api/uploads/${imageName}`,
       });
       return res.status(201).json({
         message: "File uploaded successfully",

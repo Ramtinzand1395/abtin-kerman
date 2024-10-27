@@ -96,7 +96,9 @@ const AddImageModallProduct: React.FC<AddImageModallProps> = ({
                     ? "border-4 border-primary"
                     : ""
                 }`}
-                src={`http://localhost:5000/${image.direction}`}
+                 //! change
+            src={`https://abtin-kerman-backend-new.vercel.app/api/${image.direction}`}
+                // src={`http://localhost:5000/${image.direction}`}
                 alt={image.imageName}
               />
               <button

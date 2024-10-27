@@ -48,7 +48,13 @@ const Sidebar: React.FC = () => {
       helperTxt: "کاربران",
       path: "/user-manneger",
     },
-
+    {
+      id: 5,
+      label: "کاربران",
+      icon: <MdManageAccounts size={30} />,
+      helperTxt: "کاربران",
+      path: `/dashboard/gallery/${User?._id}`,
+    },
     {
       id: 7,
       label: "دسته بندی و تگ ها",

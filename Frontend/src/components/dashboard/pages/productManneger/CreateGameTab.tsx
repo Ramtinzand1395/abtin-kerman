@@ -173,7 +173,9 @@ const CreateGameTab: React.FC = () => {
             <img
               onClick={() => removePrimaryImage()}
               className="w-[20vh] h-[20vh] rounded-lg"
-              src={`http://localhost:5000/${GameData.primaryImage.direction}`}
+              // src={`http://localhost:5000/${GameData.primaryImage.direction}`}
+                //! change
+            src={`https://abtin-kerman-backend-new.vercel.app/api/${GameData.primaryImage.direction}`}
               alt=""
             />
           </div>

@@ -42,7 +42,9 @@ const storage = multer.diskStorage({
         });
         return res.status(201).json({
             uploaded: true,
-            url: `http://localhost:5000/uploads/weblog/${imageName}`
+            //! change
+            // url: `http://localhost:5000/uploads/weblog/${imageName}`
+            url: `https://abtin-kerman-backend-new.vercel.app/api/uploads/weblog/${imageName}`
           });
       } catch (err) {
         console.log(err);
