@@ -92,12 +92,14 @@ const AddImageModallProduct: React.FC<AddImageModallProps> = ({
               <img
                 onClick={() => toggleAdditionalImage(image)}
                 className={`w-full h-[20vh] rounded-lg cursor-pointer p-1 ${
-                  Product?.additionalImages?.some((img) => img._id === image._id)
+                  Product?.additionalImages?.some(
+                    (img) => img._id === image._id
+                  )
                     ? "border-4 border-primary"
                     : ""
                 }`}
-                 //! change
-            src={`https://abtin-kerman-backend-new.vercel.app/api/${image.direction}`}
+                //! change
+                src={`${image.direction}`}
                 // src={`http://localhost:5000/${image.direction}`}
                 alt={image.imageName}
               />

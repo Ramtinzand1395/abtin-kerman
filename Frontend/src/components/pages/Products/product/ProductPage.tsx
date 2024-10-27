@@ -73,7 +73,9 @@ const ProductPage: React.FC = () => {
               </button>
             </div>
             <img
-              src={`http://localhost:5000/${currentImage}`}
+              // src={`http://localhost:5000/${currentImage}`}
+              //! change
+        src={`${currentImage}`}
               alt=""
               className="w-full h-full object-contain max-w-[300px] max-h-[300px] my-5"
             />
@@ -81,14 +83,18 @@ const ProductPage: React.FC = () => {
               {Product?.additionalImages?.map((img) => (
                 <img
                   key={img._id}
-                  src={`http://localhost:5000/${img?.direction}`}
+                  // src={`http://localhost:5000/${img?.direction}`}
+                      //! change
+        src={`${img?.direction}`}
                   alt=""
                   className="w-full h-full object-contain max-w-[70px] max-h-[70px] border-2 border-primary p-2 cursor-pointer"
                   onClick={() => handleImageClick(img?.direction)}
                 />
               ))}
               <img
-                src={`http://localhost:5000/${Product?.primaryImage?.direction}`}
+                // src={`http://localhost:5000/${Product?.primaryImage?.direction}`}
+                   //! change
+        src={`${Product?.primaryImage?.direction}`}
                 alt=""
                 className="w-full h-full object-contain max-w-[70px] max-h-[70px] border-2 border-primary p-2 mx-2 cursor-pointer"
                 onClick={() =>

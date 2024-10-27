@@ -174,8 +174,8 @@ const CreateGameTab: React.FC = () => {
               onClick={() => removePrimaryImage()}
               className="w-[20vh] h-[20vh] rounded-lg"
               // src={`http://localhost:5000/${GameData.primaryImage.direction}`}
-                //! change
-            src={`/${GameData.primaryImage.direction}`}
+              //! change
+              src={`/${GameData.primaryImage.direction}`}
               alt=""
             />
           </div>
@@ -194,7 +194,9 @@ const CreateGameTab: React.FC = () => {
                     key={index}
                     onClick={() => removeAdditionalImage(img)}
                     className="w-full h-[20vh] rounded-lg"
-                    src={`http://localhost:5000/${img.direction}`}
+                    // src={`http://localhost:5000/${img.direction}`}
+                    //! change
+                    src={`${img?.direction}`}
                     alt=""
                   />
                 </div>
@@ -389,7 +391,10 @@ const CreateGameTab: React.FC = () => {
             ))}
           </ul>
         </div>
-        <AccountGameAdditionalExplanations setGameData={setGameData} GameData={GameData} />
+        <AccountGameAdditionalExplanations
+          setGameData={setGameData}
+          GameData={GameData}
+        />
 
         <div className="">
           <button

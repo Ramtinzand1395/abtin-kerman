@@ -26,7 +26,9 @@ const ShoppingCardData: React.FC = () => {
         >
           <div className="flex flex-col items-center justify-around">
             <img
-              src={`http://localhost:5000/${item.data.image.direction}`}
+              // src={`http://localhost:5000/${item.data.image.direction}`}
+                //! change
+                src={`${item.data.image.direction}`}
               className="w-40 h-auto"
               alt={item.data.image.imageName}
             />

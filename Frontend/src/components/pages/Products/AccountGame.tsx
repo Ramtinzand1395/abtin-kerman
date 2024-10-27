@@ -90,7 +90,9 @@ const AccountGame: React.FC = () => {
         {/* Game picture */}
         <div className="">
           <img
-            src={`http://localhost:5000/${currentImage}`}
+            // src={`http://localhost:5000/${currentImage}`}
+            //! change
+        src={`${currentImage}`}
             alt=""
             className="w-full h-full object-contain max-w-[300px] max-h-[60vh] my-5"
           />
@@ -98,14 +100,18 @@ const AccountGame: React.FC = () => {
             {game?.additionalImages?.map((img) => (
               <img
                 key={img._id}
-                src={`http://localhost:5000/${img?.direction}`}
+                // src={`http://localhost:5000/${img?.direction}`}
+                //! change
+        src={`${img?.direction}`}
                 alt=""
                 className="w-full h-full object-contain max-w-[70px] max-h-[70px] border-2 border-primary p-2 cursor-pointer"
                 onClick={() => handleImageClick(img?.direction)}
               />
             ))}
             <img
-              src={`http://localhost:5000/${game?.primaryImage?.direction}`}
+              // src={`http://localhost:5000/${game?.primaryImage?.direction}`}
+              //! change
+        src={`${game?.primaryImage?.direction}`}
               alt=""
               className="w-full h-full object-contain max-w-[70px] max-h-[70px] border-2 border-primary p-2 mx-2 cursor-pointer"
               onClick={() =>

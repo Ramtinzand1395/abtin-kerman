@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { Product } from "../../../../types";
-import { addProductService, getCategoriesService, getTagService } from "../../../../services/ApiServices";
+import {
+  addProductService,
+  getCategoriesService,
+  getTagService,
+} from "../../../../services/ApiServices";
 import { toast } from "react-toastify";
 import { MdAdd } from "react-icons/md";
 import AddImageModallProduct from "../../AddImageModallProduct";
 import SearchTagsProducts from "../../searchTag/SearchTagsProducts";
 import SearchCatsProducts from "../../searchTag/SearchCatsProducts";
 import ProductAdditionalExplanations from "../../CkEditor/ProductAdditionalExplanations";
-
 
 const CreateProductTab: React.FC = () => {
   // *features
@@ -138,7 +141,9 @@ const CreateProductTab: React.FC = () => {
                   <img
                     // onClick={() => togglePrimaryImage(Product.primaryImage)}
                     className="w-[20vh] h-[20vh] rounded-lg"
-                    src={`http://localhost:5000/${Product.primaryImage.direction}`}
+                    // src={`http://localhost:5000/${Product.primaryImage.direction}`}
+                    //! change
+                    src={`${Product?.primaryImage?.direction}`}
                     alt=""
                   />
                 </div>
@@ -158,7 +163,9 @@ const CreateProductTab: React.FC = () => {
                           key={index}
                           // onClick={() => toggleAdditionalImage(img)}
                           className="w-full h-[20vh] rounded-lg"
-                          src={`http://localhost:5000/${img.direction}`}
+                          // src={`http://localhost:5000/${img.direction}`}
+                          //! change
+                          src={`${img.direction}`}
                           alt=""
                         />
                       </div>
@@ -323,7 +330,9 @@ const CreateProductTab: React.FC = () => {
                       type="text"
                       placeholder="Value"
                       value={newValueSpecifications}
-                      onChange={(e) => setnewValueSpecifications(e.target.value)}
+                      onChange={(e) =>
+                        setnewValueSpecifications(e.target.value)
+                      }
                       className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
                     />
                   </div>

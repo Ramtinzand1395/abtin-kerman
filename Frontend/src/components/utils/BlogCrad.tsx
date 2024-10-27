@@ -10,7 +10,9 @@ const BlogCrad: React.FC<BlogCradProps> = ({ blog }) => {
     <Link to={`/blog/${_id}`}>
       <div className="flex flex-col rounded-t-lg cursor-pointer shadowhand  ">
         <img
-          src={`http://localhost:5000/${primaryImage?.direction}`}
+          // src={`http://localhost:5000/${primaryImage?.direction}`}
+           //! change
+           src={`${primaryImage?.direction}`}
           className="w-full h-[50vh] mb-5 rounded-t-lg primaryImage"
           alt="Primary Image"
         />

@@ -25,7 +25,9 @@ const EditeImageTab: React.FC<EditeImageTabProps> = ({
   return (
     <div className="">
       <img
-        src={`http://localhost:5000/${SelectedProduct.primaryImage?.direction} `}
+        // src={`http://localhost:5000/${SelectedProduct.primaryImage?.direction} `}
+        //! change
+        src={`${SelectedProduct.primaryImage?.direction}`}
         alt=""
         className="w-[30vh] h-[30vh]"
       />
@@ -42,7 +44,9 @@ const EditeImageTab: React.FC<EditeImageTabProps> = ({
           <img
             onClick={() => handleRemoveInfo(index)}
             key={img._id}
-            src={`http://localhost:5000/${img.direction} `}
+            // src={`http://localhost:5000/${img.direction} `}
+            //! change
+        src={`${img.direction}`}
             alt=""
             className="w-full h-[20vh]"
           />

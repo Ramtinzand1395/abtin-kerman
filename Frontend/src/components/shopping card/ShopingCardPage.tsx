@@ -34,7 +34,9 @@ const ShopingCardPage: React.FC = () => {
               >
                 <div className="flex flex-col items-center justify-between h-72 ml-5">
                   <img
-                    src={`http://localhost:5000/${item.data.image.direction}`}
+                    // src={`http://localhost:5000/${item.data.image.direction}`}
+                    //! change
+                    src={`${item.data.image.direction}`}
                     className="w-full h-full object-contain max-w-[15vw] max-h-[15vw]"
                     alt={item.data.image.imageName}
                   />

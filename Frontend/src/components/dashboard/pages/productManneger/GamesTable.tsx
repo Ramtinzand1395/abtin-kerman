@@ -118,7 +118,9 @@ const GamesTable = () => {
                     <td className="whitespace-nowrap font-bold px-6 py-4 ">
                       <div className="flex items-center">
                         <img
-                          src={`http://localhost:5000/${data.primaryImage?.direction}`}
+                          // src={`http://localhost:5000/${data.primaryImage?.direction}`}
+                          //! change
+                          src={`${data.primaryImage?.direction}`}
                           className="w-14 h-14 rounded-lg ml-5"
                           alt=""
                         />

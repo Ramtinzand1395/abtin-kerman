@@ -94,7 +94,9 @@ const Ckeditor = () => {
         <img
           onClick={() => removePrimaryImage()}
           className="w-[20vh] h-[20vh] rounded-lg"
-          src={`http://localhost:5000/${WeblogData?.primaryImage?.direction}`}
+          // src={`http://localhost:5000/${WeblogData?.primaryImage?.direction}`}
+              //! change
+              src={`${WeblogData?.primaryImage?.direction}`}
           alt=""
         />
         <CKEditor

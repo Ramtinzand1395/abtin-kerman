@@ -7,11 +7,14 @@ import AccountsGames from "../../utils/AccountsGames";
 
 const NewestَAccountGame: React.FC = () => {
   const [Games, setGames] = useState<GameData[]>([]);
+  const [orderDesc, setOrderDesc] = useState("newestFirst");
+  const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
     const getGames = async () => {
       try {
-        const { data } = await getGameService();
-        setGames(data);
+        const { data } = await getGameService(pageNumber, orderDesc);
+        setGames(data.games);
+        console.log(data)
       } catch (err) {
         console.log(err);
       }
@@ -30,17 +33,18 @@ const NewestَAccountGame: React.FC = () => {
       </Animations>
       <LeftAnimation>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 my-10 ">
-          {Games.map((game) => (
-            <AccountsGames
-              primaryImage={game.primaryImage}
-              additionalImages={game.additionalImages}
-              title={game.title}
-              info={game.info}
-              _id={game._id}
-              tags={game.tags}
-              key={game._id}
-            />
-          ))}
+          {Games.length > 0 &&
+            Games.map((game) => (
+              <AccountsGames
+                primaryImage={game.primaryImage}
+                additionalImages={game.additionalImages}
+                title={game.title}
+                info={game.info}
+                _id={game._id}
+                tags={game.tags}
+                key={game._id}
+              />
+            ))}
         </div>
       </LeftAnimation>
     </div>

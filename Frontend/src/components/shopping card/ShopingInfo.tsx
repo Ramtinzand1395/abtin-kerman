@@ -93,7 +93,9 @@ const ShopingInfo: React.FC = () => {
               >
                 <div className="flex flex-col items-center h-72 ml-5">
                   <img
-                    src={`http://localhost:5000/${item.data.image.direction}`}
+                    // src={`http://localhost:5000/${item.data.image.direction}`}
+                      //! change
+                      src={`${item.data.image.direction}`}
                     className="w-full h-full object-contain max-w-[100px] max-h-[100px]"
                     alt={item.data.image.imageName}
                   />

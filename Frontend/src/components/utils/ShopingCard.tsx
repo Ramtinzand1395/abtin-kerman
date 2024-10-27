@@ -20,7 +20,9 @@ const ShopingCard: React.FC<CardItemProps> = ({
     <Link to={`/product/${_id}`}>
       <div className="flex flex-col items-start rounded-lg  cursor-pointer shadowhand">
         <img
-          src={`http://localhost:5000/${primaryImage?.direction}`}
+          // src={`http://localhost:5000/${primaryImage?.direction}`}
+              //! change
+              src={`${primaryImage?.direction}`}
           className="w-full  mb-2 object-contain  max-h-[40vh] "
           alt=""
         />

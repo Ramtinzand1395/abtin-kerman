@@ -73,7 +73,9 @@ const EditorImageModall: React.FC<EditorImageModallrops> = ({
                     ? " text-red-700 "
                     : "text-gray-500"
                 }`}
-                src={`http://localhost:5000/${image.direction}`}
+                // src={`http://localhost:5000/${image.direction}`}
+                //! change
+                src={`${image.direction}`}
                 alt={image.imageName}
               />
             </div>

@@ -26,12 +26,16 @@ const AccountsGames: React.FC<CardItemProps> = ({
     <Link to={`/accountgame/${_id}`}>
       <div className="flex flex-col rounded-t-lg cursor-pointer shadowhand relative divhover">
         <img
-          src={`http://localhost:5000/${primaryImage?.direction}`}
+          // src={`http://localhost:5000/${primaryImage?.direction}`}
+          //! change
+          src={`${primaryImage?.direction}`}
           className="w-full h-[50vh] mb-5 rounded-t-lg primaryImage"
           alt="Primary Image"
         />
         <img
-          src={`http://localhost:5000/${additionalImages[0]?.direction}`}
+          // src={`http://localhost:5000/${additionalImages[0]?.direction}`}
+          //! change
+          src={`${additionalImages[0]?.direction}`}
           className="w-full h-[50vh] mb-5 rounded-t-lg absolute top-0 left-0 secondImage"
           alt="Additional Image"
         />
