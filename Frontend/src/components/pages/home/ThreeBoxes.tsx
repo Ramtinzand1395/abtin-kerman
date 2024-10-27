@@ -30,7 +30,7 @@ const ThreeBoxes: React.FC = () => {
     <>
       <Animations>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5 my-10">
-          {BoxData.map((data) => (
+          {BoxData?.map((data) => (
             <img
               key={data.id}
               className="w-full h-full rounded-lg"

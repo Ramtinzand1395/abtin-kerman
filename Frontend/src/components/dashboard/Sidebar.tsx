@@ -154,7 +154,7 @@ const Sidebar: React.FC = () => {
         </div>
       </Link>
 
-      {sidebarItems.map((item) =>
+      {sidebarItems?.map((item) =>
         openSidebar ? (
           <button
             key={item.id}

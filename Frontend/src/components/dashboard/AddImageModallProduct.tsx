@@ -87,7 +87,7 @@ const AddImageModallProduct: React.FC<AddImageModallProps> = ({
           <MdClose size={30} className="bg-red-500 rounded-full text-white " />
         </button>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
-          {Images.map((image) => (
+          {Images?.map((image) => (
             <div key={image.imageName} className="relative">
               <img
                 onClick={() => toggleAdditionalImage(image)}

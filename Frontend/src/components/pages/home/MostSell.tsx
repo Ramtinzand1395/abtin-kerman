@@ -51,7 +51,7 @@ const MostSell: React.FC = () => {
       </Animations>
       <LeftAnimation>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 my-10 ">
-          {hovercars.map((card) => (
+          {hovercars?.map((card) => (
             <HoverCard key={card.id} card={card} />
           ))}
         </div>

@@ -60,7 +60,7 @@ export const ShopingcardProvider = ({ children }: shopingcardProps) => {
       if (prev.find((item) => item.id === id) == null) {
         return [...prev, { id, ItemQty: 1, SelectedPlatform, data }];
       } else {
-        return prev.map((item) => {
+        return prev?.map((item) => {
           if (item.id === id) {
             return { ...item, ItemQty: item.ItemQty + 1 };
           } else {
@@ -75,7 +75,7 @@ export const ShopingcardProvider = ({ children }: shopingcardProps) => {
       if (prev.find((item) => item.id === id)?.ItemQty == 1) {
         return prev.filter((item) => item.id !== id);
       } else {
-        return prev.map((item) => {
+        return prev?.map((item) => {
           if (item.id === id) {
             return { ...item, ItemQty: item.ItemQty - 1 };
           } else {

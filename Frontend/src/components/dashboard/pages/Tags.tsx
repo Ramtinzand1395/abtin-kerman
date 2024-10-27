@@ -212,7 +212,7 @@ const Tags: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {Tags.map((tag) => (
+              {Tags?.map((tag) => (
                 <tr
                   key={tag._id}
                   className="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 text-start "
@@ -238,7 +238,7 @@ const Tags: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {categories.map((cat) => (
+              {categories?.map((cat) => (
                 <tr
                   key={cat._id}
                   className="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 text-start "

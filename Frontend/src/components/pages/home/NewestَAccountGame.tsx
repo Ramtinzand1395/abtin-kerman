@@ -33,8 +33,8 @@ const NewestَAccountGame: React.FC = () => {
       </Animations>
       <LeftAnimation>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 my-10 ">
-          {Games.length > 0 &&
-            Games.map((game) => (
+          {Games?.length > 0 &&
+            Games?.map((game) => (
               <AccountsGames
                 primaryImage={game.primaryImage}
                 additionalImages={game.additionalImages}
