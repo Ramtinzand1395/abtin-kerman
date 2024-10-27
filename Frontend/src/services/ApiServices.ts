@@ -41,7 +41,13 @@ export const SmsService = () => {
 // @route PUT http://localhost:5000/api/login
 export const UploadImageService = (formData: FormData) => {
   const url = `${SERVER_URL}/upload-image`;
-  return axios.post(url, formData);
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  return axios.post(url, formData, config);
 };
 
 // @desc  create OR add User

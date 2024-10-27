@@ -6,6 +6,7 @@ const User = require("../models/User");
 const { sendSms } = require("../utils/Send-Msg");
 
 exports.handleLogin = async (req, res, next) => {
+  console.log("User")
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });

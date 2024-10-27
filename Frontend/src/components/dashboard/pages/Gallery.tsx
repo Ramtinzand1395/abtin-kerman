@@ -19,7 +19,9 @@ const Gallery: React.FC = () => {
       }
       const formData = new FormData();
       formData.append("image", Image);
+      console.log("first")
       const { data, status } = await UploadImageService(formData);
+      console.log(data,"data")
       if (status === 201) {
         toast.success("Image uploaded successfully!");
         console.log(data, "response");
@@ -36,6 +38,7 @@ const Gallery: React.FC = () => {
     const getImage = async () => {
       try {
         const { data } = await GetImageService();
+        console.log(data)
         setImages(data);
       } catch (err) {
         console.log(err);

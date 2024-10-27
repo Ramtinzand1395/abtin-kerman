@@ -31,8 +31,14 @@ router.get("/get-Categories", adminController.GetCategoreis);
 router.delete("/del-cat", adminController.DelCategory);
 // ?Comments
 router.get("/get-comments", adminController.handleGetComments);
-router.delete("/delete-comment/:commentId", adminController.handleDeleteComment);
-router.post("/confirm-comment/:commentId", adminController.handleConfirmComment);
+router.delete(
+  "/delete-comment/:commentId",
+  adminController.handleDeleteComment
+);
+router.post(
+  "/confirm-comment/:commentId",
+  adminController.handleConfirmComment
+);
 // ? WEBLOG
 router.post("/upload", uploadController.UploadWeblogImage);
 router.post("/create-blog", adminController.createBlog);
