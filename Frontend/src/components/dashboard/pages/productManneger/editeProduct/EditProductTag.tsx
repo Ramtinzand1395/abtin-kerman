@@ -2,21 +2,29 @@ import React, { useEffect, useState } from "react";
 import {
   getCategoriesService,
   getTagService,
-} from "../../../services/ApiServices";
-import { Category, GameData, Tag } from "../../../types";
-interface EditTagProps {
-  GameData: GameData;
-  setGameData: React.Dispatch<React.SetStateAction<GameData>>;
+} from "../../../../../services/ApiServices";
+import { Category, GameData, Tag } from "../../../../../types";
+import SearchTags from "../../../searchTag/SearchTags";
+import SearchCats from "../../../searchTag/SearchCats";
+import BtnTow from "../../../../utils/BtnTow";
+import { CiTrash } from "react-icons/ci";
+import { FaTrash } from "react-icons/fa";
+interface EditProductTagProps {
+  setSelectedProduct: React.Dispatch<React.SetStateAction<Product>>;
+  SelectedProduct: Product;
 }
-const EditTag: React.FC<EditTagProps> = ({ GameData, setGameData }) => {
+const EditProductTag: React.FC<EditProductTagProps> = ({
+  setSelectedProduct,
+  SelectedProduct,
+}) => {
   const handleRemovetag = (indexToRemove: number) => {
-    setGameData((prevData) => ({
+    setSelectedProduct((prevData) => ({
       ...prevData,
       tags: prevData.tags.filter((_, index) => index !== indexToRemove),
     }));
   };
   const handleRemovecat = (indexToRemove: number) => {
-    setGameData((prevData) => ({
+    setSelectedProduct((prevData) => ({
       ...prevData,
       categories: prevData.categories.filter(
         (_, index) => index !== indexToRemove
@@ -39,31 +47,15 @@ const EditTag: React.FC<EditTagProps> = ({ GameData, setGameData }) => {
     };
     getdata();
   }, []);
-  const handleAddTag = (tag: Tag) => {
-    setGameData((prevData) => ({
-      ...prevData,
-      tags: [...prevData.tags, tag],
-    }));
-  };
-  const handleAddCat = (cat: Category) => {
-    setGameData((prevData) => ({
-      ...prevData,
-      categories: [...prevData.categories, cat],
-    }));
-  };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
       <div className="">
         <div className="">
-          {Tags?.map((tag) => (
-            <button
-              key={tag._id}
-              onClick={() => handleAddTag(tag)}
-              className=""
-            >
-              {tag.tagName}
-            </button>
-          ))}
+          <SearchTags
+            setGameData={setSelectedProduct}
+            Tags={Tags}
+            GameData={SelectedProduct}
+          />
         </div>
         <table className="min-w-full  text-sm font-light text-surface my-10">
           <thead className="border-b border-neutral-200 font-medium ">
@@ -71,19 +63,26 @@ const EditTag: React.FC<EditTagProps> = ({ GameData, setGameData }) => {
               <th scope="col" className="px-6 py-4 text-start">
                 تگ ها
               </th>
+              <th scope="col" className="px-6 py-4 text-start">
+                حذف
+              </th>
             </tr>
           </thead>
           <tbody>
-            {GameData.tags.map((tag, index) => (
+            {SelectedProduct?.tags?.map((tag, index) => (
               <tr
                 key={tag._id}
                 className="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 text-start "
               >
-                <td
-                  onClick={() => handleRemovetag(index)}
-                  className="whitespace-nowrap px-6 py-4 font-medium"
-                >
+                <td className="whitespace-nowrap px-6 py-4 font-medium">
                   {tag.tagName}
+                </td>
+                <td className="whitespace-nowrap px-6 py-4 font-medium">
+                  <BtnTow
+                    ButtonColor="bg-red-500 hover:from-red-500 hover:to-red-400 hover:ring-red-400"
+                    ButtonText={<FaTrash />}
+                    onClick={() => handleRemovetag(index)}
+                  />
                 </td>
               </tr>
             ))}
@@ -91,30 +90,37 @@ const EditTag: React.FC<EditTagProps> = ({ GameData, setGameData }) => {
         </table>
       </div>
       <div className="">
-        {categories.map((cat) => (
-          <button key={cat._id} onClick={() => handleAddCat(cat)} className="">
-            {cat.categoryName}
-          </button>
-        ))}
+        <SearchCats
+          setGameData={setSelectedProduct}
+          GameData={SelectedProduct}
+          cats={categories}
+        />
         <table className="min-w-full text-left text-sm font-light text-surface my-10">
           <thead className="border-b border-neutral-200 font-medium ">
             <tr>
               <th scope="col" className="px-6 py-4 text-start">
                 دسته بندی ها
               </th>
+              <th scope="col" className="px-6 py-4 text-start">
+                حذف
+              </th>
             </tr>
           </thead>
           <tbody>
-            {GameData.categories.map((cat, index) => (
+            {SelectedProduct?.categories?.map((cat, index) => (
               <tr
                 key={cat._id}
                 className="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 text-start "
               >
-                <td
-                  onClick={() => handleRemovecat(index)}
-                  className="whitespace-nowrap px-6 py-4 font-medium"
-                >
+                <td className="whitespace-nowrap px-6 py-4 font-medium">
                   {cat.categoryName}
+                </td>
+                <td className="whitespace-nowrap px-6 py-4 font-medium">
+                  <BtnTow
+                    ButtonColor="bg-red-500 hover:from-red-500 hover:to-red-400 hover:ring-red-400"
+                    ButtonText={<FaTrash />}
+                    onClick={() => handleRemovecat(index)}
+                  />
                 </td>
               </tr>
             ))}
@@ -125,4 +131,4 @@ const EditTag: React.FC<EditTagProps> = ({ GameData, setGameData }) => {
   );
 };
 
-export default EditTag;
+export default EditProductTag;

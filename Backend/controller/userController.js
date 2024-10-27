@@ -20,6 +20,48 @@ exports.handleLogin = async (req, res, next) => {
   }
 };
 
+exports.handleUserInfo = async (req, res, next) => {
+  try {
+    const { userId, userInfo } = req.body;
+    const user = await User.findOne({ _id: userId });
+    if (!user) {
+      res.status(404).json({ message: "کاربر پیدا نشد." });
+    } else {
+      // Update user information
+      user.firstName = userInfo.firstName;
+      user.lastname = userInfo.lastName;
+      user.phone = userInfo.phone; // Consider changing this to String if it's a phone number
+      user.address = {
+        // Assuming you want to replace the existing address
+        plaque: userInfo.plaque,
+        unit: userInfo.unit,
+        postalCode: userInfo.postalCode,
+        address: userInfo.address,
+        city: userInfo.city,
+        provider: userInfo.provider,
+      };
+
+      // Save the changes
+      await user.save();
+      res.status(201).json({ message: "اطلاعات با موفقیت ذخیره شد.", user });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+exports.handleGetUser = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findOne({ _id: userId });
+    if (!user) {
+      res.status(404).json({ message: "کاربر پیدا نشد" });
+    } else {
+      res.status(200).json({ user });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 exports.handleSms = async (req, res, next) => {
   try {
     const response = sendSms();

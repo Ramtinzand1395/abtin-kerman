@@ -1,15 +1,15 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ConnectedProducts from "../../utils/ConnectedProducts";
 import BtnTow from "../../utils/BtnTow";
-// import { useShopingcard } from "../context/ShopingCard";
 import { getGameSingleService } from "../../../services/ApiServices";
 import { useParams } from "react-router-dom";
 import { GameData } from "../../../types";
 import Tabs from "../../utils/tab/Tabs";
+import { useShopingcard } from "../../context/ShopingCard";
 
 const AccountGame: React.FC = () => {
   // !Context
-  // const { testaccountGame, setOpenMiniShoppingcard } = useShopingcard();
+  const { InceraseCardQty, DecreaseCardQty } = useShopingcard();
   const [game, setgame] = useState<GameData | null>(null);
   const { gameId } = useParams();
   const [currentImage, setCurrentImage] = useState<string>("");
@@ -31,70 +31,53 @@ const AccountGame: React.FC = () => {
     ? [...game.info].sort((a, b) => a.price - b.price)
     : [];
 
-  const [userCardItem, setuserCardItem] = useState({
+  const [SelectedPlatform, setSelectedPlatform] = useState({
     platform: "",
-    price: "",
     capacity: "",
-    _id: "",
-    inStock: false,
-    sellOne: true,
-    cardmg: "",
-    title: "",
+    price: 0,
   });
   const handleUserSelectChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    setuserCardItem({
-      ...userCardItem,
+    setSelectedPlatform({
+      ...SelectedPlatform,
       [e.target.name]: e.target.value,
     });
   };
-  // const isInStock = () => {
-  //   if (game?.info) {
-  //     const gameInfo = game.info.find(
-  //       (item) =>
-  //         item.platform === userCardItem.platform &&
-  //         item.capacity === userCardItem.capacity
-  //     );
-
-  //     if (gameInfo && gameInfo.inStock) {
-  //       setuserCardItem((prev) => ({
-  //         ...prev,
-  //         inStock: true,
-  //         price: gameInfo.price,
-  //         _id: gameId,
-  //         cardmg: game?.primaryImage.direction,
-  //         title: game.title,
-  //       }));
-  //       return;
-  //     } else {
-  //       setuserCardItem((prev) => ({
-  //         ...prev,
-  //         inStock: false,
-  //         price: 0,
-  //         _id: gameId,
-  //         cardmg: game?.primaryImage.direction,
-  //         title: game.title,
-  //       }));
-  //       return;
-  //     }
-  //   }
-  //   return;
-  // };
-  const handleAddToCart = () => {
-    // if (!userCardItem.platform || !userCardItem.capacity) {
-    //   alert("Please select both platform and capacity");
-    //   return;
-    // }
-    // testaccountGame(userCardItem);
-    // setOpenMiniShoppingcard(true);
-    console.log("first");
+  const isInStock = () => {
+    if (game?.info) {
+      const gameInfo = game.info.find(
+        (item) =>
+          item.platform === SelectedPlatform.platform &&
+          item.capacity === SelectedPlatform.capacity &&
+          item.inStock === true
+      );
+      if (gameInfo) {
+        setSelectedPlatform((prev) => ({ ...prev, price: gameInfo.price }));
+        return gameInfo;
+      }
+    }
+    setSelectedPlatform((prev) => ({ ...prev, price: 0 }));
+    return null;
   };
-  // useEffect(() => {
-  //   if (userCardItem.platform.length > 0 && userCardItem.capacity.length > 0) {
-  //     isInStock();
-  //   }
-  // }, [userCardItem.platform, userCardItem.capacity]);
+  const handleAddToCart = () => {
+    const data = {
+      title: game?.title,
+      image: game?.primaryImage,
+      price: SelectedPlatform?.price,
+      features: game?.features,
+      tags: game?.tags,
+    };
+    game?._id && InceraseCardQty(game?._id, SelectedPlatform, data);
+  };
+  useEffect(() => {
+    if (
+      SelectedPlatform.platform.length > 0 &&
+      SelectedPlatform.capacity.length > 0
+    ) {
+      isInStock();
+    }
+  }, [SelectedPlatform.platform, SelectedPlatform.capacity]);
   const handleImageClick = (imageDirection: string) => {
     setCurrentImage(imageDirection);
   };
@@ -136,27 +119,27 @@ const AccountGame: React.FC = () => {
         <div className="flex flex-col items-start justify-evenly">
           <h1 className="font-tanha text-4xl font-bold">{game?.title}</h1>
           <p>
-             {hasMultiplePrices ? (
-            <>
-              <p className="my-2">
-                از {sortedPrices[0].price} _{" "}
-                {sortedPrices[sortedPrices.length - 1].price} تومان
-              </p>
-            </>
-          ) : (
-            game?.info.map((item, index) => (
-              <div key={index} className="my-2">
-                {item.price} تومان
-              </div>
-            ))
-          )}
+            {hasMultiplePrices ? (
+              <>
+                <p className="my-2">
+                  از {sortedPrices[0].price} _{" "}
+                  {sortedPrices[sortedPrices.length - 1].price} تومان
+                </p>
+              </>
+            ) : (
+              game?.info.map((item, index) => (
+                <div key={index} className="my-2">
+                  {item.price} تومان
+                </div>
+              ))
+            )}
           </p>
           <div className="flex flex-col">
             <label className="text-lg font-semibold mb-2 text-secondery">
               پلتفرم
             </label>
             <select
-              value={userCardItem.platform}
+              value={SelectedPlatform.platform}
               onChange={handleUserSelectChange}
               name="platform"
               className="px-16 py-2 rounded-lg border-primary border-2 ml-5"
@@ -172,7 +155,7 @@ const AccountGame: React.FC = () => {
               ظرفیت
             </label>
             <select
-              value={userCardItem.capacity}
+              value={SelectedPlatform.capacity}
               onChange={handleUserSelectChange}
               name="capacity"
               className="px-16 py-2 rounded-lg border-primary border-2"
@@ -185,30 +168,34 @@ const AccountGame: React.FC = () => {
             </select>
           </div>
           <div className="flex items-center">
-            <div className="ml-5">
-              {userCardItem.inStock ? (
-                <label className="mr-2">قیمت: {userCardItem.price} تومان</label>
-              ) : (
-                <p className="text-red-500">در انبار موجود نیست</p>
-              )}
-            </div>
+            {SelectedPlatform.platform && SelectedPlatform.capacity ? (
+              <div className="ml-5">
+                {SelectedPlatform.price > 0 ? (
+                  <label className="mr-2">
+                    قیمت: {SelectedPlatform.price} تومان
+                  </label>
+                ) : (
+                  <p className="text-red-500">در انبار موجود نیست</p>
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+
             <BtnTow
               ButtonColor="bg-blue-500 hover:from-blue-500 hover:to-blue-400 hover:ring-blue-400"
               ButtonText="افزودن به سبد خرید"
               onClick={handleAddToCart}
             />
+            <button onClick={() => game?._id && DecreaseCardQty(game?._id)}>
+              -
+            </button>
           </div>
         </div>
       </div>
 
       {/* Secont tabs */}
-      <div className=" my-10">
-        {game && (
-          <Tabs
-            Product={game}
-          />
-        )}
-      </div>
+      <div className=" my-10">{game && <Tabs Product={game} />}</div>
       <div className="my-10">
         <ConnectedProducts />
       </div>

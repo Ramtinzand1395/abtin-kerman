@@ -11,8 +11,6 @@ const infoSchema = new mongoose.Schema({
 
 const gameSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  company: { type: String, required: true },
-  region: { type: String, required: true },
   primaryImage: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Image",
@@ -24,7 +22,6 @@ const gameSchema = new mongoose.Schema({
       ref: "Image",
     },
   ],
-  multiplayer: { type: Boolean, default: false },
   info: { type: [infoSchema], required: true },
   categories: [
     {
@@ -51,7 +48,7 @@ const gameSchema = new mongoose.Schema({
   additionalExplanations: {
     type: String,
   },
-  Specifications: [
+  features: [
     {
       key: { type: String },
       value: { type: String },

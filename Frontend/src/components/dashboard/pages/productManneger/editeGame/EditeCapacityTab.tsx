@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { GameData } from "../../../types";
-interface EditeGameDataTabProps {
+import { GameData } from "../../../../../types";
+interface EditeCapacityTabProps {
   GameData: GameData;
   setGameData: React.Dispatch<React.SetStateAction<GameData>>;
 }
-const EditeGameDataTab: React.FC<EditeGameDataTabProps> = ({
+const EditeCapacityTab: React.FC<EditeCapacityTabProps> = ({
   GameData,
   setGameData,
 }) => {
@@ -118,4 +118,4 @@ const EditeGameDataTab: React.FC<EditeGameDataTabProps> = ({
   );
 };
 
-export default EditeGameDataTab;
+export default EditeCapacityTab;

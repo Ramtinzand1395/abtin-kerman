@@ -91,6 +91,7 @@ const LoginDropDown: React.FC<DropdownProps> = ({
             onClick={() => {
               googleLogout();
               localStorage.removeItem("User");
+              localStorage.removeItem("shopping-card")
               setUser(null);
               setOpenModall(false);
             }}

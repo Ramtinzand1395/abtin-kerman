@@ -13,6 +13,7 @@ const AllProducts: React.FC = () => {
   const { FiltredProducts, hasMore, loading } =
     usePaggination(pageNumber, safeCategory, sortOrder);
   // const observer = useRef();
+  // console.log(FiltredProducts)
   const observer = useRef<IntersectionObserver | null>(null);
   const lastProduct = useCallback(
     (node: HTMLElement | null) => {

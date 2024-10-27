@@ -1,19 +1,30 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 
-import AddImageModall from "../AddImageModall";
+// import AddImageModall from "../AddImageModall";
+// import {
+//   addGameService,
+//   getCategoriesService,
+//   getTagService,
+// } from "../../../services/ApiServices";
+import { toast } from "react-toastify";
+import { MdAdd } from "react-icons/md";
+import { FaTrash } from "react-icons/fa";
+import { GameData } from "../../../../types";
 import {
   addGameService,
   getCategoriesService,
   getTagService,
-} from "../../../services/ApiServices";
-import { toast } from "react-toastify";
-import { MdAdd } from "react-icons/md";
-import { FaTrash } from "react-icons/fa";
-import SearchTags from "../searchTag/SearchTags";
-import SearchCats from "../searchTag/SearchCats";
-import { GameData, Image } from "../../../types";
-import AccountGameAdditionalExplanations from "../CkEditor/AccountGameAdditionalExplanations";
-const AddGame: React.FC = () => {
+} from "../../../../services/ApiServices";
+import { Image } from "@ckeditor/ckeditor5-image";
+import AddImageModall from "../../AddImageModall";
+import SearchTags from "../../searchTag/SearchTags";
+import SearchCats from "../../searchTag/SearchCats";
+import AccountGameAdditionalExplanations from "../../CkEditor/AccountGameAdditionalExplanations";
+// import SearchTags from "../searchTag/SearchTags";
+// import SearchCats from "../searchTag/SearchCats";
+// import { GameData, Image } from "../../../types";
+// import AccountGameAdditionalExplanations from "../CkEditor/AccountGameAdditionalExplanations";
+const CreateGameTab: React.FC = () => {
   const [platform, setPlatform] = useState("");
   const [capacity, setCapacity] = useState("");
   const [price, setPrice] = useState(0);
@@ -31,7 +42,7 @@ const AddGame: React.FC = () => {
     multiplayer: false,
     categories: [],
     tags: [],
-    Specifications: [],
+    features: [],
     additionalExplanations: "",
   });
 
@@ -51,8 +62,8 @@ const AddGame: React.FC = () => {
       setnewValueSpecifications("");
       setGameData((prev) => ({
         ...prev,
-        Specifications: [
-          ...prev.Specifications,
+        features: [
+          ...prev.features,
           { key: newKeySpecifications, value: newValueSpecifications },
         ],
       }));
@@ -304,47 +315,6 @@ const AddGame: React.FC = () => {
       <div className="grid grid-cols-2 md:grid-cols-2 gap-5 ">
         <div className="">
           <label className="font-bold text-2xl flex items-center my-5">
-            سازنده
-          </label>
-          <input
-            onChange={handleGameDataChange}
-            name="company"
-            value={GameData.company}
-            className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
-            type="text"
-            title="company"
-          />
-        </div>
-        <div className="">
-          <label className="font-bold text-2xl flex items-center my-5">
-            حالت چند نفره
-          </label>
-          <select
-            value={GameData.multiplayer ? "true" : "false"}
-            onChange={handleGameDataChange}
-            className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
-            title=" multiplayer  "
-            name="multiplayer"
-          >
-            <option value=""> یک کزینه را انتخاب کنید</option>
-            <option value="true">دارد</option>
-            <option value="false">ندارد</option>
-          </select>
-        </div>
-        <div className="">
-          <label className="font-bold text-2xl flex items-center my-5">
-            ریجن
-          </label>
-          <input
-            onChange={handleGameDataChange}
-            name="region"
-            value={GameData.region}
-            className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
-            title="region"
-          />
-        </div>
-        <div className="">
-          <label className="font-bold text-2xl flex items-center my-5">
             اسم بازی
           </label>
           <input
@@ -400,11 +370,6 @@ const AddGame: React.FC = () => {
                 className="px-5 py-1 rounded-lg border-primary border-2 ml-5"
               />
             </div>
-            {/* <BtnTow
-                  ButtonColor="bg-green-500 hover:from-green-500 hover:to-green-400 hover:ring-green-400 flex items-center"
-                  ButtonText={"+"}
-                  onClick={() => handleAddFeature()}
-                /> */}
             <button
               onClick={() => handleAddSpecifications()}
               className="bg-green-500 hover:bg-green-600 px-3.5 py-2 rounded-md text-white"
@@ -414,20 +379,15 @@ const AddGame: React.FC = () => {
             </button>
           </div>
           <ul>
-            {GameData.Specifications?.map((feature, index) => (
+            {GameData.features?.map((feature, index) => (
               <li key={index}>
                 <strong>{feature.key}</strong>: {feature.value}
-                <button
-                // You can add an onClick handler here to delete or update the feature
-                // onClick={() => updateFeature(feature.key, '')}
-                >
-                  Delete
-                </button>
+                <button>Delete</button>
               </li>
             ))}
           </ul>
         </div>
-        <AccountGameAdditionalExplanations setGameData={setGameData} />
+        <AccountGameAdditionalExplanations setGameData={setGameData} GameData={GameData} />
 
         <div className="">
           <button
@@ -442,4 +402,4 @@ const AddGame: React.FC = () => {
   );
 };
 
-export default AddGame;
+export default CreateGameTab;

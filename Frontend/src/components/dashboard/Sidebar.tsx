@@ -3,7 +3,13 @@ import React, { useState } from "react";
 import "./sidebar.css";
 // import { sidebarItems } from "./DashData";
 import { Link } from "react-router-dom";
-import { FaComment, FaHome, FaPowerOff, FaProductHunt, FaTags } from "react-icons/fa";
+import {
+  FaComment,
+  FaHome,
+  FaPowerOff,
+  FaProductHunt,
+  FaTags,
+} from "react-icons/fa";
 import { MdManageAccounts } from "react-icons/md";
 import { IoIosListBox } from "react-icons/io";
 import { IoGameControllerOutline } from "react-icons/io5";
@@ -24,9 +30,8 @@ const Sidebar: React.FC = () => {
     {
       id: 2,
       label: "مدیریت محصولات",
-      icon:<SiRockstargames size={30}  />,
+      icon: <SiRockstargames size={30} />,
       helperTxt: "مدیریت محصولات ",
-
       path: `/dashboard/product-management/${User?._id}`,
     },
     {
@@ -34,7 +39,7 @@ const Sidebar: React.FC = () => {
       label: "سفارشات",
       icon: <IoIosListBox size={30} />,
       helperTxt: "سفارشات",
-      path: "/orders",
+      path: `/dashboard/orders/${User?._id}`,
     },
     {
       id: 4,
@@ -43,45 +48,26 @@ const Sidebar: React.FC = () => {
       helperTxt: "کاربران",
       path: "/user-manneger",
     },
-    {
-      id: 5,
-      label: "ساخت اکانت بازی جدید",
-      icon: <IoGameControllerOutline size={30} />,
-      helperTxt: "ساخت اکانت بازی جدید",
-      path: `/dashboard/account-game-manneger/${User?._id}`,
-    },
-    {
-      id: 6,
-      label: "ساخت اکانت بازی جدید",
-      icon: <GrGallery  size={30} />,
-      helperTxt: "ساخت اکانت بازی جدید",
-      path: `/dashboard/gallery/${User?._id}`,
-    },
+
     {
       id: 7,
       label: "دسته بندی و تگ ها",
-      icon: <FaTags  size={30} />,
+      icon: <FaTags size={30} />,
       helperTxt: "دسته بندی و تگ ها",
       path: `/dashboard/tags/${User?._id}`,
     },
+
     {
-      id: 8,
-      label: "ساخت محول جدید",
-      icon: <FaProductHunt   size={30} />,
-      helperTxt: "ساخت محول جدید",
-      path: `/dashboard/create-product/${User?._id}`,
-    },
-    {
-      id:9,
+      id: 9,
       label: "مدیرین نظرات",
-      icon: <FaComment   size={30} />,
+      icon: <FaComment size={30} />,
       helperTxt: "مدیرین نظرات",
       path: `/dashboard/comment-manegment/${User?._id}`,
     },
     {
-      id:10,
+      id: 10,
       label: "مقالات",
-      icon: <SiCkeditor4   size={30} />,
+      icon: <SiCkeditor4 size={30} />,
       helperTxt: "مقالات",
       path: `/dashboard/weblog/${User?._id}`,
     },
@@ -95,7 +81,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <div
-      className={`h-full min-h-screen bg-primary flex flex-col transition-all ease-in-out   duration-200 ${
+      className={`h-full min-h-screen bg-primary flex flex-col   transition-all pr-2 ease-in-out sticky top-0  duration-200 ${
         openSidebar ? "w-56 " : "w-16  items-center"
       }`}
     >
@@ -115,7 +101,7 @@ const Sidebar: React.FC = () => {
             openSidebar ? "visible" : "hidden"
           } cursor-pointer mt-2 mr-2`}
         >
-         <FaPowerOff size={30} color="white"  className="m-2"/>
+          <FaPowerOff size={30} color="white" className="m-2" />
         </div>
       </div>
 
@@ -157,8 +143,7 @@ const Sidebar: React.FC = () => {
               openSidebar ? "block" : "hidden"
             } flex flex-col text-white`}
           >
-            <span className=" text-white">Domin Url</span>
-            <span className=" text-white">cv</span>
+            <span className=" text-white">admin</span>
           </div>
         </div>
       </Link>
@@ -167,88 +152,43 @@ const Sidebar: React.FC = () => {
         openSidebar ? (
           <button
             key={item.id}
-            className={`my-2 p-2  flex text-sm transition-all hover:bg-white hover:text-primary ease-in-out duration-200 hover:font-bold rounded-l-full  ${
+            className={`my-2 p-2  flex text-sm transition-all hover:bg-white  ease-in-out duration-200 hover:font-bold hover:text-black rounded-l-full  ${
               location.pathname === item.path
-                ? "font-bold bg-blue-100 text-[#0007ff]"
+                ? "font-bold bg-white text-blue-500"
                 : "font-normal  text-white"
             } `}
           >
-            {item.path === "them" ? (
-              <a
-              //   href={`
-              // https://${DomainData?.base_domain}.taktiko.io/toolbar/?editcode:${Username}`}
-              >
-                <div
-                  className={`flex items-center ${location.pathname === item.path ? "text-red-500" : "text-white"}`}
-                  style={{
-                    fill: location.pathname === item.path ? "#0007ff" : "white",
-                    transition: "fill 0.3s ease",
-                  }}
-                >
-                  {item.icon}
-                  <p className="mr-2">{item.label}</p>
-                </div>
-              </a>
-            ) : (
-              <Link className={`flex items-center `} to={item.path}>
-                <div
-                  className={`${location.pathname === item.path ? "text-red-500" : "text-white"}`}
-                  style={{
-                    fill: location.pathname === item.path ? "#0007ff" : "white",
-                    transition: "fill 0.3s ease",
-                  }}
-                >
-                  {item.icon}
-                </div>
-                <p className="mr-2 font-tanha ">{item.label}</p>
-                <div
-                  className={`bg-black rigth-5 rounded-lg py-1 px-3 absolute z-10 helper`}
-                >
-                  <span className="text-xs text-white bg-secondery">
-                    {item.helperTxt}
-                  </span>
-                </div>
-              </Link>
-            )}
-          </button>
-        ) : item.path === "them" ? (
-          <a
-            className={`icon `}
-            // href={`https://${DomainData?.base_domain}.taktiko.io/toolbar/?editcode=${Username}`}
-          >
-            <div
-              className={`flex items-center ${location.pathname === item.path ? "text-red-500" : "text-white"}`}
-              style={{
-                fill: location.pathname === item.path ? "#0007ff" : "white",
-                transition: "fill 0.3s ease",
-              }}
-            >
-              {item.icon}
+            <Link className={`flex items-center `} to={item.path}>
               <div
-                className={`bg-blue-500 left-5 rounded-lg py-1 px-3 absolute z-10 helper`}
+                className={`hover:text-black ${
+                  location.pathname === item.path
+                    ? "text-blue-500"
+                    : "text-white"
+                }`}
+              >
+                {item.icon}
+              </div>
+              <p className="mr-2 font-tanha ">{item.label}</p>
+              <div
+                className={`bg-black rigth-5 rounded-lg py-1 px-3 absolute z-10 helper`}
               >
                 <span className="text-xs text-white bg-secondery">
                   {item.helperTxt}
                 </span>
               </div>
-            </div>
-          </a>
+            </Link>
+          </button>
         ) : (
           <Link
-            className={`icon bg-white w-full  rounded-r-full my-2 flex items-center justify-center p-2 ${
-              location.pathname === item.path ? "bg-blue-100" : ""
+            className={`icon  w-full  rounded-r-full my-2 flex items-center justify-center p-2 ${
+              location.pathname === item.path
+                ? "font-bold bg-white text-blue-500"
+                : "font-normal  text-white"
             } `}
             key={item.id}
             to={item.path}
           >
-            <div
-              style={{
-                fill: location.pathname === item.path ? "red" : "#062348",
-                transition: "fill 0.3s ease",
-              }}
-            >
-              {item.icon}
-            </div>
+            <div>{item.icon}</div>
             <div
               className={`text-white bg-secondery text-bl right-5 rounded-lg py-1 px-3 absolute z-10 helper`}
             >

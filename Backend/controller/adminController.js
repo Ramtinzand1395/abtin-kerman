@@ -9,6 +9,9 @@ const Tag = require("../models/Tag");
 const categorey = require("../models/categorey");
 const Products = require("../models/Products");
 const Comment = require("../models/Comment");
+const Order = require("../models/order");
+const User = require("../models/User");
+const order = require("../models/order");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -79,46 +82,33 @@ exports.AddGame = async (req, res) => {
   }
 };
 // * GET GAME
-// ! هذ ایف برای تک به تک اجرا بشه
+// !sssss
 exports.GetGames = async (req, res) => {
-  try {
-    const games = await Games.find();
-    // Create an array to store the result
-    const gamesWithTags = await Promise.all(
-      games.map(async (game) => {
-        if (game) {
-          // Find tags only if the game has tags
-          const gameTags = await Tag.find({ _id: { $in: game.tags } });
-          const gameCats = await categorey.find({
-            _id: { $in: game.categories },
-          });
-          const primaryImage = await Image.findOne({
-            _id: { $in: game.primaryImage },
-          });
-          const additionalImages = await Image.find({
-            _id: { $in: game.additionalImages },
-          });
+  const { pageNumber = 1, sortOrder = "newestFirst" } = req.query;
+  const limit = 5;
+  const page = parseInt(pageNumber, 5);
 
-          return {
-            ...game.toObject(),
-            tags: gameTags,
-            categories: gameCats,
-            primaryImage,
-            additionalImages,
-          };
-        } else {
-          return {
-            ...game.toObject(),
-            tags: [],
-            categories: [],
-            images: [],
-            primaryImage: null,
-            additionalImages: [],
-          }; // No tags, just return the game with an empty tags array
-        }
-      })
-    );
-    res.status(200).json(gamesWithTags);
+  if (isNaN(page) || page < 1) {
+    return res.status(400).json({ error: "Invalid page number" });
+  }
+  const skip = (page - 1) * limit;
+
+  const sortOption =
+    sortOrder === "newestFirst" ? { createdAt: -1 } : { createdAt: 1 };
+
+  try {
+    const totalOrders = await Games.countDocuments();
+    const totalPages = Math.ceil(totalOrders / limit);
+    const games = await Games.find()
+      .populate("tags")
+      .populate("categories")
+      .populate("primaryImage")
+      .populate("additionalImages")
+      .limit(limit)
+      .skip(skip)
+      .sort(sortOption);
+
+    res.status(200).json({ games, totalPages });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
@@ -170,11 +160,10 @@ exports.UpdateGame = async (req, res) => {
     title,
     primaryImage,
     additionalImages,
-    company,
-    region,
-    multiplayer,
     categories,
     tags,
+    features,
+    additionalExplanations,
   } = req.body;
   try {
     const game = await Games.findById({ _id });
@@ -185,10 +174,9 @@ exports.UpdateGame = async (req, res) => {
     game.title = title;
     game.primaryImage = primaryImage;
     game.additionalImages = additionalImages;
-    game.company = company;
-    game.region = region;
-    game.multiplayer = multiplayer;
+    game.features = features;
     game.categories = categories;
+    game.additionalExplanations = additionalExplanations;
     game.tags = tags;
     // Save the changes
     await game.save();
@@ -273,6 +261,7 @@ exports.DelCategory = async (req, res) => {
 };
 
 // ?  PRODUCT API
+// sssssss
 // * ADD PRODUCT
 exports.AddProduct = async (req, res) => {
   try {
@@ -284,52 +273,78 @@ exports.AddProduct = async (req, res) => {
   }
 };
 // * GET PRODUCT
-// ! هذ ایف برای تک به تک اجرا بشه
 exports.GetProducts = async (req, res) => {
-  try {
-    const ProductsDta = await Products.find();
-    // Create an array to store the result
-    const gamesWithTags = await Promise.all(
-      ProductsDta.map(async (product) => {
-        if (product) {
-          // Find tags only if the game has tags
-          const productTags = await Tag.find({ _id: { $in: product.tags } });
-          const productCats = await categorey.find({
-            _id: { $in: product.categories },
-          });
-          const primaryImage = await Image.findOne({
-            _id: { $in: product.primaryImage },
-          });
-          const additionalImages = await Image.find({
-            _id: { $in: product.additionalImages },
-          });
+  const { pageNumber = 1, sortOrder = "newestFirst" } = req.query;
+  const limit = 5;
+  const page = parseInt(pageNumber, 5);
+  if (isNaN(page) || page < 1) {
+    return res.status(400).json({ error: "Invalid page number" });
+  }
+  const skip = (page - 1) * limit;
+  const sortOption =
+    sortOrder === "newestFirst" ? { createdAt: -1 } : { createdAt: 1 };
 
-          return {
-            ...product.toObject(),
-            tags: productTags,
-            categories: productCats,
-            primaryImage,
-            additionalImages,
-          };
-        } else {
-          return {
-            ...product.toObject(),
-            tags: [],
-            categories: [],
-            images: [],
-            primaryImage: null,
-            additionalImages: [],
-          }; // No tags, just return the game with an empty tags array
-        }
-      })
-    );
-    res.status(200).json(gamesWithTags);
+  try {
+    const totalOrders = await Products.countDocuments();
+    const totalPages = Math.ceil(totalOrders / limit);
+    const products = await Products.find()
+      .populate("tags")
+      .populate("categories")
+      .populate("primaryImage")
+      .populate("additionalImages")
+      .limit(limit)
+      .skip(skip)
+      .sort(sortOption);
+    res.status(200).json({ products, totalPages });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
   }
 };
+// * UPDATE PRODUCT
+exports.Updateproduct = async (req, res) => {
+  const {
+    _id,
+    info,
+    title,
+    primaryImage,
+    additionalImages,
+    categories,
+    tags,
+    features,
+    additionalExplanations,
+    Specifications,
+    quantity,
+    price,
+    descriptionو,
+  } = req.body;
+  try {
+    const product = await Products.findById({ _id });
+    console.log(product);
+    if (!product) {
+      return res.status(404).json({ message: "بازی پیدا نشد" });
+    }
+    product.info = info;
+    product.title = title;
+    product.primaryImage = primaryImage;
+    product.additionalImages = additionalImages;
+    product.features = features;
+    product.categories = categories;
+    product.additionalExplanations = additionalExplanations;
+    product.Specifications = Specifications;
+    product.quantity = quantity;
+    product.tags = tags;
+    product.price = price;
+    product.description = description;
 
+    // Save the changes
+    await product.save();
+    res.status(200).json({ data: product, message: "بازی آپدیت شد" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
+  }
+};
 // * GET SINGLE PRODUCT
 exports.Getproduct = async (req, res) => {
   const { id } = req.params;
@@ -361,6 +376,17 @@ exports.Getproduct = async (req, res) => {
       comments,
     };
     res.status(200).json(productWithDetails);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
+  }
+};
+// * DELETE PRODUCT
+exports.deleteProduct = async (req, res) => {
+  const { productId } = req.params;
+  try {
+    const product = await Products.findByIdAndRemove(productId);
+    res.status(200).json({ data: product, message: "محصول  حذف شد" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
@@ -465,3 +491,151 @@ exports.Blogs = async (req, res) => {
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
   }
 };
+// * ORDERS
+// ? ADD ORDER
+exports.AddOrder = async (req, res) => {
+  const { CardItems, userId } = req.body;
+  try {
+    const items = CardItems.map((item) => ({
+      ...item,
+      itemType: item.SelectedPlatform === null ? "Products" : "Games",
+    }));
+    const orderData = await Order.create({
+      user: userId,
+      items,
+      TrackingCode: Math.floor(1000000 + Math.random() * 9000000),
+    });
+    const user = await User.findById(req.body.userId);
+    user.order.push(orderData._id);
+    await user.save();
+    res
+      .status(200)
+      .json({ data: orderData, message: "سفارش شما با موفقیت ثبت شد." });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
+  }
+};
+// ? GET ORDER
+exports.GetOrders = async (req, res) => {
+  const { pageNumber = 1, sortOrder = "newestFirst" } = req.query;
+  const limit = 10;
+
+  // Validate pageNumber
+  const page = parseInt(pageNumber, 10);
+  if (isNaN(page) || page < 1) {
+    return res.status(400).json({ error: "Invalid page number" });
+  }
+
+  const skip = (page - 1) * limit;
+  const sortOption =
+    sortOrder === "newestFirst" ? { createdAt: -1 } : { createdAt: 1 };
+
+  try {
+    // Count total orders
+    const totalOrders = await Order.countDocuments(); // You can add filters here if needed
+    const totalPages = Math.ceil(totalOrders / limit); // Calculate total pages
+
+    // Fetch orders
+    const orders = await Order.find()
+      .populate("user")
+      .limit(limit)
+      .skip(skip)
+      .sort(sortOption)
+      .lean(); // Use lean to return plain JavaScript objects
+
+    // Process each order to populate item details
+    for (const order of orders) {
+      for (const item of order.items) {
+        const id = item.id;
+        if (item.itemType === "Games") {
+          const populatedGame = await Games.findById(
+            { _id: id },
+            "title primaryImage"
+          ).lean();
+          if (populatedGame) {
+            item.populatedData = populatedGame;
+          }
+        } else if (item.itemType === "Products") {
+          const populatedProduct = await Products.findById(
+            { _id: id },
+            "title primaryImage price"
+          ).lean();
+          if (populatedProduct) {
+            item.populatedData = populatedProduct;
+          }
+        }
+      }
+    }
+
+    // Return orders and total pages
+    res.status(200).json({ orders, totalPages });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+exports.Changestatus = async (req, res) => {
+  const { statuss, orderId } = req.body;
+
+  if (!statuss || !orderId) {
+    return res.status(400).json({ error: "Order ID and status are required." });
+  }
+  try {
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found." });
+    }
+
+    order.status = statuss;
+    await order.save();
+
+    res
+      .status(200)
+      .json({ data: order, message: "وضعیت سفارش با موفقیت تغییر کرد." });
+  } catch (err) {
+    console.error("Error updating order status:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// exports.GetOrders = async (req, res) => {
+//   const { pageNumber = 1, sortOrder = "lowToHigh" } = req.query;
+//   const limit = 10;
+//   const skip = (parseInt(pageNumber, 10) - 1) * limit;
+//   const sortOption = sortOrder === "lowToHigh" ? { price: 1 } : { price: -1 };
+
+//   try {
+//     // Step 1: Fetch orders with user data populated
+//     const orders = await Order.find()
+//       .populate("user")
+//       .limit(limit)
+//       .skip(skip)
+//       .sort(sortOption);
+
+//     // Step 2: Populate 'items.id' based on the condition of 'selectedPlatform'
+//     for (const order of orders) {
+//       // Populate for items where 'selectedPlatform' is null (Games)
+//       await order.populate({
+//         path: 'items.id',
+//         model: 'Games',
+//         match: { 'items.selectedPlatform': { $ne: null } }, // Match items with selectedPlatform not null
+//       });
+
+//       // Populate for items where 'selectedPlatform' is not null (Products)
+//       match: { 'items.selectedPlatform': null }, // Match items with selectedPlatform null
+//       await order.populate({
+//         path: 'items.id',
+//         model: 'Products',
+//       });
+//     }
+
+//     // Step 3: Send the populated orders in the response
+//     res.status(200).json(orders);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };

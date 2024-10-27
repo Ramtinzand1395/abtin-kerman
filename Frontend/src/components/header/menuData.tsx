@@ -1,6 +1,11 @@
+import { FaHome, FaTrash } from "react-icons/fa";
+import { IoGameController } from "react-icons/io5";
+import { RiGameFill } from "react-icons/ri";
+import { SiAmazongames, SiRiotgames } from "react-icons/si";
 export const MenuData = [
   {
     id: "menu1",
+    icon:<IoGameController   />,
     title: "کنسول بازی",
     items: [
       {
@@ -37,6 +42,8 @@ export const MenuData = [
   {
     id: "menu2",
     title: "لوازم جانبی",
+    icon:<SiAmazongames  />,
+
     items: [
       {
         title: "لوازم پلی استیشن 5",
@@ -60,6 +67,8 @@ export const MenuData = [
   {
     id: "menu3",
     title: "بازی ها",
+    icon:<RiGameFill  />,
+
     items: [
       {
         title: "پلی استیشن 5",
@@ -89,6 +98,8 @@ export const MenuData = [
   {
     id: "menu4",
     title: "لوازم گیمینگ",
+    icon:<SiRiotgames   />,
+
     items: [
       {
         title: "لوازم جانبی گیمینگ",

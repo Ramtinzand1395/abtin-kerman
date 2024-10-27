@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/pages/home/Home";
 import MainLayout from "./layouts/MainLayout";
@@ -16,15 +16,11 @@ import ProductPage from "./components/pages/Products/product/ProductPage";
 import AllProducts from "./components/pages/Products/product/AllProducts";
 import AccountGame from "./components/pages/Products/AccountGame";
 import AllAcountGames from "./components/pages/Products/AllAcountGames";
+import ShopingInfo from "./components/shopping card/ShopingInfo";
+import Orders from "./components/dashboard/pages/orderTable/Orders";
+import ProductsManneger from "./components/dashboard/pages/productManneger/ProductsManneger";
 
 const App: React.FC = () => {
-  useEffect(() => {
-    const card = localStorage.getItem("cardItems");
-
-    console.log(card, "card");
-  }, []);
-  // localStorage.setItem("cardItems" , CardItems)
-
   return (
     <div className="">
       <Routes>
@@ -61,6 +57,14 @@ const App: React.FC = () => {
             </MainLayout>
           }
         />
+        <Route
+          path="/checkout/cart/info"
+          element={
+            <MainLayout>
+              <ShopingInfo />
+            </MainLayout>
+          }
+        />
         {/* PRODUCT & PRODUCTS RPUTES */}
         <Route
           path="/products/:category"
@@ -91,15 +95,7 @@ const App: React.FC = () => {
           path="/dashboard/product-management/:userId"
           element={
             <DashboardLayout>
-              <Products />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path="/dashboard/account-game-manneger/:userId"
-          element={
-            <DashboardLayout>
-              <AddGame />
+              <ProductsManneger />
             </DashboardLayout>
           }
         />
@@ -120,14 +116,6 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/dashboard/create-product/:userId"
-          element={
-            <DashboardLayout>
-              <CreateProduct />
-            </DashboardLayout>
-          }
-        />
-        <Route
           path="/dashboard/comment-manegment/:userId"
           element={
             <DashboardLayout>
@@ -140,6 +128,14 @@ const App: React.FC = () => {
           element={
             <DashboardLayout>
               <Ckeditor />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/dashboard/orders/:userId"
+          element={
+            <DashboardLayout>
+              <Orders />
             </DashboardLayout>
           }
         />

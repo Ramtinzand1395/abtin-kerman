@@ -11,7 +11,7 @@ export interface GameData {
   tags: Tag[];
   createdAt?: string;
   comments?: Comment[];
-  Specifications: Feature[];
+  features: Feature[];
   additionalExplanations: string;
 }
 export interface GameDataInfo {
@@ -55,9 +55,24 @@ export interface Feature {
   key: string;
   value: string;
 }
+export interface UserAddress {
+  city: string;
+  provider: string;
+  address: string;
+  plaque: string;
+  unit: string;
+  postalCode: string;
+}
 export interface User {
   email: string;
+  order: string;
+  address: UserAddress;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  isAdmin: string;
   profile: string;
+  createdAt?: string;
   _id?: string;
 }
 export interface Product {
@@ -85,4 +100,24 @@ export interface Weblog {
   body: string;
   primaryImage?: Image | null;
   createdAt?: string;
+}
+export interface Order {
+  _id?: string;
+  createdAt?: string;
+  user:User,
+  items:OrderItems,
+  TrackingCode:string,
+  status:string,
+}
+export interface OrderItems {
+  _id?: string;
+  id:string;
+  ItemQty:number;
+  SelectedPlatform:SelectedPlatform;
+  itemType:string;
+}
+export interface SelectedPlatform {
+  platform:string;
+  capacity:string;
+  price:string;
 }

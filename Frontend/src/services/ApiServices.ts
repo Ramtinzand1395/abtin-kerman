@@ -59,8 +59,8 @@ export const addGameService = (data: GameData) => {
 
 //* @desc  get game
 //* @route GET http://localhost:5000/api/login
-export const getGameService = () => {
-  const url = `${SERVER_URL}/get-game`;
+export const getGameService = (pageNumber: number, sortOrder: string) => {
+  const url = `${SERVER_URL}/get-game?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
   return axios.get(url);
 };
 //? @desc  get game
@@ -137,30 +137,30 @@ export const addProductService = (data: Product) => {
 
 //* @desc  get products
 //* @route GET http://localhost:5000/api/get-products
-export const getProductsService = () => {
-  const url = `${SERVER_URL}/get-products`;
+export const getProductsService = (pageNumber: number, sortOrder: string) => {
+  const url = `${SERVER_URL}/get-products?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
   return axios.get(url);
 };
 //* @desc  get product
 //* @route GET http://localhost:5000/api/login
-export const getProductService = (gameId: string) => {
-  const url = `${SERVER_URL}/get-product/${gameId}`;
+export const getProductService = (productId: string) => {
+  const url = `${SERVER_URL}/delete-product/${productId}`;
   return axios.get(url);
 };
 // //* @desc  update game
 // //* @route PUT http://localhost:5000/api/update-game
-// export const updateGameService = (data: GameData) => {
-//   const url = `${SERVER_URL}/update-game`;
-//   return axios.put(url, data);
-// };
+export const updateProductService = (data: Product) => {
+  const url = `${SERVER_URL}/update-product`;
+  return axios.put(url, data);
+};
 // //? @desc  delete game
 // //? @route DELETE http://localhost:5000/api/update-game
-// export const deleteGameService = (id: string) => {
-//   const url = `${SERVER_URL}/delete-game`;
-//   return axios.delete(url, {
-//     data: { gameId: id }, // The correct way to send data in axios.delete
-//   });
-// };
+export const deleteProductService = (id: string) => {
+  const url = `${SERVER_URL}/delete-product`;
+  return axios.delete(url, {
+    data: { gameId: id }, // The correct way to send data in axios.delete
+  });
+};
 
 //* @desc  add comment
 //* @route post http://localhost:5000/api/update-game
@@ -190,7 +190,7 @@ export const confirmCommentService = (commentId: string) => {
 // ?BLOG
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
-export const createBlogService = (WeblogData:Weblog) => {
+export const createBlogService = (WeblogData: Weblog) => {
   const url = `${SERVER_URL}/create-blog`;
   return axios.post(url, WeblogData);
 };
@@ -203,15 +203,58 @@ export const getBlogsService = () => {
 // ? FILTER PRODUCTS
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
-export const getFiltredProductsService = (category:string,  pageNumber:number , sortOrder:string) => {
+export const getFiltredProductsService = (
+  category: string,
+  pageNumber: number,
+  sortOrder: string
+) => {
   const url = `${SERVER_URL}/get-filtred-products/${category}?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
   return axios.get(url);
 };
 // !FILTRED GAMES
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
-export const getFiltredAccountGamesService = (category:string,  pageNumber:number , sortOrder:string) => {
-  console.log(category)
+export const getFiltredAccountGamesService = (
+  category: string,
+  pageNumber: number,
+  sortOrder: string
+) => {
   const url = `${SERVER_URL}/get-filtred-games/${category}?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
   return axios.get(url);
+};
+
+// ? USERINFO
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const addUserInfoService = (data) => {
+  const url = `${SERVER_URL}/add-user-info`;
+  return axios.post(url, data);
+};
+
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const getUserInfoService = (userId: string) => {
+  const url = `${SERVER_URL}/get-user-info/${userId}`;
+  return axios.get(url);
+};
+// !ADD ORDER
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const addOrderService = (data) => {
+  const url = `${SERVER_URL}/add-order`;
+  return axios.post(url, data.data);
+};
+
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const getOrdersService = (pageNumber: number, sortOrder: string) => {
+  console.log(pageNumber, sortOrder);
+  const url = `${SERVER_URL}/get-orders?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
+  return axios.get(url);
+};
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const changeStatusService = (data) => {
+  const url = `${SERVER_URL}/change-status`;
+  return axios.post(url, data);
 };

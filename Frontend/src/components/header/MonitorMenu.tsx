@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { FaUser } from "react-icons/fa";
+import { FaHome, FaUser } from "react-icons/fa";
 import LoginModall from "../loginModall/LoginModall";
 import { FiEdit, FiShoppingBag } from "react-icons/fi";
 import { useShopingcard } from "../context/ShopingCard";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { MenuData } from "./menuData";
 import { User } from "../../types";
 import { IoEnterOutline, IoExitOutline } from "react-icons/io5";
 import LoginDropDown from "../utils/LoginDropDown";
+import MiniShoppingCard from "../shopping card/MiniShoppingCard";
+import { MenuData } from "./menuData";
 const headerVariant = {
   hidden: {
     opacity: 0,
@@ -62,7 +63,8 @@ const MonitorMenu: React.FC = () => {
     link4: "exite",
     title: "خوش آمدید",
   };
-  const { CardItems, setOpenMiniShoppingcard } = useShopingcard();
+  const { setOpenMiniShoppingcard, cardQty, OpenMiniShoppingcard } =
+    useShopingcard();
   const [isLogedIn, setisLogedIn] = useState(false);
   useEffect(() => {
     const isLogedin = localStorage.getItem("User");
@@ -77,16 +79,21 @@ const MonitorMenu: React.FC = () => {
   // console.log(User, "user");
   return (
     <div
-      className={`flex items-center  justify-between p-4  border-t-2 border-b-2  border-black ${
+      className={`flex items-center  justify-between border-b-2  border-black ${
         StickyNavbar
-          ? "fixed top-0 my-0 z-20 bg-primary text-white w-full"
-          : "block my-10"
+          ? "fixed top-0 my-0 py-2 z-20 bg-primary text-white w-full"
+          : "block "
       }`}
     >
       {/* menu */}
-      <ul className="flex items-center justify-around w-full whitespace-nowrap relative">
-        <Link to={"/"}>
-          <li className="cursor-pointer">خانه</li>
+      <ul className="flex items-center mx-2 w-full whitespace-nowrap relative">
+        <Link className={`flex items-center ${
+        StickyNavbar
+          ? "text-white"
+          : "text-gray-500 "
+      }`} to={"/"}>
+        <FaHome />
+          <li className="cursor-pointer mr-2 ">خانه</li>
         </Link>
         {MenuData.map((data) => (
           <li
@@ -95,14 +102,25 @@ const MonitorMenu: React.FC = () => {
             onMouseLeave={() =>
               setIsHovered({ ...isHovered, [data.id]: false })
             }
-            className="cursor-pointer "
+            className="cursor-pointer mr-10"
           >
-            {data.title}
+            <button className={`flex items-center ${
+        StickyNavbar
+          ? "text-white"
+          : "text-gray-500 "
+      }`} title="menu" type="button">
+              <span className="ml-2">{data.icon}</span>
+              {data.title}
+            </button>
             <motion.div
               initial="hidden"
-              animate={isHovered[data.id as keyof typeof isHovered] ? "visible" : "hidden"}
+              animate={
+                isHovered[data.id as keyof typeof isHovered]
+                  ? "visible"
+                  : "hidden"
+              }
               variants={headerVariant}
-              className="bg-white border-b-2 border-gray-600 w-[95vw] absolute right-0 top-12 z-20 cursor-pointer"
+              className="bg-white border-b-2 border-gray-600 w-[95vw] absolute right-0 top-9 z-20 cursor-pointer"
             >
               <div className="flex items-start justify-around">
                 {data.items.map((item, index) => (
@@ -363,20 +381,25 @@ const MonitorMenu: React.FC = () => {
           </div>
         </div>
       )}
-      <div className="flex items-center mr-10">
+      <div className="flex items-center mr-10 border-r-2 relative">
         <button
+          // onMouseEnter={() => setOpenMiniShoppingcard(true)}
+          // onMouseLeave={() => setOpenMiniShoppingcard(false)}
           onClick={() => setOpenMiniShoppingcard(true)}
-          className="relative text-white p-3 rounded-lg text-sm uppercase font-semibold tracking-tight overflow-visible"
+          className="relative text-white py-3 rounded-lg text-sm uppercase font-semibold tracking-tight overflow-visible"
         >
           <FiShoppingBag
-            className={`ml-2 ${StickyNavbar ? "text-white" : "text-black"}`}
+            className={`ml-2 mr-10 ${StickyNavbar ? "text-white" : "text-black"}`}
             size={20}
           />
-
-          <div className="absolute -top-3 -right-3 px-2.5 py-0.5 bg-red-500 rounded-full text-xs">
-            {CardItems.length > 0 ? CardItems.length : 0}
+          {/* حتما اضافه بشه */}
+          <div className="absolute -top-2 right-0 px-2.5 py-0.5 bg-red-500 rounded-full text-xs">
+            {cardQty}
           </div>
         </button>
+        {OpenMiniShoppingcard && (
+          <MiniShoppingCard setOpenMiniShoppingcard={setOpenMiniShoppingcard} />
+        )}
       </div>
 
       {OpenModall && (

@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { getProductService } from "../../../../services/ApiServices";
 import { useParams } from "react-router-dom";
-import { FaComment, FaShare } from "react-icons/fa";
+import { FaComment, FaMinus, FaPlus, FaShare, FaTrash } from "react-icons/fa";
 import BtnIcon from "../../../utils/BtnIcon";
 import { FaBagShopping } from "react-icons/fa6";
 import { CiHeart, CiShare2 } from "react-icons/ci";
 import ConnectedProducts from "../../../utils/ConnectedProducts";
 import { Product } from "../../../../types";
 import Tabs from "../../../utils/tab/Tabs";
+import { useShopingcard } from "../../../context/ShopingCard";
 
 const ProductPage: React.FC = () => {
+  const { InceraseCardQty, removeFromCard, DecreaseCardQty, getItemqty } =
+    useShopingcard();
   const [Product, setProduct] = useState<Product>();
   const { productId } = useParams();
   const [currentImage, setCurrentImage] = useState<string>("");
@@ -26,12 +29,21 @@ const ProductPage: React.FC = () => {
     };
     getProduct();
   }, [productId]);
-  const handleAddFeature = () => {
-    console.log("first");
+  const handleAddToCart = () => {
+    const data = {
+      title: Product?.title,
+      image: Product?.primaryImage,
+      price: Product?.price,
+      features: Product?.features,
+      tags: Product?.tags,
+    };
+    Product?._id && InceraseCardQty(Product?._id, null, data);
   };
   const handleImageClick = (imageDirection: string) => {
     setCurrentImage(imageDirection);
   };
+  const qty = Product?._id && getItemqty(Product?._id);
+
   return (
     <div className="md:container md:mx-auto mx-2">
       <div className="grid grid-cols-12 gap-5">
@@ -157,27 +169,59 @@ const ProductPage: React.FC = () => {
                 Product?.inStock ? "text-green-700" : "text-red-700"
               }`}
             >
-              انبار : {Product?.inStock ? "موجود در انبار" : "موجود نیست"}
+              وضعیت انبار :{" "}
+              {Product?.inStock
+                ? `  ${Product?.quantity} عدد  موجود در انبار `
+                : "موجود نیست"}
             </p>
           </div>
           <div className="flex flex-col">
             <p className="font-semibold  text-xl mb-2">
               {Product?.price} تومان
             </p>
-            <BtnIcon
-              ButtonColor="bg-purple-500 group-hover:bg-purple-600"
-              ButtonText={"افزودن به سبد خرید"}
-              onClick={() => handleAddFeature()}
-              ButtonIcon={<FaBagShopping size={30} color="white" />}
-            />
+            {qty && qty > 0 ? (
+              <div className="flex items-center justify-around shadowhand rounded-lg py-5">
+                {qty === 1 ? (
+                  <FaTrash
+                    size={15}
+                    color="red"
+                    className="cursor-pointer"
+                    onClick={() => Product?._id && removeFromCard(Product?._id)}
+                  />
+                ) : (
+                  <FaMinus
+                    size={15}
+                    color="red"
+                    className="cursor-pointer"
+                    onClick={() =>
+                      Product?._id && DecreaseCardQty(Product?._id)
+                    }
+                  />
+                )}
+
+                {qty}
+
+                <FaPlus
+                  size={15}
+                  color="green"
+                  className="cursor-pointer"
+                  onClick={() =>
+                    Product?._id && InceraseCardQty(Product?._id, null, Product)
+                  }
+                />
+              </div>
+            ) : (
+              <BtnIcon
+                ButtonColor="bg-purple-500 group-hover:bg-purple-600"
+                ButtonText={`افزودن به سبد خرید`}
+                onClick={handleAddToCart}
+                ButtonIcon={<FaBagShopping size={30} color="white" />}
+              />
+            )}
           </div>
         </div>
       </div>
-      {Product && (
-        <Tabs
-          Product={Product}
-        />
-      )}
+      {Product && <Tabs Product={Product} />}
       <ConnectedProducts />
     </div>
   );

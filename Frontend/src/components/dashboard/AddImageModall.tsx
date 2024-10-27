@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 // *
 interface AddImageModallProps {
-  GameData: GameData ;
-  setGameData: React.Dispatch<React.SetStateAction<GameData >> ;
+  SelectedProduct: Product ;
+  setSelectedProduct: React.Dispatch<React.SetStateAction<Product >> ;
   setOpenAddImageModall: (open: boolean) => void;
 }
-import { GameData, Image } from "../../types";
+import { GameData, Image, Product } from "../../types";
 // *
 import { GetImageService } from "../../services/ApiServices";
 import { MdClose } from "react-icons/md";
@@ -13,8 +13,8 @@ import { FaFire } from "react-icons/fa";
 
 const AddImageModall: React.FC<AddImageModallProps> = ({
   setOpenAddImageModall,
-  setGameData,
-  GameData,
+  setSelectedProduct,
+  SelectedProduct,
 }) => {
   const [Images, setImages] = useState<Image[]>([]);
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -40,15 +40,15 @@ const AddImageModall: React.FC<AddImageModallProps> = ({
     };
   }, []);
   const togglePrimaryImage = (image: Image) => {
-    if (GameData.primaryImage?._id === image._id) {
+    if (SelectedProduct.primaryImage?._id === image._id) {
       // If the selected image is already the primary, deselect it
-      setGameData((prev) => ({
+      setSelectedProduct((prev) => ({
         ...prev,
         primaryImage: null,
       }));
     } else {
       // Set selected image as primary image
-      setGameData((prev) => ({
+      setSelectedProduct((prev) => ({
         ...prev,
         primaryImage: image,
       }));
@@ -56,7 +56,7 @@ const AddImageModall: React.FC<AddImageModallProps> = ({
   };
 
   const toggleAdditionalImage = (image: Image) => {
-    setGameData((prev) => {
+    setSelectedProduct((prev) => {
       // Ensure additionalImages is always an array
       const currentAdditionalImages = prev.additionalImages || [];
       
@@ -92,7 +92,7 @@ const AddImageModall: React.FC<AddImageModallProps> = ({
               <img
                 onClick={() => toggleAdditionalImage(image)}
                 className={`w-full h-[20vh] rounded-lg cursor-pointer p-1 ${
-                  GameData.additionalImages?.some(
+                  SelectedProduct.additionalImages?.some(
                     (img) => img._id === image._id
                   )
                     ? "border-4 border-primary"
@@ -110,7 +110,7 @@ const AddImageModall: React.FC<AddImageModallProps> = ({
                 <FaFire
                   size={20}
                   className={`${
-                    GameData.primaryImage?._id === image._id
+                    SelectedProduct.primaryImage?._id === image._id
                       ? " text-red-700 "
                       : "text-gray-500"
                   }`}

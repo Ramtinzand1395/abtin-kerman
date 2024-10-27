@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import {
-  addProductService,
-  getCategoriesService,
-  getTagService,
-} from "../../../services/ApiServices";
-import { MdAdd } from "react-icons/md";
+import { Product } from "../../../../types";
+import { addProductService, getCategoriesService, getTagService } from "../../../../services/ApiServices";
 import { toast } from "react-toastify";
-import { Product } from "../../../types";
-import AddImageModallProduct from "../AddImageModallProduct";
-import SearchTagsProducts from "../searchTag/SearchTagsProducts";
-import SearchCatsProducts from "../searchTag/SearchCatsProducts";
-import ProductAdditionalExplanations from "../CkEditor/ProductAdditionalExplanations";
+import { MdAdd } from "react-icons/md";
+import AddImageModallProduct from "../../AddImageModallProduct";
+import SearchTagsProducts from "../../searchTag/SearchTagsProducts";
+import SearchCatsProducts from "../../searchTag/SearchCatsProducts";
+import ProductAdditionalExplanations from "../../CkEditor/ProductAdditionalExplanations";
 
-const CreateProduct: React.FC = () => {
+
+const CreateProductTab: React.FC = () => {
   // *features
   const [newKey, setNewKey] = useState("");
   const [newValue, setNewValue] = useState("");
@@ -374,4 +371,4 @@ const CreateProduct: React.FC = () => {
   );
 };
 
-export default CreateProduct;
+export default CreateProductTab;

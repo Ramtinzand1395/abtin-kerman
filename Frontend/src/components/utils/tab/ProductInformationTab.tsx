@@ -6,10 +6,9 @@ interface ProductInformationTabProps {
 const ProductInformationTab: React.FC<ProductInformationTabProps> = ({
   Product,
 }) => {
-  console.log(Product);
   return (
     <div
-      dangerouslySetInnerHTML={{ __html: Product.additionalExplanations|| "" }}
+      dangerouslySetInnerHTML={{ __html: Product.additionalExplanations || "" }}
       className="p-5 rounded-xl bg-white"
     ></div>
   );
