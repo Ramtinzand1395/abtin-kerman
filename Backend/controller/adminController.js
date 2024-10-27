@@ -316,7 +316,7 @@ exports.Updateproduct = async (req, res) => {
     Specifications,
     quantity,
     price,
-    descriptionو,
+    description,
   } = req.body;
   try {
     const product = await Products.findById({ _id });
