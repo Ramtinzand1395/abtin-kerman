@@ -39,7 +39,7 @@ exports.UploadImage = async (req, res) => {
     } else if (err) {
       // An unknown error occurred when uploading.
       console.log(err);
-      return res.status(500).json({ error: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error 1" });
     }
     // Everything went fine.
     // You can now use req.file to access information about the uploaded file.
@@ -56,7 +56,7 @@ exports.UploadImage = async (req, res) => {
       });
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ error: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error 2" });
     }
   });
 };
