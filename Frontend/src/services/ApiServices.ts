@@ -1,5 +1,14 @@
 import axios, { AxiosResponse } from "axios";
-import { Comment, GameData, Product, Weblog } from "../types";
+import {
+  Comment,
+  Feature,
+  GameData,
+  Product,
+  Tag,
+  UserAddress,
+  Weblog,
+} from "../types";
+import { Image } from "@ckeditor/ckeditor5-image";
 interface LoginData {
   email: string;
   profile: string;
@@ -16,6 +25,39 @@ interface LoginResponse {
     profile: string;
   };
   status: number;
+}
+// ?dsdd
+type SelectedPlatform = {
+  platform: string;
+  capacity: string;
+  price: number;
+};
+type data = {
+  title: string;
+  image: Image;
+  price: number;
+  features: Feature[];
+  tags: Tag[];
+};
+type cardItemType = {
+  id: string;
+  ItemQty: number;
+  SelectedPlatform: null | SelectedPlatform;
+  data: data;
+};
+
+type AddOrderData = {
+  CardItems: cardItemType[]; // Assuming CardItems is an array of CardItem
+  userId: string;
+};
+
+type changeStatus = {
+  orderId: string;
+  statuss: string;
+};
+type UserInfo = {
+  userInfo:UserAddress,
+userId:string,
 }
 // const SERVER_URL = "http://localhost:5000/api";
 const SERVER_URL = "https://abtin-kerman-backend-new.vercel.app/api";
@@ -233,7 +275,7 @@ export const getFiltredAccountGamesService = (
 // ? USERINFO
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
-export const addUserInfoService = (data) => {
+export const addUserInfoService = (data:UserInfo) => {
   const url = `${SERVER_URL}/add-user-info`;
   return axios.post(url, data);
 };
@@ -247,7 +289,7 @@ export const getUserInfoService = (userId: string) => {
 // !ADD ORDER
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
-export const addOrderService = (data) => {
+export const addOrderService = (data: { data:AddOrderData }) => {
   const url = `${SERVER_URL}/add-order`;
   return axios.post(url, data.data);
 };
@@ -261,7 +303,7 @@ export const getOrdersService = (pageNumber: number, sortOrder: string) => {
 };
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
-export const changeStatusService = (data) => {
+export const changeStatusService = (data: changeStatus) => {
   const url = `${SERVER_URL}/change-status`;
   return axios.post(url, data);
 };

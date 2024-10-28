@@ -62,11 +62,16 @@ const AccountGame: React.FC = () => {
   };
   const handleAddToCart = () => {
     const data = {
-      title: game?.title,
-      image: game?.primaryImage,
-      price: SelectedPlatform?.price,
-      features: game?.features,
-      tags: game?.tags,
+      title: game?.title || "",
+      image: game?.primaryImage || {
+        imageName: "",
+        direction: "",
+        createdAt: "",
+        _id: "",
+      },
+      price: SelectedPlatform?.price || 0,
+      features: game?.features || [],
+      tags: game?.tags || [],
     };
     game?._id && InceraseCardQty(game?._id, SelectedPlatform, data);
   };
@@ -92,7 +97,7 @@ const AccountGame: React.FC = () => {
           <img
             // src={`http://localhost:5000/${currentImage}`}
             //! change
-        src={`${currentImage}`}
+            src={`${currentImage}`}
             alt=""
             className="w-full h-full object-contain max-w-[300px] max-h-[60vh] my-5"
           />
@@ -102,7 +107,7 @@ const AccountGame: React.FC = () => {
                 key={img._id}
                 // src={`http://localhost:5000/${img?.direction}`}
                 //! change
-        src={`${img?.direction}`}
+                src={`${img?.direction}`}
                 alt=""
                 className="w-full h-full object-contain max-w-[70px] max-h-[70px] border-2 border-primary p-2 cursor-pointer"
                 onClick={() => handleImageClick(img?.direction)}
@@ -111,7 +116,7 @@ const AccountGame: React.FC = () => {
             <img
               // src={`http://localhost:5000/${game?.primaryImage?.direction}`}
               //! change
-        src={`${game?.primaryImage?.direction}`}
+              src={`${game?.primaryImage?.direction}`}
               alt=""
               className="w-full h-full object-contain max-w-[70px] max-h-[70px] border-2 border-primary p-2 mx-2 cursor-pointer"
               onClick={() =>

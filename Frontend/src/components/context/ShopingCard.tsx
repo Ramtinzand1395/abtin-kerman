@@ -8,7 +8,7 @@ type shopingcardProps = {
 type SelectedPlatform = {
   platform: string;
   capacity: string;
-  price: string;
+  price: number;
 };
 type data = {
   title: string;

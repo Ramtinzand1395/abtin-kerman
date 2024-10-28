@@ -3,8 +3,8 @@ import AddressInfoModall from "./AddressInfoModall";
 import GetGoogleAddressModall from "./GetGoogleAddressModall";
 import { MdClose } from "react-icons/md";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
-import GetUserInformation from "./GetUserInformation";
 import { User } from "../../../types";
+import GetUserInformation from "./GetUserInformation";
 interface AddressModallProps {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean >>;
   setLoadingdata: React.Dispatch<React.SetStateAction<boolean >>;

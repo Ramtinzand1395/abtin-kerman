@@ -16,9 +16,9 @@ import { Product } from "../../../../types";
 import LeftAnimation from "../../../utils/LeftAnimation";
 const NewestَProductsSlider: React.FC = () => {
   const [Products, setProducts] = useState<Product[]>([]);
-  const [orderDesc, setOrderDesc] = useState("newestFirst");
-  const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
+    const pageNumber = 1;
+    const orderDesc = "newestFirst";
     const getProducts = async () => {
       try {
         const { data } = await getProductsService(pageNumber, orderDesc);

@@ -21,7 +21,6 @@ const ProductPage: React.FC = () => {
       if (!productId) return;
       try {
         const { data } = await getProductService(productId);
-        console.log(data,"sss")
         setProduct(data);
         setCurrentImage(data?.primaryImage?.direction);
       } catch (err) {
@@ -32,11 +31,16 @@ const ProductPage: React.FC = () => {
   }, [productId]);
   const handleAddToCart = () => {
     const data = {
-      title: Product?.title,
-      image: Product?.primaryImage,
-      price: Product?.price,
-      features: Product?.features,
-      tags: Product?.tags,
+      title: Product?.title || "",
+      image: Product?.primaryImage || {
+        imageName: "",
+        direction: "",
+        createdAt: "",
+        _id: "",
+      },
+      price: Product?.price || 0,
+      features: Product?.features || [],
+      tags: Product?.tags || [],
     };
     Product?._id && InceraseCardQty(Product?._id, null, data);
   };
@@ -212,9 +216,7 @@ const ProductPage: React.FC = () => {
                   size={15}
                   color="green"
                   className="cursor-pointer"
-                  onClick={() =>
-                    Product?._id && InceraseCardQty(Product?._id, null, Product)
-                  }
+                  onClick={() => handleAddToCart()}
                 />
               </div>
             ) : (

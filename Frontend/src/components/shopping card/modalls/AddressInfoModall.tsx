@@ -32,7 +32,7 @@ const AddressInfoModall: React.FC<AddressInfoModallProps> = ({
         </p>{" "}
         <p className="flex items-center my-2">
           <FaMailchimp className="ml-5" />
-          {UserInfo.firstName ? UserInfo?.firstName : "اسم وارد نشده"}{" "}
+          {UserInfo?.firstName ? UserInfo?.firstName : "اسم وارد نشده"}{" "}
           {UserInfo?.lastName}
         </p>
         <button

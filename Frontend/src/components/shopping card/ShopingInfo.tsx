@@ -10,6 +10,7 @@ import {
   getUserInfoService,
 } from "../../services/ApiServices";
 import { toast } from "react-toastify";
+import { User } from "../../types";
 
 const ShopingInfo: React.FC = () => {
   const {
@@ -24,8 +25,8 @@ const ShopingInfo: React.FC = () => {
     return total + price * cardItem.ItemQty;
   }, 0);
   const [OpenModal, setOpenModal] = useState(false);
-  const [UserInfo, setUserInfo] = useState();
-  const user = JSON.parse(localStorage.getItem("User"));
+  const [UserInfo, setUserInfo] = useState<User>();
+  const user = JSON.parse(localStorage.getItem("User") || "{}");
   const [Loadingdata, setLoadingdata] = useState(false);
   useEffect(() => {
     const getUser = async () => {
@@ -82,7 +83,7 @@ const ShopingInfo: React.FC = () => {
             <h3 className="text-gray-600 text-xs font-tanha">کد تخفیف</h3>
             <p> کد تخفیف</p>
 
-            <input type="text" className="border-2" />
+            <input title="DiscountCode" type="text" className="border-2" />
             <button>اعمال کد</button>
           </div>
           <div className="grid grid-cols-6 gap-5 ">
@@ -94,8 +95,8 @@ const ShopingInfo: React.FC = () => {
                 <div className="flex flex-col items-center h-72 ml-5">
                   <img
                     // src={`http://localhost:5000/${item.data.image.direction}`}
-                      //! change
-                      src={`${item.data.image.direction}`}
+                    //! change
+                    src={`${item.data.image.direction}`}
                     className="w-full h-full object-contain max-w-[100px] max-h-[100px]"
                     alt={item.data.image.imageName}
                   />
@@ -104,7 +105,18 @@ const ShopingInfo: React.FC = () => {
                     <FaPlus
                       size={10}
                       className="cursor-pointer text-secondery"
-                      onClick={() => InceraseCardQty(item?.id, null)}
+                      onClick={() => InceraseCardQty(item?.id, null , {
+                        title: "",
+                        image: {
+                          imageName: "",
+                          direction: "",
+                          createdAt: "",
+                          _id: "",
+                        },
+                        price: 0,
+                        features: [],
+                        tags: [],
+                      })}
                     />
                     <span className=" text-secondery">{item.ItemQty}</span>
                     {item.ItemQty === 1 ? (
@@ -151,7 +163,7 @@ const ShopingInfo: React.FC = () => {
           </Link>
         </div>
       </div>
-      {OpenModal && (
+      {OpenModal && UserInfo && (
         <AddressModall
           setOpenModal={setOpenModal}
           UserInfo={UserInfo}

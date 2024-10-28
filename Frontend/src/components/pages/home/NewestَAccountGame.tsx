@@ -7,14 +7,15 @@ import AccountsGames from "../../utils/AccountsGames";
 
 const NewestَAccountGame: React.FC = () => {
   const [Games, setGames] = useState<GameData[]>([]);
-  const [orderDesc, setOrderDesc] = useState("newestFirst");
-  const [pageNumber, setPageNumber] = useState(1);
+
   useEffect(() => {
     const getGames = async () => {
+      const pageNumber = 1;
+      const orderDesc = "newestFirst";
       try {
         const { data } = await getGameService(pageNumber, orderDesc);
         setGames(data.games);
-        console.log(data)
+        console.log(data);
       } catch (err) {
         console.log(err);
       }

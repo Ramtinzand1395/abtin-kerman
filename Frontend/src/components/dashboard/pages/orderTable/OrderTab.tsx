@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { MdClose } from "react-icons/md";
 import { Order } from "../../../../types";
 interface OrderTabProps {
-  data: Order[];
+  data: Order | null;
   setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const OrderTab: React.FC<OrderTabProps> = ({ data, setOpenModall }) => {
@@ -16,12 +16,12 @@ const OrderTab: React.FC<OrderTabProps> = ({ data, setOpenModall }) => {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, []); 
-  const totalPrice = data.items.reduce((acc, item) => {
+  }, []);
+  const totalPrice = data?.items?.reduce((acc, item) => {
     const price =
       item?.SelectedPlatform !== null
-        ? item?.SelectedPlatform?.price
-        : item?.populatedData?.price;
+        ? Number(item?.SelectedPlatform?.price)
+        : Number(item?.populatedData?.price);
     return acc + item.ItemQty * price;
   }, 0);
 
@@ -85,7 +85,7 @@ const OrderTab: React.FC<OrderTabProps> = ({ data, setOpenModall }) => {
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">{price}</td>
                   <td className="whitespace-nowrap px-6 py-4">
-                    {item.ItemQty * price}
+                    {item.ItemQty * Number(price)}
                   </td>
                 </tr>
               );

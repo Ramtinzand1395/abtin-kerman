@@ -45,7 +45,20 @@ const ShopingCardPage: React.FC = () => {
                     <FaPlus
                       size={10}
                       className="cursor-pointer text-secondery"
-                      onClick={() => InceraseCardQty(item?.id, null)}
+                      onClick={() =>
+                        InceraseCardQty(item?.id, null, {
+                          title: "",
+                          image: {
+                            imageName: "",
+                            direction: "",
+                            createdAt: "",
+                            _id: "",
+                          },
+                          price: 0,
+                          features: [],
+                          tags: [],
+                        })
+                      }
                     />
                     <span className=" text-secondery">{item.ItemQty}</span>
                     {item.ItemQty === 1 ? (
@@ -73,7 +86,8 @@ const ShopingCardPage: React.FC = () => {
                     ))}
                   </div>
                   <p className="text-black">
-                    {item.data.price * item.ItemQty} تومان
+                    {item?.data?.price && item?.data?.price * item.ItemQty}{" "}
+                    تومان
                   </p>
                 </div>
               </div>

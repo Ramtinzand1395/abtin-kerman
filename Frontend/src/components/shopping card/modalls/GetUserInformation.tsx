@@ -27,7 +27,7 @@ const GetUserInformation:React.FC<GetUserInformationProps> = ({
     phone: UserInfo?.phone || "",
     address: address || "", // Initialize from props
     city: City || "", // Initialize from props
-    provider: Provider || "", // Initialize from props
+    provider: Provider || "", 
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
