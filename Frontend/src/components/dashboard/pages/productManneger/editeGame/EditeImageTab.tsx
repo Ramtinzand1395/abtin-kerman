@@ -33,10 +33,10 @@ const EditeImageTab: React.FC<EditeImageTabProps> = ({
       />
       <div className="grid grid-cols-6 gap-5 mt-5">
         {OpenAddImageModall && (
-          <AddImageModall
+          <AddImageModall<GameData>
             setOpenAddImageModall={setOpenAddImageModall}
-            setGameData={setGameData}
-            GameData={GameData}
+            setSelectedProduct={setGameData}
+            SelectedProduct={GameData}
           />
         )}
 

@@ -9,14 +9,14 @@ import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
 import EditeProductModall from "./editeProduct/EditeProductModall";
 
-const ProductsTable = () => {
+const ProductsTable: React.FC = () => {
   const [Products, setProducts] = useState<Product[]>([]);
   const [orderDesc, setOrderDesc] = useState("newestFirst");
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [LodaingProducts, setLodaingProducts] = useState(false);
   const [OpenModall, setOpenModall] = useState(false);
-  const [SelectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [SelectedProduct, setSelectedProduct] = useState<Product>(Products[0]);
   const handleOpenModall = (product: Product) => {
     setOpenModall(true);
     setSelectedProduct(product);
@@ -119,8 +119,8 @@ const ProductsTable = () => {
                       <div className="flex items-center">
                         <img
                           // src={`http://localhost:5000/${data.primaryImage?.direction}`}
-                            //! change
-                            src={`${data.primaryImage?.direction}`}
+                          //! change
+                          src={`${data.primaryImage?.direction}`}
                           className="w-14 h-14 rounded-lg ml-5"
                           alt=""
                         />
@@ -206,7 +206,7 @@ const ProductsTable = () => {
           </li>
         </ul>
       </nav>
-      {OpenModall && (
+      {OpenModall && SelectedProduct && (
         <EditeProductModall
           SelectedProduct={SelectedProduct}
           setSelectedProduct={setSelectedProduct}

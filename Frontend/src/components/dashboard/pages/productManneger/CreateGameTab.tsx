@@ -1,29 +1,17 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-
-// import AddImageModall from "../AddImageModall";
-// import {
-//   addGameService,
-//   getCategoriesService,
-//   getTagService,
-// } from "../../../services/ApiServices";
 import { toast } from "react-toastify";
 import { MdAdd } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
-import { GameData } from "../../../../types";
+import { GameData, Image } from "../../../../types";
 import {
   addGameService,
   getCategoriesService,
   getTagService,
 } from "../../../../services/ApiServices";
-import { Image } from "@ckeditor/ckeditor5-image";
 import AddImageModall from "../../AddImageModall";
 import SearchTags from "../../searchTag/SearchTags";
 import SearchCats from "../../searchTag/SearchCats";
 import AccountGameAdditionalExplanations from "../../CkEditor/AccountGameAdditionalExplanations";
-// import SearchTags from "../searchTag/SearchTags";
-// import SearchCats from "../searchTag/SearchCats";
-// import { GameData, Image } from "../../../types";
-// import AccountGameAdditionalExplanations from "../CkEditor/AccountGameAdditionalExplanations";
 const CreateGameTab: React.FC = () => {
   const [platform, setPlatform] = useState("");
   const [capacity, setCapacity] = useState("");
@@ -161,7 +149,7 @@ const CreateGameTab: React.FC = () => {
         </label>
 
         {OpenAddImageModall && (
-          <AddImageModall
+          <AddImageModall<GameData>
             setSelectedProduct={setGameData}
             SelectedProduct={GameData}
             setOpenAddImageModall={setOpenAddImageModall}

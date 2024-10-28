@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import CreateGameTab from "./CreateGameTab";
 import CreateProductTab from "./CreateProductTab";
-import GamesTableTab from "./GamesTable";
 import GamesTable from "./GamesTable";
 import ProductsTable from "./ProductsTable";
-
+type TabKey = "games" | "products" | "createProducts" | "createGames";
 const tabContent = {
   games: <GamesTable />,
   products: <ProductsTable />,
@@ -12,12 +11,12 @@ const tabContent = {
   createGames: <CreateGameTab />,
 };
 
-const ProductsManager = () => {
-  const [activeTab, setActiveTab] = useState("games");
+const ProductsManager: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<TabKey>("games");
 
   const renderContent = () => tabContent[activeTab] || tabContent.games;
 
-  const tabs = [
+  const tabs: { key: TabKey; label: string }[] = [
     { key: "games", label: "لیست بازی ها" },
     { key: "products", label: "لیست محصولات" },
     { key: "createProducts", label: " محصول جدید" },

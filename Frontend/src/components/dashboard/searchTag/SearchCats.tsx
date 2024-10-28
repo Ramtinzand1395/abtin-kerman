@@ -1,21 +1,26 @@
 import React, { useState } from "react";
-import { Category, GameData } from "../../../types";
-interface SearchCatsProps {
-  GameData: GameData;
-  setGameData: React.Dispatch<React.SetStateAction<GameData>>;
+import { Category } from "../../../types";
+interface HasCats {
+  categories?: Category[];
+}
+
+interface SearchCatsProps<T extends HasCats> {
+  GameData: T;
+  setGameData: React.Dispatch<React.SetStateAction<T>>;
   cats: Category[];
 }
-const SearchCats: React.FC<SearchCatsProps> = ({
+
+const SearchCats = <T extends HasCats>({
   setGameData,
   cats,
   GameData,
-}) => {
+}: SearchCatsProps<T>) => {
   const [SearchTherm, setSearchTherm] = useState("");
 
   const handleAddCat = (cat: Category) => {
     setGameData((prevData) => ({
       ...prevData,
-      categories: [...prevData.categories, cat],
+      categories: [...(prevData.categories ?? []), cat],
     }));
     setSearchTherm("");
   };
@@ -23,7 +28,7 @@ const SearchCats: React.FC<SearchCatsProps> = ({
     ?.filter(
       (cat) =>
         cat.categoryName.toLowerCase().includes(SearchTherm.toLowerCase()) &&
-        !GameData.categories.some(
+        !GameData?.categories?.some(
           (selectedCat) => selectedCat.categoryName === cat.categoryName
         )
     )

@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
-import { GameData, Product } from "../../../../../types";
+import { Product } from "../../../../../types";
 import EditeImageTab from "./EditeImageTab";
-import InputTabs from "./EditeProductInfo";
 import BtnTow from "../../../../utils/BtnTow";
 import { toast } from "react-toastify";
-import { updateGameService, updateProductService } from "../../../../../services/ApiServices";
-import EditeGameDataTab from "./EditeCapacityTab";
-import EditTag from "./EditProductTag";
-import AccountGameAdditionalExplanations from "../../../CkEditor/AccountGameAdditionalExplanations";
-import EditeGameInfo from "./EditeProductInfo";
-import EditGameTag from "./EditProductTag";
+import { updateProductService } from "../../../../../services/ApiServices";
 import EditeProductInfo from "./EditeProductInfo";
 import ProductAdditionalExplanations from "../../../CkEditor/ProductAdditionalExplanations";
 import EditProductTag from "./EditProductTag";
@@ -20,17 +14,21 @@ interface EditeProductModallProps {
   setSelectedProduct: React.Dispatch<React.SetStateAction<Product>>;
   setLodaingProducts: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
+type TabKey =
+  | "productImage"
+  | "productInfo"
+  | "aboutProduct"
+  | "createProducts"
 const EditeProductModall: React.FC<EditeProductModallProps> = ({
   SelectedProduct,
   setOpenModall,
   setSelectedProduct,
   setLodaingProducts,
 }) => {
-  const [activeTab, setActiveTab] = useState("productImage");
+  const [activeTab, setActiveTab] = useState<TabKey>("productImage");
   const renderContent = () => tabContent[activeTab] || tabContent.productImage;
 
-  const tabs = [
+    const tabs: { key: TabKey; label: string }[] = [
     { key: "productImage", label: " عکس محصول " },
     { key: "productInfo", label: "  اطلاعات فنی محصول " },
     { key: "aboutProduct", label: " درباره محصول " },
@@ -83,8 +81,8 @@ const EditeProductModall: React.FC<EditeProductModallProps> = ({
     ),
     createProducts: (
       <EditProductTag
-      SelectedProduct={SelectedProduct}
-      setSelectedProduct={setSelectedProduct}
+        SelectedProduct={SelectedProduct}
+        setSelectedProduct={setSelectedProduct}
       />
     ),
   };

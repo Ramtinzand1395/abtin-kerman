@@ -7,13 +7,10 @@ import {
   FaComment,
   FaHome,
   FaPowerOff,
-  FaProductHunt,
   FaTags,
 } from "react-icons/fa";
 import { MdManageAccounts } from "react-icons/md";
 import { IoIosListBox } from "react-icons/io";
-import { IoGameControllerOutline } from "react-icons/io5";
-import { GrGallery } from "react-icons/gr";
 import { SiCkeditor4, SiRockstargames } from "react-icons/si";
 
 const Sidebar: React.FC = () => {

@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { MdClose } from "react-icons/md";
-
-const OrderTab = ({ data, setOpenModall }) => {
+import { Order } from "../../../../types";
+interface OrderTabProps {
+  data: Order[];
+  setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const OrderTab: React.FC<OrderTabProps> = ({ data, setOpenModall }) => {
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
   };
@@ -12,9 +16,7 @@ const OrderTab = ({ data, setOpenModall }) => {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, []);
-
-  // Calculate total price for all items
+  }, []); 
   const totalPrice = data.items.reduce((acc, item) => {
     const price =
       item?.SelectedPlatform !== null
@@ -43,10 +45,18 @@ const OrderTab = ({ data, setOpenModall }) => {
         <table className="min-w-full text-left text-sm font-light text-surface">
           <thead className="border-b border-neutral-200 font-medium">
             <tr>
-              <th scope="col" className="px-6 py-4 text-start">نام محصول</th>
-              <th scope="col" className="px-6 py-4 text-start">تعداد</th>
-              <th scope="col" className="px-6 py-4 text-start">قیمت</th>
-              <th scope="col" className="px-6 py-4 text-start">جمع سفارش</th>
+              <th scope="col" className="px-6 py-4 text-start">
+                نام محصول
+              </th>
+              <th scope="col" className="px-6 py-4 text-start">
+                تعداد
+              </th>
+              <th scope="col" className="px-6 py-4 text-start">
+                قیمت
+              </th>
+              <th scope="col" className="px-6 py-4 text-start">
+                جمع سفارش
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -70,7 +80,9 @@ const OrderTab = ({ data, setOpenModall }) => {
                       </div>
                     )}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">{item.ItemQty}</td>
+                  <td className="whitespace-nowrap px-6 py-4">
+                    {item.ItemQty}
+                  </td>
                   <td className="whitespace-nowrap px-6 py-4">{price}</td>
                   <td className="whitespace-nowrap px-6 py-4">
                     {item.ItemQty * price}
@@ -81,9 +93,7 @@ const OrderTab = ({ data, setOpenModall }) => {
           </tbody>
         </table>
         <div className="flex justify-end mt-4">
-          <p className=" font-semibold">
-            جمع کل: {totalPrice} تومان
-          </p>
+          <p className=" font-semibold">جمع کل: {totalPrice} تومان</p>
         </div>
       </div>
     </div>

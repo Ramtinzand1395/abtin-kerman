@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useState } from "react";
-import { GameData, Product } from "../../../../../types";
+import React, {  useState } from "react";
+import {  Product } from "../../../../../types";
 interface EditeProductInfoProps {
   SelectedProduct: Product;
   setSelectedProduct: React.Dispatch<React.SetStateAction<Product>>;

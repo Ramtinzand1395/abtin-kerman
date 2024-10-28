@@ -151,7 +151,7 @@ export const getProductsService = (pageNumber: number, sortOrder: string) => {
 //* @desc  get product
 //* @route GET http://localhost:5000/api/login
 export const getProductService = (productId: string) => {
-  const url = `${SERVER_URL}/delete-product/${productId}`;
+  const url = `${SERVER_URL}/get-product/${productId}`;
   return axios.get(url);
 };
 // //* @desc  update game

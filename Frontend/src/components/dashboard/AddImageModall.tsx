@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 // *
-interface AddImageModallProps {
-  SelectedProduct: Product ;
-  setSelectedProduct: React.Dispatch<React.SetStateAction<Product >> ;
+interface AddImageModallProps<T> {
+  SelectedProduct: T;
+  setSelectedProduct: React.Dispatch<React.SetStateAction<T>>;
   setOpenAddImageModall: (open: boolean) => void;
 }
-import { GameData, Image, Product } from "../../types";
+import { Image } from "../../types";
 // *
 import { GetImageService } from "../../services/ApiServices";
 import { MdClose } from "react-icons/md";
 import { FaFire } from "react-icons/fa";
 
-const AddImageModall: React.FC<AddImageModallProps> = ({
+const AddImageModall = <T extends { primaryImage?: Image | null; additionalImages?: Image[] }>({
   setOpenAddImageModall,
   setSelectedProduct,
   SelectedProduct,
-}) => {
+}: AddImageModallProps<T>) => {
   const [Images, setImages] = useState<Image[]>([]);
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // Stop event propagation to prevent closing the modal when clicked inside

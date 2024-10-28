@@ -65,11 +65,11 @@ export interface UserAddress {
 }
 export interface User {
   email: string;
-  order: string;
-  address: UserAddress;
-  firstName: string;
-  lastName: string;
-  phone: string;
+  order?: string;
+  address?: UserAddress;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
   isAdmin: string;
   profile: string;
   createdAt?: string;
@@ -105,7 +105,7 @@ export interface Order {
   _id?: string;
   createdAt?: string;
   user:User,
-  items:OrderItems,
+  items:OrderItems[],
   TrackingCode:string,
   status:string,
 }
@@ -115,9 +115,16 @@ export interface OrderItems {
   ItemQty:number;
   SelectedPlatform:SelectedPlatform;
   itemType:string;
+  populatedData:PopulatedData
 }
 export interface SelectedPlatform {
   platform:string;
   capacity:string;
   price:string;
+}
+interface PopulatedData {
+  primaryImage: string;
+  title: string;
+  _id: string;
+  price:number | undefined;
 }

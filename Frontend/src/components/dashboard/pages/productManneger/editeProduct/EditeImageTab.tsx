@@ -4,7 +4,7 @@ interface EditeImageTabProps {
   SelectedProduct: Product;
   setSelectedProduct: React.Dispatch<React.SetStateAction<Product>>;
 }
-import { GameData, Product } from "../../../../../types";
+import {  Product } from "../../../../../types";
 // *
 import AddImageModall from "../../../AddImageModall";
 import BtnTow from "../../../../utils/BtnTow";

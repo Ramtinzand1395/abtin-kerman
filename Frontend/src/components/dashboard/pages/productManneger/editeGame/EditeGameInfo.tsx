@@ -1,10 +1,9 @@
-import React, { ChangeEvent, useState } from "react";
+import React, {  useState } from "react";
 import { GameData } from "../../../../../types";
 interface EditeGameInfoProps {
   GameData: GameData;
-  handleGameDataChange: (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => void; // Correct type for the function
+  setGameData: React.Dispatch<React.SetStateAction<GameData>>;
+
 }
 const EditeGameInfo: React.FC<EditeGameInfoProps> = ({
   GameData,

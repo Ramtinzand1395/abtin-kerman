@@ -6,18 +6,17 @@ import {
 import { GameData } from "../../../../types";
 import BtnTow from "../../../utils/BtnTow";
 import { confirmAlert } from "react-confirm-alert";
-import EditeProductModall from "../../editeGame/EditeProductModall";
 import { toast } from "react-toastify";
 import EditeGameModall from "./editeGame/EditeGameModall";
 
-const GamesTable = () => {
+const GamesTable: React.FC = () => {
   const [Games, setGames] = useState<GameData[]>([]);
   const [orderDesc, setOrderDesc] = useState("newestFirst");
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [LodaingGames, setLodaingGames] = useState(false);
   const [OpenModall, setOpenModall] = useState(false);
-  const [SelectedProduct, setSelectedProduct] = useState<GameData | null>(null);
+  const [SelectedProduct, setSelectedProduct] = useState<GameData>(Games[0]);
   const handleOpenModall = (product: GameData) => {
     setOpenModall(true);
     setSelectedProduct(product);
@@ -211,7 +210,7 @@ const GamesTable = () => {
           </li>
         </ul>
       </nav>
-      {OpenModall && (
+      {OpenModall && SelectedProduct && (
         <EditeGameModall
           SelectedProduct={SelectedProduct}
           setSelectedProduct={setSelectedProduct}

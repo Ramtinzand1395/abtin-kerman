@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { GameData } from "../../../../../types";
 import EditeImageTab from "./EditeImageTab";
-import InputTabs from "./EditeGameInfo";
 import BtnTow from "../../../../utils/BtnTow";
 import { toast } from "react-toastify";
 import { updateGameService } from "../../../../../services/ApiServices";
 import EditeGameDataTab from "./EditeCapacityTab";
-import EditTag from "./EditGameTag";
 import AccountGameAdditionalExplanations from "../../../CkEditor/AccountGameAdditionalExplanations";
 import EditeGameInfo from "./EditeGameInfo";
 import EditGameTag from "./EditGameTag";
@@ -17,6 +15,12 @@ interface EditeGameModallProps {
   setSelectedProduct: React.Dispatch<React.SetStateAction<GameData>>;
   setLodaingGames: React.Dispatch<React.SetStateAction<boolean>>;
 }
+type TabKey =
+  | "gameImage"
+  | "gameInfo"
+  | "capacity"
+  | "aboutGame"
+  | "createGames";
 
 const EditeGameModall: React.FC<EditeGameModallProps> = ({
   SelectedProduct,
@@ -24,10 +28,10 @@ const EditeGameModall: React.FC<EditeGameModallProps> = ({
   setSelectedProduct,
   setLodaingGames,
 }) => {
-  const [activeTab, setActiveTab] = useState("gameImage");
+  const [activeTab, setActiveTab] = useState<TabKey>("gameImage");
   const renderContent = () => tabContent[activeTab] || tabContent.gameImage;
 
-  const tabs = [
+  const tabs: { key: TabKey; label: string }[] = [
     { key: "gameImage", label: " عکس بازی " },
     { key: "gameInfo", label: "بازی اطلاعات فنی " },
     { key: "capacity", label: " ظرفیت های بازی " },
@@ -68,7 +72,10 @@ const EditeGameModall: React.FC<EditeGameModallProps> = ({
       />
     ),
     gameInfo: (
-      <EditeGameInfo GameData={SelectedProduct} setGameData={setSelectedProduct} />
+      <EditeGameInfo
+        GameData={SelectedProduct}
+        setGameData={setSelectedProduct}
+      />
     ),
     capacity: (
       <EditeGameDataTab
@@ -83,7 +90,10 @@ const EditeGameModall: React.FC<EditeGameModallProps> = ({
       />
     ),
     createGames: (
-      <EditGameTag GameData={SelectedProduct} setGameData={setSelectedProduct} />
+      <EditGameTag
+        GameData={SelectedProduct}
+        setGameData={setSelectedProduct}
+      />
     ),
   };
 

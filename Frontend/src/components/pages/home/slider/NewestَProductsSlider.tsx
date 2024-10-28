@@ -16,11 +16,13 @@ import { Product } from "../../../../types";
 import LeftAnimation from "../../../utils/LeftAnimation";
 const NewestَProductsSlider: React.FC = () => {
   const [Products, setProducts] = useState<Product[]>([]);
+  const [orderDesc, setOrderDesc] = useState("newestFirst");
+  const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const { data } = await getProductsService();
-        setProducts(data);
+        const { data } = await getProductsService(pageNumber, orderDesc);
+        setProducts(data.products);
       } catch (err) {
         console.log(err);
       }
@@ -68,21 +70,21 @@ const NewestَProductsSlider: React.FC = () => {
           }}
           scrollbar={{ draggable: true }}
         >
-          {Products.map((product) => (
-            <SwiperSlide key={product._id}>
-              {product._id && (
-                <ShopingCard
-                  title={product.title}
-                  price={product.price}
-                  primaryImage={product.primaryImage}
-                  additionalImages={product.additionalImages}
-                  _id={product._id}
-              tags={product.tags}
-
-                />
-              )}
-            </SwiperSlide>
-          ))}
+          {Products &&
+            Products.map((product) => (
+              <SwiperSlide key={product._id}>
+                {product._id && (
+                  <ShopingCard
+                    title={product.title}
+                    price={product.price}
+                    primaryImage={product.primaryImage}
+                    additionalImages={product.additionalImages}
+                    _id={product._id}
+                    tags={product.tags}
+                  />
+                )}
+              </SwiperSlide>
+            ))}
         </Swiper>
       </LeftAnimation>
     </div>

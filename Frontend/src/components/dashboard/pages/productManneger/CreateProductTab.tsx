@@ -370,7 +370,7 @@ const CreateProductTab: React.FC = () => {
                 ButtonText={"ساخت محصول"}
                 onClick={(e) => handleCreateProduct(e)}
               /> */}
-              <ProductAdditionalExplanations setProduct={setProduct} />
+              <ProductAdditionalExplanations SelectedProduct={Product} setSelectedProduct={setProduct}/>
               <button type="submit">"ساخت محصول"</button>
             </div>
           </div>

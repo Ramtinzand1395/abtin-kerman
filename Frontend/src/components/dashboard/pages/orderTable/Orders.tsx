@@ -6,7 +6,7 @@ import {
 import BtnTow from "../../../utils/BtnTow";
 import OrderTab from "./OrderTab";
 import { toast } from "react-toastify";
-import { Order } from "../../../../types";
+import { Order, OrderItems } from "../../../../types";
 
 const Orders: React.FC = () => {
   const [Orders, setOrders] = useState<Order[]>([]);
@@ -14,14 +14,14 @@ const Orders: React.FC = () => {
   const [SelectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [orderDesc, setOrderDesc] = useState("newestFirst");
   const [pageNumber, setPageNumber] = useState(1);
-  const [totalPages, setTotalPages] = useState(1); // Assuming you set this value based on your data
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const getOrders = async () => {
       try {
         const { data } = await getOrdersService(pageNumber, orderDesc);
-        setOrders(data.orders); // Adjust based on how your backend returns data
-        setTotalPages(data.totalPages); // Adjust based on your backend response
+        setOrders(data.orders);
+        setTotalPages(data.totalPages);
       } catch (err) {
         console.log(err);
       }
@@ -29,12 +29,13 @@ const Orders: React.FC = () => {
     getOrders();
   }, [orderDesc, pageNumber]);
 
-  const calculateTotalPrice = (items) => {
+  const calculateTotalPrice = (items: OrderItems[]) => {
+    console.log(items);
     return items.reduce((total, item) => {
       const price =
-        item?.SelectedPlatform !== null
-          ? item?.SelectedPlatform?.price
-          : item?.populatedData?.price;
+        item?.itemType === "Games"
+          ? Number(item.SelectedPlatform.price) || 0
+          : Number(item.populatedData?.price) || 0;
       return total + price * item.ItemQty;
     }, 0);
   };

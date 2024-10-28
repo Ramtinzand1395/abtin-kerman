@@ -7,7 +7,6 @@ import { Category, GameData, Tag } from "../../../../../types";
 import SearchTags from "../../../searchTag/SearchTags";
 import SearchCats from "../../../searchTag/SearchCats";
 import BtnTow from "../../../../utils/BtnTow";
-import { CiTrash } from "react-icons/ci";
 import { FaTrash } from "react-icons/fa";
 interface EditGameTagProps {
   GameData: GameData;

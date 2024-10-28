@@ -3,11 +3,10 @@ import {
   getCategoriesService,
   getTagService,
 } from "../../../../../services/ApiServices";
-import { Category, GameData, Tag } from "../../../../../types";
+import { Category, Product, Tag } from "../../../../../types";
 import SearchTags from "../../../searchTag/SearchTags";
 import SearchCats from "../../../searchTag/SearchCats";
 import BtnTow from "../../../../utils/BtnTow";
-import { CiTrash } from "react-icons/ci";
 import { FaTrash } from "react-icons/fa";
 interface EditProductTagProps {
   setSelectedProduct: React.Dispatch<React.SetStateAction<Product>>;
@@ -20,13 +19,13 @@ const EditProductTag: React.FC<EditProductTagProps> = ({
   const handleRemovetag = (indexToRemove: number) => {
     setSelectedProduct((prevData) => ({
       ...prevData,
-      tags: prevData.tags.filter((_, index) => index !== indexToRemove),
+      tags: prevData?.tags?.filter((_, index) => index !== indexToRemove),
     }));
   };
   const handleRemovecat = (indexToRemove: number) => {
     setSelectedProduct((prevData) => ({
       ...prevData,
-      categories: prevData.categories.filter(
+      categories: prevData?.categories?.filter(
         (_, index) => index !== indexToRemove
       ),
     }));
@@ -51,7 +50,7 @@ const EditProductTag: React.FC<EditProductTagProps> = ({
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
       <div className="">
         <div className="">
-          <SearchTags
+          <SearchTags<Product>
             setGameData={setSelectedProduct}
             Tags={Tags}
             GameData={SelectedProduct}
@@ -90,7 +89,7 @@ const EditProductTag: React.FC<EditProductTagProps> = ({
         </table>
       </div>
       <div className="">
-        <SearchCats
+        <SearchCats<Product>
           setGameData={setSelectedProduct}
           GameData={SelectedProduct}
           cats={categories}

@@ -1,7 +1,7 @@
 import React from "react";
 
 interface BtnTowProps {
-  ButtonText: string;
+  ButtonText: string | React.ReactNode;
   ButtonColor: string;
   onClick: () => void;
 }

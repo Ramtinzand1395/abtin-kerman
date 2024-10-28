@@ -21,6 +21,7 @@ const ProductPage: React.FC = () => {
       if (!productId) return;
       try {
         const { data } = await getProductService(productId);
+        console.log(data,"sss")
         setProduct(data);
         setCurrentImage(data?.primaryImage?.direction);
       } catch (err) {
@@ -75,7 +76,7 @@ const ProductPage: React.FC = () => {
             <img
               // src={`http://localhost:5000/${currentImage}`}
               //! change
-        src={`${currentImage}`}
+              src={`${currentImage}`}
               alt=""
               className="w-full h-full object-contain max-w-[300px] max-h-[300px] my-5"
             />
@@ -84,8 +85,8 @@ const ProductPage: React.FC = () => {
                 <img
                   key={img._id}
                   // src={`http://localhost:5000/${img?.direction}`}
-                      //! change
-        src={`${img?.direction}`}
+                  //! change
+                  src={`${img?.direction}`}
                   alt=""
                   className="w-full h-full object-contain max-w-[70px] max-h-[70px] border-2 border-primary p-2 cursor-pointer"
                   onClick={() => handleImageClick(img?.direction)}
@@ -93,8 +94,8 @@ const ProductPage: React.FC = () => {
               ))}
               <img
                 // src={`http://localhost:5000/${Product?.primaryImage?.direction}`}
-                   //! change
-        src={`${Product?.primaryImage?.direction}`}
+                //! change
+                src={`${Product?.primaryImage?.direction}`}
                 alt=""
                 className="w-full h-full object-contain max-w-[70px] max-h-[70px] border-2 border-primary p-2 mx-2 cursor-pointer"
                 onClick={() =>
