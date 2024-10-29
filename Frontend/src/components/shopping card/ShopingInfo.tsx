@@ -41,6 +41,7 @@ const ShopingInfo: React.FC = () => {
   }, [Loadingdata]);
 
   const handleAddOrder = async () => {
+    console.log(CardItems)
     try {
       const userId = user._id;
       const { data } = await addOrderService({

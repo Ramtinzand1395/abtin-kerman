@@ -3,12 +3,12 @@ import {
   Comment,
   Feature,
   GameData,
+  Image,
   Product,
   Tag,
   UserAddress,
   Weblog,
 } from "../types";
-import { Image } from "@ckeditor/ckeditor5-image";
 interface LoginData {
   email: string;
   profile: string;
@@ -56,9 +56,9 @@ type changeStatus = {
   statuss: string;
 };
 type UserInfo = {
-  userInfo:UserAddress,
-userId:string,
-}
+  userInfo: UserAddress;
+  userId: string;
+};
 // const SERVER_URL = "http://localhost:5000/api";
 const SERVER_URL = "https://abtin-kerman-backend-new.vercel.app/api";
 
@@ -275,7 +275,7 @@ export const getFiltredAccountGamesService = (
 // ? USERINFO
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
-export const addUserInfoService = (data:UserInfo) => {
+export const addUserInfoService = (data: UserInfo) => {
   const url = `${SERVER_URL}/add-user-info`;
   return axios.post(url, data);
 };
@@ -289,7 +289,7 @@ export const getUserInfoService = (userId: string) => {
 // !ADD ORDER
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
-export const addOrderService = (data: { data:AddOrderData }) => {
+export const addOrderService = (data: { data: AddOrderData }) => {
   const url = `${SERVER_URL}/add-order`;
   return axios.post(url, data.data);
 };

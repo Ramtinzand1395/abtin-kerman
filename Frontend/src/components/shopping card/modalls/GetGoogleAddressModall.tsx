@@ -21,9 +21,8 @@ const GetGoogleAddressModall: React.FC<GetGoogleAddressModallProps> = ({
 }) => {
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const [currentPosition, setCurrentPosition] = useState<
-    [number, number] | null
-  >(null);
+  const [currentPosition, setCurrentPosition] = useState<[number, number] | null>(null);
+  const [altitude, setAltitude] = useState<mapboxgl.LngLat | null>(null);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -33,50 +32,56 @@ const GetGoogleAddressModall: React.FC<GetGoogleAddressModallProps> = ({
       },
       (error) => {
         console.error("Error getting location", error);
-        setCurrentPosition([51.392173, 35.730954]);
+        setCurrentPosition([51.392173, 35.730954]); // Default location
       }
     );
   }, []);
 
   useEffect(() => {
     if (mapContainerRef.current && currentPosition) {
-      mapRef.current = new mapboxgl.Map({
-        mapType: mapboxgl.Map.mapTypes.neshanVector,
-        container: mapContainerRef.current,
-        zoom: 12,
-        pitch: 0,
-        center: currentPosition,
-        minZoom: 2,
-        maxZoom: 21,
-        trackResize: true,
-        mapKey: "web.9769f65e037047f18e87ed818a5e7e68",
-        poi: false,
-        traffic: false,
-      }) as unknown as mapboxgl.Map;
+      // Initialize map only if it doesn't already exist
+      if (!mapRef.current) {
+        mapRef.current = new mapboxgl.Map({
+          mapType: mapboxgl.Map.mapTypes.neshanVector,
+          container: mapContainerRef.current,
+          zoom: 12,
+          pitch: 0,
+          center: currentPosition,
+          minZoom: 2,
+          maxZoom: 21,
+          trackResize: true,
+          mapKey: "web.9769f65e037047f18e87ed818a5e7e68",
+          poi: false,
+          traffic: false,
+        }) as unknown as mapboxgl.Map;
 
-      mapRef.current.on("load", () => {
-        drawMarkerOnMap(currentPosition);
-      });
+        mapRef.current.on("load", () => {
+          drawMarkerOnMap(currentPosition);
+        });
+      } else {
+        // If map already exists, recenter it on `currentPosition`
+        mapRef.current.setCenter(currentPosition);
+      }
     }
   }, [currentPosition]);
-  console.log(currentPosition, "currentPosition");
+
   function drawMarkerOnMap(position: [number, number]) {
-    console.log(position);
     const map = mapRef.current;
 
     if (map) {
       const popup = new mapboxgl.Popup({ offset: 25 }).setText(
         " (مختصات فعلی شما) با نگه داشتن مارکر می‌توانید آن را روی نقشه جابه‌جا کنید "
       );
-      new mapboxgl.Marker({ color: "#00F975", draggable: true })
+      const marker = new mapboxgl.Marker({ color: "#00F975", draggable: true })
         .setPopup(popup)
         .setLngLat(position)
         .addTo(map)
-        .togglePopup()
-        .on("dragend", (e) => {
-          const markerLngLat = e.target.getLngLat();
-          fetchAddress(markerLngLat.lat, markerLngLat.lng); // Fetch address when the marker is moved
-        });
+        .togglePopup();
+
+      marker.on("dragend", () => {
+        const markerLngLat = marker.getLngLat();
+        setAltitude(markerLngLat);
+      });
     }
   }
 
@@ -106,11 +111,18 @@ const GetGoogleAddressModall: React.FC<GetGoogleAddressModallProps> = ({
   };
 
   return (
-    <div
-      ref={mapContainerRef}
-      id="map"
-      style={{ width: "100%", height: "100vh" }}
-    />
+    <>
+      <div
+        ref={mapContainerRef}
+        id="map"
+        style={{ width: "100%", height: "60vh" }}
+      />
+      <button
+        onClick={() => altitude && fetchAddress(altitude.lat, altitude.lng)}
+      >
+        Get Address
+      </button>
+    </>
   );
 };
 

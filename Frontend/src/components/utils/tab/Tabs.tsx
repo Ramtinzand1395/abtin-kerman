@@ -3,15 +3,14 @@ import { motion } from "framer-motion";
 import CommentsTab from "./CommentsTab";
 import ProductInformationTab from "./ProductInformationTab";
 import ProductSpecifications from "./ProductSpecifications";
-import { GameData, Product } from "../../../types";
+import { Product } from "../../../types";
 interface ChipProps {
   text: string;
   selected: boolean;
   setSelected: (text: string) => void;
 }
 interface TabsProps {
-
-  Product: Product | GameData;
+  Product: Product;
 }
 const Chip: React.FC<ChipProps> = ({ text, selected, setSelected }) => {
   return (
@@ -33,10 +32,7 @@ const Chip: React.FC<ChipProps> = ({ text, selected, setSelected }) => {
   );
 };
 const tabs = [" توضیحات", "مشخصات فنی", "نظرات"];
-const Tabs: React.FC<TabsProps> = ({
- 
-  Product,
-}) => {
+const Tabs: React.FC<TabsProps> = ({ Product }) => {
   const [selected, setSelected] = useState(tabs[0]);
 
   return (

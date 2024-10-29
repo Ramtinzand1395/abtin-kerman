@@ -37,7 +37,7 @@ const AddressModall: React.FC<AddressModallProps> = ({
       className="bg-gray-700 bg-opacity-60 z-10 w-full h-full fixed top-0 left-0 flex items-center justify-center"
     >
       <div
-        className={`  md:w-[50vw]  w-[80vw] h-[70vh] overflow-y-auto rounded-2xl bg-white px-10`}
+        className={` w-[80vw] h-[90vh] overflow-y-auto rounded-2xl bg-white px-10`}
         onClick={handleModalClick}
       >
         <div className="flex items-center justify-between static top-0">

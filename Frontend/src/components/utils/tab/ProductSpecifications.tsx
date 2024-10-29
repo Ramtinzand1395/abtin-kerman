@@ -1,7 +1,7 @@
 import React from "react";
-import { GameData, Product } from "../../../types";
+import { Product } from "../../../types";
 interface ProductSpecificationsProps {
-  Product: Product | GameData;
+  Product: Product;
 }
 const ProductSpecifications: React.FC<ProductSpecificationsProps> = ({
   Product,
@@ -15,7 +15,6 @@ const ProductSpecifications: React.FC<ProductSpecificationsProps> = ({
               <td className="whitespace-nowrap px-6 font-bold py-4">
                 {data.key}
               </td>
-
               <td className="whitespace-nowrap px-6 py-4">{data.value}</td>
             </tr>
           ))}

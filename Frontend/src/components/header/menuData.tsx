@@ -1,4 +1,3 @@
-import { FaHome, FaTrash } from "react-icons/fa";
 import { IoGameController } from "react-icons/io5";
 import { RiGameFill } from "react-icons/ri";
 import { SiAmazongames, SiRiotgames } from "react-icons/si";
