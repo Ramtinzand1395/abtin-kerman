@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import CreateGameTab from "./CreateGameTab";
-import CreateProductTab from "./CreateProductTab";
 import GamesTable from "./GamesTable";
 import ProductsTable from "./ProductsTable";
+import GeneralProductTab from "./createProduct/GeneralProductTab";
+import GeneralGameTab from "./createGame/GeneralGameTab";
 type TabKey = "games" | "products" | "createProducts" | "createGames";
 const tabContent = {
   games: <GamesTable />,
   products: <ProductsTable />,
-  createProducts: <CreateProductTab />,
-  createGames: <CreateGameTab />,
+  createProducts: <GeneralProductTab />,
+  createGames: <GeneralGameTab />,
 };
 
 const ProductsManager: React.FC = () => {

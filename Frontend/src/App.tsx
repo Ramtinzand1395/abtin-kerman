@@ -16,6 +16,7 @@ import AllAcountGames from "./components/pages/Products/AllAcountGames";
 import ShopingInfo from "./components/shopping card/ShopingInfo";
 import Orders from "./components/dashboard/pages/orderTable/Orders";
 import ProductsManneger from "./components/dashboard/pages/productManneger/ProductsManneger";
+import Users from "./components/dashboard/pages/Users";
 
 const App: React.FC = () => {
   return (
@@ -88,11 +89,19 @@ const App: React.FC = () => {
             </DashboardLayout>
           }
         />
-         <Route
+        <Route
           path="/dashboard/gallery/:userId"
           element={
             <DashboardLayout>
               <Gallery />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/user-manneger/:userId"
+          element={
+            <DashboardLayout>
+              <Users />
             </DashboardLayout>
           }
         />

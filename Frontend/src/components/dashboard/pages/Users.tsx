@@ -1,88 +1,37 @@
 import React, { useEffect, useState } from "react";
-import {
-  deleteGameService,
-  getGameService,
-} from "../../../../services/ApiServices";
-import { GameData } from "../../../../types";
-import BtnTow from "../../../utils/BtnTow";
-import { confirmAlert } from "react-confirm-alert";
-import { toast } from "react-toastify";
-import EditeGameModall from "./editeGame/EditeGameModall";
+
+import { getUsersService } from "../../../services/ApiServices";
+import { User } from "../../../types";
 // import Spiner from "../../../utils/Spiner";
 
-const GamesTable: React.FC = () => {
-  const [Games, setGames] = useState<GameData[]>([]);
+const Users: React.FC = () => {
+  const [Users, setUsers] = useState<User[]>([]);
   const [orderDesc, setOrderDesc] = useState("newestFirst");
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [LodaingGames, setLodaingGames] = useState(false);
-  const [OpenModall, setOpenModall] = useState(false);
-  const [SelectedProduct, setSelectedProduct] = useState<GameData>(Games[0]);
-  const handleOpenModall = (product: GameData) => {
-    setOpenModall(true);
-    setSelectedProduct(product);
-  };
+  const [LodaingGames, setLodaingUsers] = useState(false);
+  //   const [OpenModall, setOpenModall] = useState(false);
+  //   const [SelectedProduct, setSelectedProduct] = useState<User>(Users[0]);
+  //   const handleOpenModall = (product: User) => {
+  //     setOpenModall(true);
+  //     setSelectedProduct(product);
+  //   };
   useEffect(() => {
-    setLodaingGames(true);
-    const getGames = async () => {
+    setLodaingUsers(true);
+    const getUsers = async () => {
       try {
-        const { data } = await getGameService(pageNumber, orderDesc);
-        setGames(data.games);
+        const { data } = await getUsersService(pageNumber, orderDesc);
+        console.log(data);
+        setUsers(data.users);
         setTotalPages(data.totalPages);
       } catch (err) {
         console.log(err);
       } finally {
-        setLodaingGames(false);
+        setLodaingUsers(false);
       }
     };
-    getGames();
+    getUsers();
   }, [orderDesc, pageNumber, LodaingGames]);
-  // !ادیت گیم حذف بشه و مدال اضافه بشه
-  const handleDeleteGame = async (id: string) => {
-    setLodaingGames(true);
-    try {
-      const { data } = await deleteGameService(id);
-      toast.success(data.message);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLodaingGames(false);
-    }
-  };
-  //  ? DELETE
-  const confirmAlertmodall = (game: GameData) => {
-    confirmAlert({
-      customUI: ({ onClose }) => {
-        return (
-          <div className="bg-primary border-2 rounded-2xl p-4 border-white w-[50vw] h-auto">
-            <p className="text-white font-vazir my-5 ">
-              از حذف
-              <span className="text-red-400 font-bold text-xl">
-                {" "}
-                {game.title}{" "}
-              </span>
-              مطمعنی؟
-            </p>
-            <button
-              onClick={() => {
-                game._id && handleDeleteGame(game._id);
-                onClose();
-              }}
-              className="bg-green-500 rounded-lg py-2 px-10 border-white border-2 text-black hover:bg-green-400 ml-5"
-            >
-              بله
-            </button>
-            <button
-              onClick={onClose}
-              className="bg-red-500 rounded-lg py-2 px-10 border-white border-2 text-black hover:bg-red-400 ml-5"
-            >
-              انصراف
-            </button>
-          </div>
-        );
-      },
-    });
-  };
   // if (LodaingGames === true)  <Spiner />;
   return (
     <div className="w-full md:container md:mx-auto mx-2 my-10">
@@ -97,26 +46,32 @@ const GamesTable: React.FC = () => {
               <thead className="border-b border-neutral-200 font-medium ">
                 <tr>
                   <th scope="col" className="px-6 py-4 text-start">
-                    اسم بازی
+                    عکس کاربر
                   </th>
                   <th scope="col" className="px-6 py-4 text-start">
-                    ظرفیت ها
+                    ایمیل
                   </th>
                   <th scope="col" className="px-6 py-4 text-start">
-                    تگ ها
+                    نام
                   </th>
                   <th scope="col" className="px-6 py-4 text-start">
-                    دسته بندی
+                    نام خانوادگی
                   </th>
                   <th scope="col" className="px-6 py-4 text-start">
-                    تغییرات
+                    آدرس
+                  </th>
+                  <th scope="col" className="px-6 py-4 text-start">
+                    شماره تماس
+                  </th>{" "}
+                  <th scope="col" className="px-6 py-4 text-start">
+                    سفارشات
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {Games?.map((data) => (
+                {Users?.map((user) => (
                   <tr
-                    key={data._id}
+                    key={user._id}
                     className="border-b text-start border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100  "
                   >
                     <td className="whitespace-nowrap font-bold px-6 py-4 ">
@@ -124,47 +79,41 @@ const GamesTable: React.FC = () => {
                         <img
                           // src={`http://localhost:5000/${data.primaryImage?.direction}`}
                           //! change
-                          src={`${data.primaryImage?.direction}`}
+                          src={`${user.profile}`}
                           className="w-14 h-14 rounded-lg ml-5"
                           alt=""
                         />
-                        {data.title}
                       </div>
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 flex flex-col">
-                      {data.info.map((infodata, index) => (
-                        <div
-                          key={index}
-                          className="mb-2"
-                        >{`پلتفورم:${infodata.platform} - ظرفیت: ${infodata.capacity} - قیمت:${infodata.price} - تعداد: ${infodata.qty} `}</div>
-                      ))}
+                      {user.email}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
-                      {data.tags.map((tag) => (
-                        <div key={tag._id} className="mb-2">
-                          {tag.tagName}
-                        </div>
-                      ))}
+                      {user.firstName}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
-                      {data.categories.map((cat) => (
-                        <div key={cat._id} className="mb-2">
-                          {cat.categoryName}
-                        </div>
-                      ))}
+                      {user.lastName}
                     </td>
                     <td className="flex items-center justify-around">
-                      <BtnTow
-                        ButtonColor="bg-red-500 hover:from-red-500 hover:to-red-400 hover:ring-red-400"
-                        ButtonText={"حذف"}
-                        onClick={() => confirmAlertmodall(data)}
-                      />
-                      <BtnTow
-                        ButtonColor="bg-orange-500 hover:from-orange-500 hover:to-orange-400 hover:ring-orange-400"
-                        ButtonText={"ویرایش"}
-                        onClick={() => handleOpenModall(data)}
-                      />
+                      {user.address?.address}
+                      {user.address?.city}
+                      {user.address?.plaque}
+                      {user.address?.postalCode}
+                      {user.address?.provider}
+                      {user.address?.unit}
                     </td>
+                    <td className="flex items-center justify-around">
+                      {user.phone}
+                    </td>{" "}
+                    {/* <td className="flex items-center justify-around">
+                      {user?.order ? (
+                        user?.order?.map((order) => (
+                          <div className="">{console.log(order)}</div>
+                        ))
+                      ) : (
+                        <div>asddsa</div>
+                      )}
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
@@ -215,16 +164,16 @@ const GamesTable: React.FC = () => {
           </li>
         </ul>
       </nav>
-      {OpenModall && SelectedProduct && (
+      {/* {OpenModall && SelectedProduct && (
         <EditeGameModall
           SelectedProduct={SelectedProduct}
           setSelectedProduct={setSelectedProduct}
           setOpenModall={setOpenModall}
           setLodaingGames={setLodaingGames}
         />
-      )}
+      )} */}
     </div>
   );
 };
 
-export default GamesTable;
+export default Users;

@@ -47,5 +47,7 @@ router.get("/get-blogs", adminController.Blogs);
 router.post("/add-order", adminController.AddOrder);
 router.get("/get-orders", adminController.GetOrders);
 router.post("/change-status", adminController.Changestatus);
+// ? Users
+router.get("/get-users", adminController.GetUsers);
 
 module.exports = router;

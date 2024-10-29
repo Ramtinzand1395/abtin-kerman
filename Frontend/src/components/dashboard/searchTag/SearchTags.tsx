@@ -23,6 +23,7 @@ const SearchTags = <T extends HasTags>({
       ...prevData,
       tags: [...(prevData.tags ?? []), tag], // Default to an empty array if `tags` is undefined
     }));
+    setSearchTherm("");
   };
   const filteredTags = Tags.filter(
     (tag) =>

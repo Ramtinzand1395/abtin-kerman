@@ -321,7 +321,6 @@ exports.Updateproduct = async (req, res) => {
   } = req.body;
   try {
     const product = await Products.findById({ _id });
-    console.log(product);
     if (!product) {
       return res.status(404).json({ message: "بازی پیدا نشد" });
     }
@@ -411,11 +410,10 @@ exports.handleGetComments = async (req, res, next) => {
 
         return {
           ...comment.toObject(),
-          relatedData, // Adding the populated game or product data to the comment
+          relatedData,
         };
       })
     );
-
     res.status(201).json({
       data: populatedComments,
     });
@@ -444,23 +442,16 @@ exports.handleConfirmComment = async (req, res, next) => {
     if (!foundComment) {
       return res.status(404).json({ message: "نظر پیدا نشد" });
     }
-
     let relatedData = null;
-
     if (foundComment.relatedModel === "accountgame") {
       relatedData = await Games.findById(foundComment.relatedId);
     } else if (foundComment.relatedModel === "Product") {
       relatedData = await Products.findById(foundComment.relatedId);
     }
-
     if (!relatedData) {
       return res.status(404).json({ message: "مورد مرتبط پیدا نشد" });
     }
-
-    // Add comment ID to the related document's comments array
     relatedData.comments.push(commentId);
-
-    // Save the changes in both related data and foundComment
     await relatedData.save();
     foundComment.isValidated = true;
     await foundComment.save();
@@ -602,41 +593,30 @@ exports.Changestatus = async (req, res) => {
   }
 };
 
-// exports.GetOrders = async (req, res) => {
-//   const { pageNumber = 1, sortOrder = "lowToHigh" } = req.query;
-//   const limit = 10;
-//   const skip = (parseInt(pageNumber, 10) - 1) * limit;
-//   const sortOption = sortOrder === "lowToHigh" ? { price: 1 } : { price: -1 };
+// ? USERS
+// * GET usres
+exports.GetUsers = async (req, res) => {
+  const { pageNumber = 1, sortOrder = "newestFirst" } = req.query;
+  const limit = 5;
+  const page = parseInt(pageNumber, 5);
+  if (isNaN(page) || page < 1) {
+    return res.status(400).json({ error: "Invalid page number" });
+  }
+  const skip = (page - 1) * limit;
+  const sortOption =
+    sortOrder === "newestFirst" ? { createdAt: -1 } : { createdAt: 1 };
 
-//   try {
-//     // Step 1: Fetch orders with user data populated
-//     const orders = await Order.find()
-//       .populate("user")
-//       .limit(limit)
-//       .skip(skip)
-//       .sort(sortOption);
-
-//     // Step 2: Populate 'items.id' based on the condition of 'selectedPlatform'
-//     for (const order of orders) {
-//       // Populate for items where 'selectedPlatform' is null (Games)
-//       await order.populate({
-//         path: 'items.id',
-//         model: 'Games',
-//         match: { 'items.selectedPlatform': { $ne: null } }, // Match items with selectedPlatform not null
-//       });
-
-//       // Populate for items where 'selectedPlatform' is not null (Products)
-//       match: { 'items.selectedPlatform': null }, // Match items with selectedPlatform null
-//       await order.populate({
-//         path: 'items.id',
-//         model: 'Products',
-//       });
-//     }
-
-//     // Step 3: Send the populated orders in the response
-//     res.status(200).json(orders);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// };
+  try {
+    const totalUsers = await User.countDocuments();
+    const totalPages = Math.ceil(totalUsers / limit);
+    const users = await User.find()
+      .populate("order")
+      .limit(limit)
+      .skip(skip)
+      .sort(sortOption);
+    res.status(200).json({ users, totalPages });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
+  }
+};

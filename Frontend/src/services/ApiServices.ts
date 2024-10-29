@@ -307,3 +307,11 @@ export const changeStatusService = (data: changeStatus) => {
   const url = `${SERVER_URL}/change-status`;
   return axios.post(url, data);
 };
+// * Users
+// ? GET USERS  
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const getUsersService = (pageNumber: number, sortOrder: string) => {
+  const url = `${SERVER_URL}/get-users?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
+  return axios.get(url);
+};

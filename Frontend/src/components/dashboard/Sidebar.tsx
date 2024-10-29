@@ -3,15 +3,11 @@ import React, { useState } from "react";
 import "./sidebar.css";
 // import { sidebarItems } from "./DashData";
 import { Link } from "react-router-dom";
-import {
-  FaComment,
-  FaHome,
-  FaPowerOff,
-  FaTags,
-} from "react-icons/fa";
+import { FaComment, FaHome, FaPowerOff, FaTags } from "react-icons/fa";
 import { MdManageAccounts } from "react-icons/md";
 import { IoIosListBox } from "react-icons/io";
 import { SiCkeditor4, SiRockstargames } from "react-icons/si";
+import { RiGalleryFill } from "react-icons/ri";
 
 const Sidebar: React.FC = () => {
   const userJson = localStorage.getItem("User");
@@ -43,13 +39,13 @@ const Sidebar: React.FC = () => {
       label: "کاربران",
       icon: <MdManageAccounts size={30} />,
       helperTxt: "کاربران",
-      path: "/user-manneger",
+      path: `/user-manneger/${User?._id}`,
     },
     {
       id: 5,
-      label: "کاربران",
-      icon: <MdManageAccounts size={30} />,
-      helperTxt: "کاربران",
+      label: "گالری عکس",
+      icon: <RiGalleryFill size={30} />,
+      helperTxt: "گالری عکس",
       path: `/dashboard/gallery/${User?._id}`,
     },
     {
