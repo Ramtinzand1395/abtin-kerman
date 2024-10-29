@@ -125,7 +125,7 @@ const ProductPage: React.FC = () => {
             </label>
             <div className="border-2 border-secondery rounded-lg w-full md:w-[30vw] p-3 mt-4">
               <ul>
-                {Product?.features?.map((feature, index) => (
+                {Product?.Specifications?.map((feature, index) => (
                   <li className="my-4 border-b-2 p-1" key={index}>
                     <span className="text-gray-600">{feature.key}:</span>{" "}
                     {feature.value}

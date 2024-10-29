@@ -6,7 +6,7 @@ import { Comment, GameData, Product } from "../../../types";
 import BtnTow from "../BtnTow";
 
 interface CommentsTabProps {
-  Product: Product | GameData;
+  Product:Product | GameData ;
 }
 const CommentsTab: React.FC<CommentsTabProps> = ({ Product }) => {
   const { gameId, productId } = useParams(); // Correctly calling useParams as a function

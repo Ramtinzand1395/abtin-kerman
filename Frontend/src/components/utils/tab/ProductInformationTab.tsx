@@ -1,14 +1,17 @@
-import React from "react";
-import { GameData, Product } from "../../../types";
-interface ProductInformationTabProps {
-  Product: Product | GameData;
+import { Product } from "../../../types";
+
+interface ProductInformationTabProps<T> {
+  Product: T;
 }
-const ProductInformationTab: React.FC<ProductInformationTabProps> = ({
+
+const ProductInformationTab = <T,>({
   Product,
-}) => {
+}: ProductInformationTabProps<T>) => {
   return (
     <div
-      dangerouslySetInnerHTML={{ __html: Product.additionalExplanations || "" }}
+      dangerouslySetInnerHTML={{
+        __html: (Product as Product).additionalExplanations || "",
+      }}
       className="p-5 rounded-xl bg-white"
     ></div>
   );

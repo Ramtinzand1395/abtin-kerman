@@ -3,22 +3,23 @@ import { motion } from "framer-motion";
 import CommentsTab from "./CommentsTab";
 import ProductInformationTab from "./ProductInformationTab";
 import ProductSpecifications from "./ProductSpecifications";
-import { Product } from "../../../types";
+import { Product, GameData } from "../../../types"; // Import your types
+
 interface ChipProps {
   text: string;
   selected: boolean;
   setSelected: (text: string) => void;
 }
+
 interface TabsProps {
-  Product: Product;
+  Product: Product | GameData; // Explicitly use the union type here
 }
+
 const Chip: React.FC<ChipProps> = ({ text, selected, setSelected }) => {
   return (
     <button
       onClick={() => setSelected(text)}
-      className={` text-white${
-        selected ? "" : " hover:text-slate-200 hover:bg-slate-700"
-      } text-sm transition-colors px-2.5 py-2 rounded-md relative`}
+      className={`text-white${selected ? "" : " hover:text-slate-200 hover:bg-slate-700"} text-sm transition-colors px-2.5 py-2 rounded-md relative`}
     >
       <span className="relative z-10">{text}</span>
       {selected && (
@@ -31,7 +32,9 @@ const Chip: React.FC<ChipProps> = ({ text, selected, setSelected }) => {
     </button>
   );
 };
-const tabs = [" توضیحات", "مشخصات فنی", "نظرات"];
+
+const tabs = ["توضیحات", "مشخصات فنی", "نظرات"];
+
 const Tabs: React.FC<TabsProps> = ({ Product }) => {
   const [selected, setSelected] = useState(tabs[0]);
 
@@ -47,16 +50,16 @@ const Tabs: React.FC<TabsProps> = ({ Product }) => {
           />
         ))}
       </div>
-      {selected === " توضیحات" ? (
-        <div className="">
+      {selected === "توضیحات" ? (
+        <div>
           <ProductInformationTab Product={Product} />
         </div>
       ) : selected === "مشخصات فنی" ? (
-        <div className="">
+        <div>
           <ProductSpecifications Product={Product} />
         </div>
       ) : (
-        <div className="">
+        <div>
           <CommentsTab Product={Product} />
         </div>
       )}

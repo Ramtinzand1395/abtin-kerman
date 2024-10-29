@@ -1,16 +1,16 @@
-import React from "react";
 import { Product } from "../../../types";
-interface ProductSpecificationsProps {
-  Product: Product;
+interface ProductSpecificationsProps<T> {
+  Product: T;
 }
-const ProductSpecifications: React.FC<ProductSpecificationsProps> = ({
+
+const ProductSpecifications = <T,>({
   Product,
-}) => {
+}: ProductSpecificationsProps<T>) => {
   return (
     <div>
       <table className="min-w-full text-start text-sm font-light text-surface ">
         <tbody>
-          {Product.Specifications.map((data) => (
+          {(Product as Product)?.features?.map((data) => (
             <tr className="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100  ">
               <td className="whitespace-nowrap px-6 font-bold py-4">
                 {data.key}
