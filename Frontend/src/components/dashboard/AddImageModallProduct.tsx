@@ -5,7 +5,7 @@ interface AddImageModallProps {
   setProduct: React.Dispatch<React.SetStateAction<Product>>;
   setOpenAddImageModall: (open: boolean) => void;
 }
-import { Product, Image } from "../../types";
+import { Product, ImageType } from "../../types";
 // *
 import { GetImageService } from "../../services/ApiServices";
 import { MdClose } from "react-icons/md";
@@ -16,7 +16,7 @@ const AddImageModallProduct: React.FC<AddImageModallProps> = ({
   setProduct,
   Product,
 }) => {
-  const [Images, setImages] = useState<Image[]>([]);
+  const [Images, setImages] = useState<ImageType[]>([]);
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // Stop event propagation to prevent closing the modal when clicked inside
     event.stopPropagation();
@@ -39,7 +39,7 @@ const AddImageModallProduct: React.FC<AddImageModallProps> = ({
       document.body.style.overflow = "unset";
     };
   }, []);
-  const togglePrimaryImage = (image: Image) => {
+  const togglePrimaryImage = (image: ImageType) => {
     if (Product.primaryImage?._id === image._id) {
       // If the selected image is already the primary, deselect it
       setProduct((prev) => ({
@@ -55,7 +55,7 @@ const AddImageModallProduct: React.FC<AddImageModallProps> = ({
     }
   };
 
-  const toggleAdditionalImage = (image: Image) => {
+  const toggleAdditionalImage = (image: ImageType) => {
     setProduct((prev) => {
       // Ensure additionalImages is always an array
       const currentAdditionalImages = prev.additionalImages || [];

@@ -9,7 +9,7 @@ const Users: React.FC = () => {
   const [orderDesc, setOrderDesc] = useState("newestFirst");
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [LodaingGames, setLodaingUsers] = useState(false);
+  // const [LodaingGames, setLodaingUsers] = useState(false);
   //   const [OpenModall, setOpenModall] = useState(false);
   //   const [SelectedProduct, setSelectedProduct] = useState<User>(Users[0]);
   //   const handleOpenModall = (product: User) => {
@@ -17,7 +17,6 @@ const Users: React.FC = () => {
   //     setSelectedProduct(product);
   //   };
   useEffect(() => {
-    setLodaingUsers(true);
     const getUsers = async () => {
       try {
         const { data } = await getUsersService(pageNumber, orderDesc);
@@ -26,12 +25,10 @@ const Users: React.FC = () => {
         setTotalPages(data.totalPages);
       } catch (err) {
         console.log(err);
-      } finally {
-        setLodaingUsers(false);
       }
     };
     getUsers();
-  }, [orderDesc, pageNumber, LodaingGames]);
+  }, [orderDesc, pageNumber]);
   // if (LodaingGames === true)  <Spiner />;
   return (
     <div className="w-full md:container md:mx-auto mx-2 my-10">
@@ -60,12 +57,7 @@ const Users: React.FC = () => {
                   <th scope="col" className="px-6 py-4 text-start">
                     آدرس
                   </th>
-                  <th scope="col" className="px-6 py-4 text-start">
-                    شماره تماس
-                  </th>{" "}
-                  <th scope="col" className="px-6 py-4 text-start">
-                    سفارشات
-                  </th>
+               
                 </tr>
               </thead>
               <tbody>
@@ -94,25 +86,36 @@ const Users: React.FC = () => {
                     <td className="whitespace-nowrap px-6 py-4">
                       {user.lastName}
                     </td>
-                    <td className="flex items-center justify-around">
-                      {user.address?.address}
-                      {user.address?.city}
-                      {user.address?.plaque}
-                      {user.address?.postalCode}
-                      {user.address?.provider}
-                      {user.address?.unit}
+                    <td className="flex  flex-col justify-around">
+                      <p>آدرس: {user.address?.address}</p>
+                      <p>شهر: {user.address?.city}</p>
+                      <p>
+                        پلاک:
+                        {user.address?.plaque}
+                      </p>
+                      <p>
+                        کد پستی:
+                        {user.address?.postalCode}
+                      </p>
+                      <p>
+                        استان:
+                        {user.address?.provider}
+                      </p>
+                      <p>
+                        واحد:
+                        {user.address?.unit}
+                      </p>
+                      <p>
+                        شماره تماس:
+                        {user.phone}
+                      </p>
                     </td>
-                    <td className="flex items-center justify-around">
-                      {user.phone}
-                    </td>{" "}
                     {/* <td className="flex items-center justify-around">
-                      {user?.order ? (
-                        user?.order?.map((order) => (
-                          <div className="">{console.log(order)}</div>
-                        ))
-                      ) : (
-                        <div>asddsa</div>
-                      )}
+                      {
+                        user.order ? <p>
+                          {user.order.length}
+                        </p> : <p>سفارشی موجود نیست</p>
+                      }
                     </td> */}
                   </tr>
                 ))}

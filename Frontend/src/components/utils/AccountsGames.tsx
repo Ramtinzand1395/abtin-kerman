@@ -1,11 +1,11 @@
 import React from "react";
-import { GameDataInfo, Image, Tag } from "../../types";
+import { GameDataInfo, ImageType, Tag } from "../../types";
 import { Link } from "react-router-dom";
 
 interface CardItemProps {
   title: string;
-  primaryImage: Image | null;
-  additionalImages: Image[];
+  primaryImage: ImageType | null;
+  additionalImages: ImageType[];
   info: GameDataInfo[];
   _id?: string;
   tags: Tag[];

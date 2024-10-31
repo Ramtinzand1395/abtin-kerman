@@ -29,7 +29,6 @@ const GetUserInformation:React.FC<GetUserInformationProps> = ({
     city: City || "", // Initialize from props
     provider: Provider || "", 
   });
-  console.log(UserInfo)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setUserInfo((prevInfo) => ({

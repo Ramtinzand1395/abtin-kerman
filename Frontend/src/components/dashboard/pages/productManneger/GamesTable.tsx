@@ -23,20 +23,18 @@ const GamesTable: React.FC = () => {
     setSelectedProduct(product);
   };
   useEffect(() => {
-    setLodaingGames(true);
     const getGames = async () => {
       try {
         const { data } = await getGameService(pageNumber, orderDesc);
+        console.log(data)
         setGames(data.games);
         setTotalPages(data.totalPages);
       } catch (err) {
         console.log(err);
-      } finally {
-        setLodaingGames(false);
-      }
+      } 
     };
     getGames();
-  }, [orderDesc, pageNumber, LodaingGames]);
+  }, [orderDesc, pageNumber , LodaingGames]);
   // !ادیت گیم حذف بشه و مدال اضافه بشه
   const handleDeleteGame = async (id: string) => {
     setLodaingGames(true);

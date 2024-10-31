@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import "./sidebar.css";
 // import { sidebarItems } from "./DashData";
 import { Link } from "react-router-dom";
-import { FaComment, FaHome, FaPowerOff, FaTags } from "react-icons/fa";
-import { MdManageAccounts } from "react-icons/md";
+import { FaComment, FaHome, FaPowerOff, FaTags, FaUser } from "react-icons/fa";
+import { MdEdit, MdManageAccounts } from "react-icons/md";
 import { IoIosListBox } from "react-icons/io";
 import { SiCkeditor4, SiRockstargames } from "react-icons/si";
 import { RiGalleryFill } from "react-icons/ri";
@@ -20,56 +20,76 @@ const Sidebar: React.FC = () => {
       helperTxt: "بازگشت به صفحه نخست",
       path: "/",
     },
-    {
-      id: 2,
-      label: "مدیریت محصولات",
-      icon: <SiRockstargames size={30} />,
-      helperTxt: "مدیریت محصولات ",
-      path: `/dashboard/product-management/${User?._id}`,
-    },
-    {
-      id: 3,
-      label: "سفارشات",
-      icon: <IoIosListBox size={30} />,
-      helperTxt: "سفارشات",
-      path: `/dashboard/orders/${User?._id}`,
-    },
-    {
-      id: 4,
-      label: "کاربران",
-      icon: <MdManageAccounts size={30} />,
-      helperTxt: "کاربران",
-      path: `/user-manneger/${User?._id}`,
-    },
-    {
-      id: 5,
-      label: "گالری عکس",
-      icon: <RiGalleryFill size={30} />,
-      helperTxt: "گالری عکس",
-      path: `/dashboard/gallery/${User?._id}`,
-    },
-    {
-      id: 7,
-      label: "دسته بندی و تگ ها",
-      icon: <FaTags size={30} />,
-      helperTxt: "دسته بندی و تگ ها",
-      path: `/dashboard/tags/${User?._id}`,
-    },
+    // ? ADMIN
+    ...(User?.isAdmin
+      ? [
+          {
+            id: 2,
+            label: "مدیریت محصولات",
+            icon: <SiRockstargames size={30} />,
+            helperTxt: "مدیریت محصولات ",
+            path: `/dashboard/product-management/${User?._id}`,
+          },
+          {
+            id: 3,
+            label: "سفارشات",
+            icon: <IoIosListBox size={30} />,
+            helperTxt: "سفارشات",
+            path: `/dashboard/orders/${User?._id}`,
+          },
+          {
+            id: 4,
+            label: "کاربران",
+            icon: <MdManageAccounts size={30} />,
+            helperTxt: "کاربران",
+            path: `/user-manneger/${User?._id}`,
+          },
+          {
+            id: 5,
+            label: "گالری عکس",
+            icon: <RiGalleryFill size={30} />,
+            helperTxt: "گالری عکس",
+            path: `/dashboard/gallery/${User?._id}`,
+          },
+          {
+            id: 7,
+            label: "دسته بندی و تگ ها",
+            icon: <FaTags size={30} />,
+            helperTxt: "دسته بندی و تگ ها",
+            path: `/dashboard/tags/${User?._id}`,
+          },
 
-    {
-      id: 9,
-      label: "مدیرین نظرات",
-      icon: <FaComment size={30} />,
-      helperTxt: "مدیرین نظرات",
-      path: `/dashboard/comment-manegment/${User?._id}`,
-    },
-    {
-      id: 10,
-      label: "مقالات",
-      icon: <SiCkeditor4 size={30} />,
-      helperTxt: "مقالات",
-      path: `/dashboard/weblog/${User?._id}`,
-    },
+          {
+            id: 9,
+            label: "مدیرین نظرات",
+            icon: <FaComment size={30} />,
+            helperTxt: "مدیرین نظرات",
+            path: `/dashboard/comment-manegment/${User?._id}`,
+          },
+          {
+            id: 10,
+            label: "مقالات",
+            icon: <SiCkeditor4 size={30} />,
+            helperTxt: "مقالات",
+            path: `/dashboard/weblog/${User?._id}`,
+          },
+        ]
+      : [
+          {
+            id: 2,
+            label: "اطلاعات حساب",
+            icon: <FaUser size={30} />,
+            helperTxt: "اطلاعات حساب",
+            path: `/dashboard/userInfo/${User?._id}`,
+          },
+          {
+            id: 2,
+            label: "ویرایش اطلاعات حساب",
+            icon: <MdEdit  size={30} />,
+            helperTxt: "ویرایش اطلاعات حساب",
+            path: `/dashboard/editeUserInfo/${User?._id}`,
+          },
+        ]),
   ];
 
   const [openSidebar, setOpenSidebar] = useState(false);

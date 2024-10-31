@@ -1,11 +1,11 @@
 import React from "react";
-import { Image, Tag } from "../../types";
+import { ImageType, Tag } from "../../types";
 import { Link } from "react-router-dom";
 interface CardItemProps {
   title: string;
   price: number;
-  primaryImage: Image | null;
-  additionalImages?: Image[];
+  primaryImage: ImageType | null;
+  additionalImages?: ImageType[];
   _id?: string;
   tags?: Tag[];
 }

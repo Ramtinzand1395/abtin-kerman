@@ -1,6 +1,6 @@
 import React from "react";
 import { MdAdd } from "react-icons/md";
-import { GameData, Image } from "../../../../../types";
+import { GameData, ImageType } from "../../../../../types";
 import AddImageModall from "../../../AddImageModall";
 interface AddGameImageTabProps {
   OpenAddImageModall: boolean;
@@ -20,7 +20,7 @@ const AddGameImageTab: React.FC<AddGameImageTabProps> = ({
       primaryImage: null,
     }));
   };
-  const removeAdditionalImage = (image: Image) => {
+  const removeAdditionalImage = (image: ImageType) => {
     setGameData((prev) => {
       const updatedImages = prev.additionalImages.filter(
         (img) => img._id !== image._id

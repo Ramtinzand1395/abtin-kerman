@@ -3,9 +3,10 @@ import {
   Comment,
   Feature,
   GameData,
-  Image,
+  ImageType,
   Product,
   Tag,
+  User,
   UserAddress,
   Weblog,
 } from "../types";
@@ -34,7 +35,7 @@ type SelectedPlatform = {
 };
 type data = {
   title: string;
-  image: Image;
+  image: ImageType;
   price: number;
   features: Feature[];
   tags: Tag[];
@@ -56,7 +57,7 @@ type changeStatus = {
   statuss: string;
 };
 type UserInfo = {
-  userInfo: UserAddress;
+  userInfo: UserAddress | User;
   userId: string;
 };
 // const SERVER_URL = "http://localhost:5000/api";
@@ -276,6 +277,7 @@ export const getFiltredAccountGamesService = (
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
 export const addUserInfoService = (data: UserInfo) => {
+  console.log(data,"dataapi")
   const url = `${SERVER_URL}/add-user-info`;
   return axios.post(url, data);
 };

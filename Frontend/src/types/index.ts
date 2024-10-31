@@ -3,8 +3,8 @@ export interface GameData {
   title: string;
   company: string;
   region: string;
-  primaryImage: Image | null;
-  additionalImages: Image[];
+  primaryImage: ImageType | null;
+  additionalImages: ImageType[];
   multiplayer: boolean;
   info: GameDataInfo[];
   categories: Category[];
@@ -32,7 +32,7 @@ export interface Category {
   _id: string;
 }
 
-export interface Image {
+export interface ImageType {
   imageName: string;
   direction: string;
   createdAt: string;
@@ -82,9 +82,9 @@ export interface Product {
   features: Feature[];
   Specifications: Feature[];
   description?: string;
-  primaryImage: Image | null;
+  primaryImage: ImageType | null;
   comments?: Comment[];
-  additionalImages?: Image[];
+  additionalImages?: ImageType[];
   tags?: Tag[];
   categories?: Category[];
   sellOne: boolean;
@@ -98,7 +98,7 @@ export interface Weblog {
   _id?: string;
   title: string;
   body: string;
-  primaryImage?: Image | null;
+  primaryImage?: ImageType | null;
   createdAt?: string;
 }
 export interface Order {

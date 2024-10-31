@@ -50,12 +50,12 @@ const MonitorMenu: React.FC = () => {
 
   const [OpenModall, setOpenModall] = useState(false);
   const [User, setUser] = useState<User | null>(null);
-
+console.log(User)
   // !DROP ITHEMS
   const DropdownIthem = {
     text1: "ورود به داشبورد",
     icon1: IoEnterOutline,
-    link1: `/dashboard/${User?._id}`,
+    link1: User ? (User.isAdmin ? `/dashboard/${User._id}` : `/dashboard/userInfo/${User._id}`) : "/login",
     text2: "ویرایش حساب کاربری",
     icon2: FiEdit,
     text4: "خروج از حساب",

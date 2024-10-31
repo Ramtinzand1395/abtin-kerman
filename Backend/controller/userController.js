@@ -28,12 +28,10 @@ exports.handleUserInfo = async (req, res, next) => {
     if (!user) {
       res.status(404).json({ message: "کاربر پیدا نشد." });
     } else {
-      // Update user information
       user.firstName = userInfo.firstName;
-      user.lastname = userInfo.lastName;
-      user.phone = userInfo.phone; // Consider changing this to String if it's a phone number
+      user.lastName = userInfo.lastName;
+      user.phone = userInfo.phone;
       user.address = {
-        // Assuming you want to replace the existing address
         plaque: userInfo.plaque,
         unit: userInfo.unit,
         postalCode: userInfo.postalCode,
@@ -41,10 +39,9 @@ exports.handleUserInfo = async (req, res, next) => {
         city: userInfo.city,
         provider: userInfo.provider,
       };
-
-      // Save the changes
       await user.save();
-      res.status(201).json({ message: "اطلاعات با موفقیت ذخیره شد.", user });
+      let ali = "dfdfsf"
+      res.status(201).json({ message: "اطلاعات با موفقیت ذخیره شد.", user , userInfo  , userId , ali});
     }
   } catch (err) {
     next(err);

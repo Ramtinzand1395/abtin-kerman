@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, Weblog } from "../../../types";
+import {  ImageType, Weblog } from "../../../types";
 import { GetImageService } from "../../../services/ApiServices";
 import { MdClose } from "react-icons/md";
 interface EditorImageModallrops {
@@ -12,7 +12,7 @@ const EditorImageModall: React.FC<EditorImageModallrops> = ({
   setWeblogData,
   setOpenAddImageModall,
 }) => {
-  const [Images, setImages] = useState<Image[]>([]);
+  const [Images, setImages] = useState<ImageType[]>([]);
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // Stop event propagation to prevent closing the modal when clicked inside
     event.stopPropagation();
@@ -35,7 +35,7 @@ const EditorImageModall: React.FC<EditorImageModallrops> = ({
       document.body.style.overflow = "unset";
     };
   }, []);
-  const togglePrimaryImage = (image: Image) => {
+  const togglePrimaryImage = (image: ImageType) => {
     if (WeblogData.primaryImage?._id === image._id) {
       // If the selected image is already the primary, deselect it
       setWeblogData((prev) => ({

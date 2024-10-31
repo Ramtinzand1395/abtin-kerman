@@ -4,7 +4,6 @@ import Home from "./components/pages/home/Home";
 import MainLayout from "./layouts/MainLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
 import UserInformation from "./components/dashboard/pages/UserInformation";
-import Gallery from "./components/dashboard/pages/Gallery";
 import Tags from "./components/dashboard/pages/Tags";
 import ShopingCardPage from "./components/shopping card/ShopingCardPage";
 import CommentManneger from "./components/dashboard/pages/CommentManneger";
@@ -17,6 +16,9 @@ import ShopingInfo from "./components/shopping card/ShopingInfo";
 import Orders from "./components/dashboard/pages/orderTable/Orders";
 import ProductsManneger from "./components/dashboard/pages/productManneger/ProductsManneger";
 import Users from "./components/dashboard/pages/Users";
+import Gallery from "./components/dashboard/pages/gallery/Gallery";
+import Pishkhan from "./components/dashboard/pages/user/Pishkhan";
+import EditeUserInfo from "./components/dashboard/pages/user/EditeUserInfo";
 
 const App: React.FC = () => {
   return (
@@ -90,14 +92,6 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/dashboard/gallery/:userId"
-          element={
-            <DashboardLayout>
-              <Gallery />
-            </DashboardLayout>
-          }
-        />
-        <Route
           path="/user-manneger/:userId"
           element={
             <DashboardLayout>
@@ -150,6 +144,23 @@ const App: React.FC = () => {
           element={
             <DashboardLayout>
               <Orders />
+            </DashboardLayout>
+          }
+        />
+        {/* UsSER */}
+        <Route
+          path="/dashboard/userInfo/:userId"
+          element={
+            <DashboardLayout>
+              <Pishkhan />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/dashboard/editeUserInfo/:userId"
+          element={
+            <DashboardLayout>
+              <EditeUserInfo />
             </DashboardLayout>
           }
         />

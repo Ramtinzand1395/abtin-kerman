@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocallStorage";
-import { Feature, Image, Tag } from "../../types";
+import { Feature, ImageType, Tag } from "../../types";
 
 type shopingcardProps = {
   children: ReactNode;
@@ -12,7 +12,7 @@ type SelectedPlatform = {
 };
 type data = {
   title: string;
-  image: Image;
+  image: ImageType;
   price: number;
   features: Feature[];
   tags: Tag[];
