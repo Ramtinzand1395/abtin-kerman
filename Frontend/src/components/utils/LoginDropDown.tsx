@@ -23,7 +23,7 @@ interface DropdownProps {
     link1: string;
     link4: string;
   };
-  setUser: React.Dispatch<React.SetStateAction<string>>;
+  setUser: React.Dispatch<React.SetStateAction<string | null>>;
   setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const wrapperVariants = {
@@ -90,8 +90,8 @@ const LoginDropDown: React.FC<DropdownProps> = ({
             onClick={() => {
               googleLogout();
               localStorage.removeItem("User");
-              localStorage.removeItem("shopping-card")
-              setUser("");
+              localStorage.removeItem("shopping-card");
+              setUser(null);
               setOpenModall(false);
             }}
           >

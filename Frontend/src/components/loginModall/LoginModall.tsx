@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 interface LoginModallProps {
   setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
-  setUser: React.Dispatch<React.SetStateAction<string>>;
+  setUser: React.Dispatch<React.SetStateAction<string | null>>;
 }
 const LoginModall: React.FC<LoginModallProps> = ({
   setOpenModall,

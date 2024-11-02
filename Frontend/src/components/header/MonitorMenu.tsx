@@ -50,10 +50,12 @@ const MonitorMenu: React.FC = () => {
   }, []);
 
   const [OpenModall, setOpenModall] = useState(false);
-  const [User, setUser] = useState<string>("");
+  const token = localStorage.getItem("User");
+  const [User, setUser] = useState<string | null>(token);
   const [decodedUser, setdecodedUser] = useState<decodedUser | null>(null);
   useEffect(() => {
-    if (User && typeof User === "string") { // Ensure User is a string
+    if (User && typeof User === "string") {
+      // Ensure User is a string
       try {
         const decodedToken = jwtDecode<decodedUser>(User);
         setdecodedUser(decodedToken);
@@ -163,7 +165,6 @@ const MonitorMenu: React.FC = () => {
             </motion.div>
           </li>
         ))}
-
       </ul>
       {isLogedIn ? (
         <div className="">
@@ -223,10 +224,12 @@ const MonitorMenu: React.FC = () => {
 
 export default MonitorMenu;
 
+{
+  /* <li>لوازم گیمینگ</li> */
+}
 
-        {/* <li>لوازم گیمینگ</li> */}
-
-        {/* <li
+{
+  /* <li
           onMouseEnter={() => setIsHovered({ ...isHovered, menu1: true })}
           onMouseLeave={() => setIsHovered({ ...isHovered, menu1: false })}
           className="cursor-pointer"
@@ -286,8 +289,10 @@ export default MonitorMenu;
               </ul>
             </div>
           </motion.div>
-        </li> */}
-        {/* <li
+        </li> */
+}
+{
+  /* <li
           onMouseEnter={() => setIsHovered({ ...isHovered, menu2: true })}
           onMouseLeave={() => setIsHovered({ ...isHovered, menu2: false })}
           className="cursor-pointer"
@@ -373,8 +378,10 @@ export default MonitorMenu;
               </ul>
             </div>
           </motion.div>
-        </li> */}
-        {/* <li
+        </li> */
+}
+{
+  /* <li
           onMouseEnter={() => setIsHovered({ ...isHovered, menu3: true })}
           onMouseLeave={() => setIsHovered({ ...isHovered, menu3: false })}
           className="cursor-pointer"
@@ -435,4 +442,5 @@ export default MonitorMenu;
               حضوری مراجعه فرمایید.
             </p>
           </motion.div>
-        </li> */}
+        </li> */
+}

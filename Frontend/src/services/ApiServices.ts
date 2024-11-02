@@ -52,8 +52,8 @@ type UserInfo = {
   userInfo: UserAddress | User;
   userId: string;
 };
-const SERVER_URL = "http://localhost:5000/api";
-// const SERVER_URL = "https://abtin-kerman-backend-new.vercel.app/api";
+// const SERVER_URL = "http://localhost:5000/api";
+const SERVER_URL = "https://abtin-kerman-backend-new.vercel.app/api";
 
 const token = localStorage.getItem("User");
 
