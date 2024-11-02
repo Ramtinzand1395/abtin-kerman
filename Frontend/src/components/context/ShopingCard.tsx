@@ -91,8 +91,6 @@ export const ShopingcardProvider = ({ children }: shopingcardProps) => {
     });
   };
   const cardQty = CardItems.reduce((qty, item) => item.ItemQty + qty, 0);
-
-  console.log(CardItems, "provider");
   return (
     <ShopingCardContext.Provider
       value={{

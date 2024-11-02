@@ -5,11 +5,12 @@ import { FiEdit, FiShoppingBag } from "react-icons/fi";
 import { useShopingcard } from "../context/ShopingCard";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { User } from "../../types";
+import { decodedUser } from "../../types";
 import { IoEnterOutline, IoExitOutline } from "react-icons/io5";
 import LoginDropDown from "../utils/LoginDropDown";
 import MiniShoppingCard from "../shopping card/MiniShoppingCard";
 import { MenuData } from "./menuData";
+import { jwtDecode } from "jwt-decode";
 const headerVariant = {
   hidden: {
     opacity: 0,
@@ -49,13 +50,30 @@ const MonitorMenu: React.FC = () => {
   }, []);
 
   const [OpenModall, setOpenModall] = useState(false);
-  const [User, setUser] = useState<User | null>(null);
-console.log(User)
+  const [User, setUser] = useState<string>("");
+  const [decodedUser, setdecodedUser] = useState<decodedUser | null>(null);
+  useEffect(() => {
+    if (User && typeof User === "string") { // Ensure User is a string
+      try {
+        const decodedToken = jwtDecode<decodedUser>(User);
+        setdecodedUser(decodedToken);
+      } catch (error) {
+        console.error("Failed to decode token:", error);
+        setdecodedUser(null); // Reset on error
+      }
+    } else {
+      setdecodedUser(null); // Reset if User is not a valid string
+    }
+  }, [User]);
   // !DROP ITHEMS
   const DropdownIthem = {
     text1: "ورود به داشبورد",
     icon1: IoEnterOutline,
-    link1: User ? (User.isAdmin ? `/dashboard/${User._id}` : `/dashboard/userInfo/${User._id}`) : "/login",
+    link1: User
+      ? decodedUser?.isAdmin
+        ? `/dashboard/${decodedUser?.userId}`
+        : `/dashboard/userInfo/${decodedUser?.userId}`
+      : "/login",
     text2: "ویرایش حساب کاربری",
     icon2: FiEdit,
     text4: "خروج از حساب",
@@ -87,12 +105,13 @@ console.log(User)
     >
       {/* menu */}
       <ul className="flex items-center mx-2 w-full whitespace-nowrap relative">
-        <Link className={`flex items-center ${
-        StickyNavbar
-          ? "text-white"
-          : "text-gray-500 "
-      }`} to={"/"}>
-        <FaHome />
+        <Link
+          className={`flex items-center ${
+            StickyNavbar ? "text-white" : "text-gray-500 "
+          }`}
+          to={"/"}
+        >
+          <FaHome />
           <li className="cursor-pointer mr-2 ">خانه</li>
         </Link>
         {MenuData.map((data) => (
@@ -104,11 +123,13 @@ console.log(User)
             }
             className="cursor-pointer mr-10"
           >
-            <button className={`flex items-center ${
-        StickyNavbar
-          ? "text-white"
-          : "text-gray-500 "
-      }`} title="menu" type="button">
+            <button
+              className={`flex items-center ${
+                StickyNavbar ? "text-white" : "text-gray-500 "
+              }`}
+              title="menu"
+              type="button"
+            >
               <span className="ml-2">{data.icon}</span>
               {data.title}
             </button>
@@ -142,6 +163,67 @@ console.log(User)
             </motion.div>
           </li>
         ))}
+
+      </ul>
+      {isLogedIn ? (
+        <div className="">
+          <LoginDropDown
+            setUser={setUser}
+            DropdownIthem={DropdownIthem}
+            setOpenModall={setOpenModall}
+          />
+        </div>
+      ) : (
+        <div className="flex items-center justify-between min-w-[20vw]">
+          <div className="flex items-center">
+            <FaUser
+              className={`ml-2 ${StickyNavbar ? "text-white" : "text-black"}`}
+              size={20}
+            />
+            <p
+              onClick={() => setOpenModall(true)}
+              className={`cursor-pointer whitespace-nowrap ${
+                StickyNavbar ? "text-white" : "text-black"
+              }`}
+            >
+              ورود/ثبت نام
+            </p>
+          </div>
+        </div>
+      )}
+      <div className="flex items-center mr-10 border-r-2 relative">
+        <button
+          // onMouseEnter={() => setOpenMiniShoppingcard(true)}
+          // onMouseLeave={() => setOpenMiniShoppingcard(false)}
+          onClick={() => setOpenMiniShoppingcard(true)}
+          className="relative text-white py-3 rounded-lg text-sm uppercase font-semibold tracking-tight overflow-visible"
+        >
+          <FiShoppingBag
+            className={`ml-2 mr-10 ${
+              StickyNavbar ? "text-white" : "text-black"
+            }`}
+            size={20}
+          />
+          {/* حتما اضافه بشه */}
+          <div className="absolute -top-2 right-0 px-2.5 py-0.5 bg-red-500 rounded-full text-xs">
+            {cardQty}
+          </div>
+        </button>
+        {OpenMiniShoppingcard && (
+          <MiniShoppingCard setOpenMiniShoppingcard={setOpenMiniShoppingcard} />
+        )}
+      </div>
+
+      {OpenModall && (
+        <LoginModall setUser={setUser} setOpenModall={setOpenModall} />
+      )}
+    </div>
+  );
+};
+
+export default MonitorMenu;
+
+
         {/* <li>لوازم گیمینگ</li> */}
 
         {/* <li
@@ -354,59 +436,3 @@ console.log(User)
             </p>
           </motion.div>
         </li> */}
-      </ul>
-      {isLogedIn ? (
-        <div className="">
-          <LoginDropDown
-            setUser={setUser}
-            DropdownIthem={DropdownIthem}
-            setOpenModall={setOpenModall}
-          />
-        </div>
-      ) : (
-        <div className="flex items-center justify-between min-w-[20vw]">
-          <div className="flex items-center">
-            <FaUser
-              className={`ml-2 ${StickyNavbar ? "text-white" : "text-black"}`}
-              size={20}
-            />
-            <p
-              onClick={() => setOpenModall(true)}
-              className={`cursor-pointer whitespace-nowrap ${
-                StickyNavbar ? "text-white" : "text-black"
-              }`}
-            >
-              ورود/ثبت نام
-            </p>
-          </div>
-        </div>
-      )}
-      <div className="flex items-center mr-10 border-r-2 relative">
-        <button
-          // onMouseEnter={() => setOpenMiniShoppingcard(true)}
-          // onMouseLeave={() => setOpenMiniShoppingcard(false)}
-          onClick={() => setOpenMiniShoppingcard(true)}
-          className="relative text-white py-3 rounded-lg text-sm uppercase font-semibold tracking-tight overflow-visible"
-        >
-          <FiShoppingBag
-            className={`ml-2 mr-10 ${StickyNavbar ? "text-white" : "text-black"}`}
-            size={20}
-          />
-          {/* حتما اضافه بشه */}
-          <div className="absolute -top-2 right-0 px-2.5 py-0.5 bg-red-500 rounded-full text-xs">
-            {cardQty}
-          </div>
-        </button>
-        {OpenMiniShoppingcard && (
-          <MiniShoppingCard setOpenMiniShoppingcard={setOpenMiniShoppingcard} />
-        )}
-      </div>
-
-      {OpenModall && (
-        <LoginModall setUser={setUser} setOpenModall={setOpenModall} />
-      )}
-    </div>
-  );
-};
-
-export default MonitorMenu;

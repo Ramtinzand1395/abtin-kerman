@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
-  addUserInfoService,
   getUserInfoService,
+  updateUserInfoService,
 } from "../../../../services/ApiServices";
 import { useParams } from "react-router-dom";
 import { User } from "../../../../types";
@@ -50,12 +50,11 @@ const EditUserInfo = () => {
     };
     getUser();
   }, [userId]);
-  
 
   const handleEditeUser = async () => {
     try {
       if (userId) {
-        const { data } = await addUserInfoService({
+        const { data } = await updateUserInfoService({
           userInfo: user,
           userId,
         });

@@ -73,18 +73,12 @@ const GetUserInformation:React.FC<GetUserInformationProps> = ({
           {/* دارپ دون */}
           <div className="">
             استان
-            {/* <input
-              type="text"
-              className="h-12 w-full px-3 py-2 outline-none md:text bg-neutral-100 lg:bg-neutral-000 rounded border-complete styles_DropDown__input--bordered__jYaLg lg:border-complete-200"
-            /> */}{" "}
+          
             {City}
           </div>
           <div className="">
             شهر
-            {/* <input
-              type="text"
-              className="h-12 w-full px-3 py-2 outline-none md:text bg-neutral-100 lg:bg-neutral-000 rounded border-complete styles_DropDown__input--bordered__jYaLg lg:border-complete-200"
-            /> */}
+           
             {Provider}
           </div>
         </div>

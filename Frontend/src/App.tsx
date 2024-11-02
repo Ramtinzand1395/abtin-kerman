@@ -19,12 +19,23 @@ import Users from "./components/dashboard/pages/Users";
 import Gallery from "./components/dashboard/pages/gallery/Gallery";
 import Pishkhan from "./components/dashboard/pages/user/Pishkhan";
 import EditeUserInfo from "./components/dashboard/pages/user/EditeUserInfo";
+import UserOrders from "./components/dashboard/pages/user/UserOrders";
+import Page404 from "./components/utils/validate/Page404";
+import ProtectedRoute from "./components/utils/validate/ProtectedRoutes";
 
 const App: React.FC = () => {
   return (
     <div className="">
       <Routes>
         {/* Routes that use MainLayout */}
+        <Route
+          path="/404"
+          element={
+            <MainLayout>
+              <Page404 />
+            </MainLayout>
+          }
+        />
         <Route
           path="/"
           element={
@@ -86,65 +97,81 @@ const App: React.FC = () => {
         <Route
           path="/dashboard/:userId"
           element={
-            <DashboardLayout>
-              <UserInformation />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <UserInformation />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/user-manneger/:userId"
           element={
-            <DashboardLayout>
-              <Users />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Users />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/dashboard/product-management/:userId"
           element={
-            <DashboardLayout>
-              <ProductsManneger />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <ProductsManneger />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/dashboard/gallery/:userId"
           element={
-            <DashboardLayout>
-              <Gallery />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Gallery />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/dashboard/tags/:userId"
           element={
-            <DashboardLayout>
-              <Tags />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Tags />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/dashboard/comment-manegment/:userId"
           element={
-            <DashboardLayout>
-              <CommentManneger />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <CommentManneger />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/dashboard/weblog/:userId"
           element={
-            <DashboardLayout>
-              <Ckeditor />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Ckeditor />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/dashboard/orders/:userId"
           element={
-            <DashboardLayout>
-              <Orders />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Orders />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         {/* UsSER */}
@@ -161,6 +188,14 @@ const App: React.FC = () => {
           element={
             <DashboardLayout>
               <EditeUserInfo />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/dashboard/userOrders/:userId"
+          element={
+            <DashboardLayout>
+              <UserOrders />
             </DashboardLayout>
           }
         />

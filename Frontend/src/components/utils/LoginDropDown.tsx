@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { FiChevronDown } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { googleLogout } from "@react-oauth/google";
-import { User } from "../../types";
 
 interface OptionProps {
   text: string;
@@ -24,7 +23,7 @@ interface DropdownProps {
     link1: string;
     link4: string;
   };
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  setUser: React.Dispatch<React.SetStateAction<string>>;
   setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const wrapperVariants = {
@@ -92,7 +91,7 @@ const LoginDropDown: React.FC<DropdownProps> = ({
               googleLogout();
               localStorage.removeItem("User");
               localStorage.removeItem("shopping-card")
-              setUser(null);
+              setUser("");
               setOpenModall(false);
             }}
           >

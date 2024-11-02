@@ -63,6 +63,11 @@ export interface UserAddress {
   unit: string;
   postalCode: string;
 }
+export interface decodedUser {
+  email: string;
+  isAdmin: boolean;
+  userId: string;
+}
 export interface User {
   email: string;
   order?: string;
@@ -104,27 +109,27 @@ export interface Weblog {
 export interface Order {
   _id?: string;
   createdAt?: string;
-  user:User,
-  items:OrderItems[],
-  TrackingCode:string,
-  status:string,
+  user: User;
+  items: OrderItems[];
+  TrackingCode: string;
+  status: string;
 }
 export interface OrderItems {
   _id?: string;
-  id:string;
-  ItemQty:number;
-  SelectedPlatform:SelectedPlatform;
-  itemType:string;
-  populatedData:PopulatedData
+  id: string;
+  ItemQty: number;
+  SelectedPlatform: SelectedPlatform;
+  itemType: string;
+  populatedData: PopulatedData;
 }
 export interface SelectedPlatform {
-  platform:string;
-  capacity:string;
-  price:string;
+  platform: string;
+  capacity: string;
+  price: string;
 }
 interface PopulatedData {
   primaryImage: string;
   title: string;
   _id: string;
-  price:number | undefined;
+  price: number | undefined;
 }

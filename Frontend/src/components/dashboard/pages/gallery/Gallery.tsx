@@ -114,7 +114,6 @@ const Gallery: React.FC = () => {
       }, originalFile.type); // Use original file's type
     }
   };
-  console.log(CropedImage);
   useEffect(() => {
     const fetchImages = async () => {
       try {

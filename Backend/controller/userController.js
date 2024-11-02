@@ -1,20 +1,48 @@
 const Categorey = require("../models/Categorey");
 const Comment = require("../models/Comment");
 const Games = require("../models/Games");
+const Order = require("../models/Order");
 const Products = require("../models/Products");
 const User = require("../models/User");
 const { sendSms } = require("../utils/Send-Msg");
+const jwt = require("jsonwebtoken");
 
 exports.handleLogin = async (req, res, next) => {
-  console.log("User")
   try {
     const { email } = req.body;
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
+
     if (user) {
-      res.status(200).json({ message: "ورود موفقیت آمیز بود", user });
+      // User exists, generate token and log them in
+      const token = jwt.sign(
+        {
+          userId: user._id.toString(),
+          email: user.email,
+          isAdmin: user.isAdmin,
+        },
+        process.env.JWT_SECRET
+      );
+
+      res.status(200).setHeader("Authorization", token).json({
+        message: "ورود موفقیت آمیز بود",
+        token,
+      });
     } else {
-      await User.create(req.body);
-      res.status(201).json({ message: "عضویت موفقیت آمیز بود", user });
+      // User doesn't exist, create and log them in
+      user = await User.create(req.body);
+      const token = jwt.sign(
+        {
+          userId: user._id.toString(),
+          email: user.email,
+          isAdmin: user.isAdmin,
+        },
+        process.env.JWT_SECRET
+      );
+
+      res.status(201).setHeader("Authorization", token).json({
+        message: "عضویت موفقیت آمیز بود",
+        token,
+      });
     }
   } catch (err) {
     next(err);
@@ -24,6 +52,7 @@ exports.handleLogin = async (req, res, next) => {
 exports.handleUserInfo = async (req, res, next) => {
   try {
     const { userId, userInfo } = req.body;
+    console.log(userInfo);
     const user = await User.findOne({ _id: userId });
     if (!user) {
       res.status(404).json({ message: "کاربر پیدا نشد." });
@@ -40,14 +69,43 @@ exports.handleUserInfo = async (req, res, next) => {
         provider: userInfo.provider,
       };
       await user.save();
-      let ali = "dfdfsf"
-      res.status(201).json({ message: "اطلاعات با موفقیت ذخیره شد.", user , userInfo  , userId , ali});
+      res.status(201).json({ message: "اطلاعات با موفقیت ذخیره شد.", user });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+// *UPDATEUSER
+exports.handleUpdateUserInfo = async (req, res, next) => {
+  try {
+    const { userId, userInfo } = req.body;
+    console.log(userInfo);
+    console.log(userInfo);
+    const user = await User.findOne({ _id: userId });
+    if (!user) {
+      res.status(404).json({ message: "کاربر پیدا نشد." });
+    } else {
+      user.firstName = userInfo.firstName;
+      user.lastName = userInfo.lastName;
+      user.phone = userInfo.phone;
+      user.address = {
+        plaque: userInfo.address.plaque,
+        unit: userInfo.address.unit,
+        postalCode: userInfo.address.postalCode,
+        address: userInfo.address.address,
+        city: userInfo.address.city,
+        provider: userInfo.address.provider,
+      };
+      await user.save();
+      res.status(201).json({ message: "اطلاعات با موفقیت ذخیره شد.", user });
     }
   } catch (err) {
     next(err);
   }
 };
 exports.handleGetUser = async (req, res, next) => {
+  const { userId, userInfo } = req.body;
+
   try {
     const { userId } = req.params;
     const user = await User.findOne({ _id: userId });
@@ -58,6 +116,52 @@ exports.handleGetUser = async (req, res, next) => {
     }
   } catch (err) {
     next(err);
+  }
+};
+// ?USER ORDERS
+exports.GetUserOrders = async (req, res) => {
+  const { pageNumber = 1, sortOrder = "newestFirst" } = req.query;
+  const { userId } = req.params;
+  const limit = 5;
+  const page = parseInt(pageNumber, 5);
+
+  if (isNaN(page) || page < 1) {
+    return res.status(400).json({ error: "Invalid page number" });
+  }
+  const skip = (page - 1) * limit;
+
+  const sortOption =
+    sortOrder === "newestFirst" ? { createdAt: -1 } : { createdAt: 1 };
+
+  try {
+    const totalOrders = await Order.countDocuments({ user: userId });
+    const totalPages = Math.ceil(totalOrders / limit);
+    const userOrders = await Order.find({ user: userId })
+      .limit(limit)
+      .skip(skip)
+      .sort(sortOption)
+      .lean();
+    for (const order of userOrders) {
+      for (const item of order.items) {
+        const id = item.id;
+        if (item.itemType === "Games") {
+          const populatedGame = await Games.findById({ _id: id }).lean();
+          if (populatedGame) {
+            item.populatedData = populatedGame;
+          }
+        } else if (item.itemType === "Products") {
+          const populatedProduct = await Products.findById({ _id: id }).lean();
+          if (populatedProduct) {
+            item.populatedData = populatedProduct;
+          }
+        }
+      }
+    }
+
+    res.status(200).json({ userOrders, totalPages });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
   }
 };
 exports.handleSms = async (req, res, next) => {

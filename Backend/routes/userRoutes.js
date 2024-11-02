@@ -14,7 +14,11 @@ router.get("/get-filtred-products/:category", userController.handleFilterProduct
 router.get("/get-filtred-games/:category", userController.handleFilterGames);
 // ? USERINFO   
 router.post("/add-user-info", userController.handleUserInfo);
+router.put("/update-user-info", userController.handleUpdateUserInfo);
 router.get("/get-user-info/:userId", userController.handleGetUser);
+// ?UserOrders
+router.get("/get-user-orders/:userId", userController.GetUserOrders);
+
 
 // router.get("/get-comment", userController.handleGetComments);
 // router.post("/login", userController.handleLogin);

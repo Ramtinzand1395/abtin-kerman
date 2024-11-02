@@ -4,14 +4,20 @@ import "./sidebar.css";
 // import { sidebarItems } from "./DashData";
 import { Link } from "react-router-dom";
 import { FaComment, FaHome, FaPowerOff, FaTags, FaUser } from "react-icons/fa";
-import { MdEdit, MdManageAccounts } from "react-icons/md";
+import { MdEdit, MdManageAccounts, MdShoppingBasket } from "react-icons/md";
 import { IoIosListBox } from "react-icons/io";
 import { SiCkeditor4, SiRockstargames } from "react-icons/si";
 import { RiGalleryFill } from "react-icons/ri";
+import { jwtDecode } from "jwt-decode";
 
 const Sidebar: React.FC = () => {
   const userJson = localStorage.getItem("User");
-  const User = userJson ? JSON.parse(userJson) : null;
+  const decodedToken = userJson && jwtDecode(userJson)as {
+    email: string;
+    isAdmin: boolean;
+    userId:string;
+  };
+  const User = decodedToken ? decodedToken : null;
   const sidebarItems = [
     {
       id: 1,
@@ -28,35 +34,35 @@ const Sidebar: React.FC = () => {
             label: "مدیریت محصولات",
             icon: <SiRockstargames size={30} />,
             helperTxt: "مدیریت محصولات ",
-            path: `/dashboard/product-management/${User?._id}`,
+            path: `/dashboard/product-management/${User?.userId}`,
           },
           {
             id: 3,
             label: "سفارشات",
             icon: <IoIosListBox size={30} />,
             helperTxt: "سفارشات",
-            path: `/dashboard/orders/${User?._id}`,
+            path: `/dashboard/orders/${User?.userId}`,
           },
           {
             id: 4,
             label: "کاربران",
             icon: <MdManageAccounts size={30} />,
             helperTxt: "کاربران",
-            path: `/user-manneger/${User?._id}`,
+            path: `/user-manneger/${User?.userId}`,
           },
           {
             id: 5,
             label: "گالری عکس",
             icon: <RiGalleryFill size={30} />,
             helperTxt: "گالری عکس",
-            path: `/dashboard/gallery/${User?._id}`,
+            path: `/dashboard/gallery/${User?.userId}`,
           },
           {
             id: 7,
             label: "دسته بندی و تگ ها",
             icon: <FaTags size={30} />,
             helperTxt: "دسته بندی و تگ ها",
-            path: `/dashboard/tags/${User?._id}`,
+            path: `/dashboard/tags/${User?.userId}`,
           },
 
           {
@@ -64,14 +70,14 @@ const Sidebar: React.FC = () => {
             label: "مدیرین نظرات",
             icon: <FaComment size={30} />,
             helperTxt: "مدیرین نظرات",
-            path: `/dashboard/comment-manegment/${User?._id}`,
+            path: `/dashboard/comment-manegment/${User?.userId}`,
           },
           {
             id: 10,
             label: "مقالات",
             icon: <SiCkeditor4 size={30} />,
             helperTxt: "مقالات",
-            path: `/dashboard/weblog/${User?._id}`,
+            path: `/dashboard/weblog/${User?.userId}`,
           },
         ]
       : [
@@ -80,14 +86,21 @@ const Sidebar: React.FC = () => {
             label: "اطلاعات حساب",
             icon: <FaUser size={30} />,
             helperTxt: "اطلاعات حساب",
-            path: `/dashboard/userInfo/${User?._id}`,
+            path: `/dashboard/userInfo/${User?.userId}`,
           },
           {
-            id: 2,
+            id: 3,
             label: "ویرایش اطلاعات حساب",
-            icon: <MdEdit  size={30} />,
+            icon: <MdEdit size={30} />,
             helperTxt: "ویرایش اطلاعات حساب",
-            path: `/dashboard/editeUserInfo/${User?._id}`,
+            path: `/dashboard/editeUserInfo/${User?.userId}`,
+          },
+          {
+            id: 4,
+            label: " سفارشات ",
+            icon: <MdShoppingBasket size={30} />,
+            helperTxt: " سفارشات ",
+            path: `/dashboard/userOrders/${User?.userId}`,
           },
         ]),
   ];

@@ -38,7 +38,7 @@ const storage = multer.diskStorage({
       try {
         await Image.create({
           imageName,
-          direction: `/uploads/weblog/${imageName}`,
+          direction: `https://abtin-kerman-backend-new.vercel.app/uploads/weblog/${imageName}`,
         });
         return res.status(201).json({
             uploaded: true,

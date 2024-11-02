@@ -41,7 +41,6 @@ const ShopingInfo: React.FC = () => {
   }, [Loadingdata]);
 
   const handleAddOrder = async () => {
-    console.log(CardItems)
     try {
       const userId = user._id;
       const { data } = await addOrderService({
@@ -106,18 +105,20 @@ const ShopingInfo: React.FC = () => {
                     <FaPlus
                       size={10}
                       className="cursor-pointer text-secondery"
-                      onClick={() => InceraseCardQty(item?.id, null , {
-                        title: "",
-                        image: {
-                          imageName: "",
-                          direction: "",
-                          createdAt: "",
-                          _id: "",
-                        },
-                        price: 0,
-                        features: [],
-                        tags: [],
-                      })}
+                      onClick={() =>
+                        InceraseCardQty(item?.id, null, {
+                          title: "",
+                          image: {
+                            imageName: "",
+                            direction: "",
+                            createdAt: "",
+                            _id: "",
+                          },
+                          price: 0,
+                          features: [],
+                          tags: [],
+                        })
+                      }
                     />
                     <span className=" text-secondery">{item.ItemQty}</span>
                     {item.ItemQty === 1 ? (
