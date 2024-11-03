@@ -4,9 +4,12 @@ import Animations from "../../utils/Animations";
 import BlogCrad from "../../utils/BlogCrad";
 import { getBlogsService } from "../../../services/ApiServices";
 import BtnTow from "../../utils/BtnTow";
+import { Weblog } from "../../../types";
+interface Blog{
 
+}
 const Blog: React.FC = () => {
-  const [Blogs, setBlogs] = useState([]);
+  const [Blogs, setBlogs] = useState<Weblog[] |null >(null);
   useEffect(() => {
     const getBlogs = async () => {
       try {
@@ -33,7 +36,7 @@ const Blog: React.FC = () => {
       </Animations>
       <LeftAnimation>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 my-10 ">
-          {Blogs && Blogs?.map((blog) => <BlogCrad blog={blog} />)}
+          {Blogs && Blogs?.map((blog) => <BlogCrad key={blog._id} blog={blog} />)}
         </div>
       </LeftAnimation>
       <BtnTow

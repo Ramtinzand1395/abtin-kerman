@@ -23,10 +23,12 @@ const LoginModall: React.FC<LoginModallProps> = ({
         email: string;
         picture: string;
       };
+      console.log(decodedToken)
       const { data, status } = await LoginService({
         email: decodedToken.email,
         profile: decodedToken.picture,
       });
+      console.log(data)
       if (status === 201 || status === 200) {
         toast.success(data.message);
       }

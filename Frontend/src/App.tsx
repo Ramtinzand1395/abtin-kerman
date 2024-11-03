@@ -44,6 +44,14 @@ const App: React.FC = () => {
             </MainLayout>
           }
         />
+          <Route
+          path="/"
+          element={
+            <MainLayout>
+              <Home />
+            </MainLayout>
+          }
+        />
         <Route
           path="/games/:category"
           element={
