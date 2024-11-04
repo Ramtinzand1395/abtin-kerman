@@ -1,27 +1,27 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import ShopingCard from "../../../utils/ShopingCard";
 import usePaggination from "../../../hooks/usePaggination";
 import Spiner from "../../../utils/Spiner";
+import {Helmet} from "react-helmet";
+// Preload the ShoppingCard component for faster loading
+const ShopingCard = React.lazy(() => import("../../../utils/ShopingCard"));
 
 const AllProducts: React.FC = () => {
   const [sortOrder, setSortOrder] = useState("");
   const { category } = useParams();
   const safeCategory = category || "";
 
-  const [pageNumber, setpageNumber] = useState(1);
-  const { FiltredProducts, hasMore, loading } =
-    usePaggination(pageNumber, safeCategory, sortOrder);
-  // const observer = useRef();
-  // console.log(FiltredProducts)
+  const [pageNumber, setPageNumber] = useState(1);
+  const { FiltredProducts, hasMore, loading } = usePaggination(pageNumber, safeCategory, sortOrder);
   const observer = useRef<IntersectionObserver | null>(null);
-  const lastProduct = useCallback(
+
+  const lastProductRef = useCallback(
     (node: HTMLElement | null) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entery) => {
-        if (entery[0].isIntersecting && hasMore) {
-          setpageNumber((prev) => prev + 1);
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prev) => prev + 1);
         }
       });
       if (node) observer.current.observe(node);
@@ -30,18 +30,23 @@ const AllProducts: React.FC = () => {
   );
 
   useEffect(() => {
-    setpageNumber(1);
+    setPageNumber(1);
   }, [category, sortOrder]);
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const order = event.target.value;
-    setSortOrder(order);
+    setSortOrder(event.target.value);
   };
 
   return (
     <div className="md:container md:mx-auto mx-2">
-      {/* مرتب سازی */}
-      <div className="">
+      <Helmet>
+        <title>All Products</title>
+        <meta name="description" content="Browse our wide range of products." />
+      </Helmet>
+
+      {/* Sort Options */}
+      <div className="my-4">
+        <label htmlFor="sortOrder" className="sr-only">Sort Order</label>
         <select
           id="sortOrder"
           title="sortOrder"
@@ -49,38 +54,33 @@ const AllProducts: React.FC = () => {
           onChange={handleSortChange}
           className="p-2 border border-gray-300 rounded"
         >
-          <option value="highToLow"> گرانترین </option>
-          <option value="lowToHigh"> ارزان ترین </option>
+          <option value="highToLow">گرانترین</option>
+          <option value="lowToHigh">ارزان ترین</option>
         </select>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-10">
-        {FiltredProducts &&
-          FiltredProducts?.map((product, index) =>
-            FiltredProducts.length === index + 1 ? (
-              <div ref={lastProduct} className="">
+
+      {/* Products Grid */}
+      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-10">
+        <Suspense fallback={<Spiner />}>
+          {FiltredProducts &&
+            FiltredProducts.map((product, index) => (
+              <div
+                key={product._id}
+                ref={FiltredProducts.length === index + 1 ? lastProductRef : null}
+              >
                 <ShopingCard
                   title={product.title}
                   price={product.price}
-                  primaryImage={product.primaryImage}
+                  primaryImage={product.primaryImage} // ensure optimized and preloaded images
                   additionalImages={product.additionalImages}
                   _id={product._id}
                   tags={product.tags}
                 />
               </div>
-            ) : (
-              <div className="">
-                <ShopingCard
-                  title={product.title}
-                  price={product.price}
-                  primaryImage={product.primaryImage}
-                  additionalImages={product.additionalImages}
-                  _id={product._id}
-                  tags={product.tags}
-                />
-              </div>
-            )
-          )}
-      </div>
+            ))}
+        </Suspense>
+      </section>
+
       <div className="flex w-full items-center justify-center">
         {loading && <Spiner />}
       </div>

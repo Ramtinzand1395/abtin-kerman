@@ -7,6 +7,7 @@ import {
 import { ImageType } from "../../../../types";
 import "react-image-crop/dist/ReactCrop.css";
 import ReactCrop, { centerCrop, makeAspectCrop, Crop } from "react-image-crop";
+import axios from "axios";
 
 const Gallery: React.FC = () => {
   const [CropedImage, setCropedImage] = useState<File | null>(null);
@@ -24,25 +25,44 @@ const Gallery: React.FC = () => {
 
   const handleAddToGallery = async () => {
     if (!CropedImage) {
-      console.log("No image selected.");
+      toast.error("No image selected. Please choose an image to upload.");
       return;
     }
+    
     setLoadinImage(true);
+    
     try {
       const formData = new FormData();
       formData.append("image", CropedImage);
       const { data, status } = await UploadImageService(formData);
+      
       if (status === 201) {
         toast.success(data.message);
+      } else if (status === 400) {
+        // Handle client-side validation errors
+        toast.error(data.error);
       } else {
-        toast.error("Failed to upload image.");
+        // Handle unexpected server errors
+        toast.error("Failed to upload image. Please try again.");
       }
     } catch (err) {
-      console.error("Error uploading image:", err);
-    } finally {
+      // Type guard to check if err is an AxiosError
+      if (axios.isAxiosError(err)) {
+        // The request was made and the server responded with a status code
+        const errorMessage = err.response?.data?.error || "An unexpected error occurred.";
+        toast.error(errorMessage);
+      } else if (err instanceof Error) {
+        // If it's a generic Error instance (not an AxiosError)
+        toast.error("Error uploading image: " + err.message);
+      } else {
+        // Handle unexpected error types
+        toast.error("An unknown error occurred.");
+      }
+    }finally {
       setLoadinImage(false);
     }
   };
+  
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.[0] ?? null;

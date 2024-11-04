@@ -10,6 +10,7 @@ const jwt = require("jsonwebtoken");
 exports.handleLogin = async (req, res, next) => {
   try {
     const { email } = req.body;
+    console.log(email)
     let user = await User.findOne({ email });
 
     if (user) {

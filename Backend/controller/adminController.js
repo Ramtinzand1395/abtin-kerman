@@ -26,34 +26,57 @@ const storage = multer.diskStorage({
   },
 });
 
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(new Error("Only JPEG and PNG files are allowed"), false);
+  }
+};
+
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 2 * 1024 * 1024 },
+  limits: { fileSize: 200 * 1024 }, // 20 KB limit
+  fileFilter,
 }).single("image");
 
 exports.UploadImage = async (req, res) => {
   upload(req, res, async function (err) {
     if (err instanceof multer.MulterError) {
-      console.log(err);
-      return res.status(400).json({ error: "File upload error" });
+      // Handle Multer-specific errors
+      switch (err.code) {
+        case "LIMIT_FILE_SIZE":
+          return res
+            .status(400)
+            .json({ error: "File size exceeds 20 KB limit." });
+        default:
+          console.error(err);
+          return res
+            .status(400)
+            .json({ error: "File upload error: " + err.message });
+      }
     } else if (err) {
-      console.log(err);
-      return res.status(500).json({ error: "Internal server error 1" });
+      // Handle any other errors
+      console.error("Error uploading image:", err);
+      return res
+        .status(500)
+        .json({ error: "Internal server error: " + err.message });
     }
+
     const imageName = req.file.filename;
+
     try {
       await Image.create({
         imageName,
-        // direction: `/uploads/${imageName}`,
         direction: `https://abtin-kerman-backend-new.vercel.app/uploads/${imageName}`,
       });
       return res.status(201).json({
-        message: "عکس با موفقیت اضافه شد",
+        message: "Image successfully added.",
         filename: req.file.filename,
       });
     } catch (err) {
-      console.log(err);
-      return res.status(500).json({ error: "Internal server error 2" });
+      console.error("Error saving image to database:", err);
+      return res.status(500).json({ error: err });
     }
   });
 };
