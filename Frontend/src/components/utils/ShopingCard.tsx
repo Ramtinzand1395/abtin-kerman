@@ -21,17 +21,18 @@ const ShopingCard: React.FC<CardItemProps> = ({
       <div className="flex flex-col items-start rounded-lg  cursor-pointer shadowhand">
         <img
           // src={`http://localhost:5000/${primaryImage?.direction}`}
-              //! change
-              src={`${primaryImage?.direction}`}
+          //! change
+          src={`${primaryImage?.direction}`}
           className="w-full  mb-2 object-contain  max-h-[40vh] "
-          alt=""
+          alt={primaryImage?.imageName}
         />
         <div className=" m-2 ">
           <h4 className="font-bold font-tanha text-primary ">{title}</h4>
           <p className="my-2">{price} قیمت</p>
           {tags?.map((tag) => (
             <span key={tag._id} className="text-sm px-2 text-gray-500">
-             {tag.tagName}{"#"}
+              {tag.tagName}
+              {"#"}
             </span>
           ))}
         </div>

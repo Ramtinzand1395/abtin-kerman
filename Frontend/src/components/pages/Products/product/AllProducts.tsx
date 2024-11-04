@@ -1,18 +1,27 @@
-import React, { Suspense, useCallback, useEffect, useRef, useState } from "react";
-// import {Helmet} from "react-helmet";
+import React, {
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useParams } from "react-router-dom";
 import usePaggination from "../../../hooks/usePaggination";
 import Spiner from "../../../utils/Spiner";
 // Preload the ShoppingCard component for faster loading
 const ShopingCard = React.lazy(() => import("../../../utils/ShopingCard"));
-
+import { Helmet } from "react-helmet";
 const AllProducts: React.FC = () => {
   const [sortOrder, setSortOrder] = useState("");
   const { category } = useParams();
   const safeCategory = category || "";
 
   const [pageNumber, setPageNumber] = useState(1);
-  const { FiltredProducts, hasMore, loading } = usePaggination(pageNumber, safeCategory, sortOrder);
+  const { FiltredProducts, hasMore, loading } = usePaggination(
+    pageNumber,
+    safeCategory,
+    sortOrder
+  );
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastProductRef = useCallback(
@@ -39,14 +48,16 @@ const AllProducts: React.FC = () => {
 
   return (
     <div className="md:container md:mx-auto mx-2">
-      {/* <Helmet>
+      <Helmet>
         <title>All Products</title>
         <meta name="description" content="Browse our wide range of products." />
-      </Helmet> */}
+      </Helmet>
 
       {/* Sort Options */}
       <div className="my-4">
-        <label htmlFor="sortOrder" className="sr-only">Sort Order</label>
+        <label htmlFor="sortOrder" className="sr-only">
+          Sort Order
+        </label>
         <select
           id="sortOrder"
           title="sortOrder"
@@ -66,7 +77,9 @@ const AllProducts: React.FC = () => {
             FiltredProducts.map((product, index) => (
               <div
                 key={product._id}
-                ref={FiltredProducts.length === index + 1 ? lastProductRef : null}
+                ref={
+                  FiltredProducts.length === index + 1 ? lastProductRef : null
+                }
               >
                 <ShopingCard
                   title={product.title}

@@ -6,18 +6,17 @@ import { googleLogout } from "@react-oauth/google";
 
 interface OptionProps {
   text: string;
-  Icon: React.ComponentType;
+  Icon: React.ReactNode;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   link: string;
 }
 interface DropdownProps {
   DropdownIthem: {
-    icon1: React.ComponentType;
+    icon1: React.ReactNode;
     text1: string;
-    icon2: React.ComponentType;
+    icon2: React.ReactNode;
     text2: string;
-
-    icon4: React.ComponentType;
+    icon4: React.ReactNode;
     text4: string;
     title: string;
     link1: string;
@@ -83,7 +82,7 @@ const LoginDropDown: React.FC<DropdownProps> = ({
         className="flex items-center gap-2 w-full p-2 text-xs font-medium whitespace-nowrap rounded-md hover:bg-indigo-100 text-slate-700 hover:text-indigo-500 transition-colors cursor-pointer"
       >
         <motion.span variants={actionIconVariants}>
-          <Icon />
+          {Icon}
         </motion.span>
         {link === "exite" ? (
           <span
@@ -106,7 +105,7 @@ const LoginDropDown: React.FC<DropdownProps> = ({
     );
   };
   return (
-    <div className=" flex items-center justify-center  bg-white">
+    <div className=" flex items-center  bg-white">
       <motion.div animate={open ? "open" : "closed"} className="relative">
         <button
           onClick={() => setOpen((pv) => !pv)}

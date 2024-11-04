@@ -185,7 +185,12 @@ export const delTagService = (id: string) => {
 //? @route PUT http://localhost:5000/api/login
 export const addCategoriesService = (data: string) => {
   const url = `${SERVER_URL}/add-Categories`;
-  return axios.post(url, { categoryName: data });
+  return axios.post(url, { categoryName: data },{
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  });
 };
 
 //? @desc  create OR add User
