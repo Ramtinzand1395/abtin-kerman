@@ -1,8 +1,8 @@
 import React, { Suspense, useCallback, useEffect, useRef, useState } from "react";
+// import {Helmet} from "react-helmet";
 import { useParams } from "react-router-dom";
 import usePaggination from "../../../hooks/usePaggination";
 import Spiner from "../../../utils/Spiner";
-import {Helmet} from "react-helmet";
 // Preload the ShoppingCard component for faster loading
 const ShopingCard = React.lazy(() => import("../../../utils/ShopingCard"));
 
@@ -39,10 +39,10 @@ const AllProducts: React.FC = () => {
 
   return (
     <div className="md:container md:mx-auto mx-2">
-      <Helmet>
+      {/* <Helmet>
         <title>All Products</title>
         <meta name="description" content="Browse our wide range of products." />
-      </Helmet>
+      </Helmet> */}
 
       {/* Sort Options */}
       <div className="my-4">
