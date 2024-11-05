@@ -129,7 +129,12 @@ const HeaderContainer: React.FC = () => {
         <Topheader />
       </div>
       <div className="block md:hidden relative">
-        <CenterHederMobile setOpenMenu={setOpenMenu} />
+        <CenterHederMobile
+          setOpenMenu={setOpenMenu}
+          setOpenMiniShoppingcard={setOpenMiniShoppingcard}
+          cardQty={cardQty}
+          OpenMiniShoppingcard={OpenMiniShoppingcard}
+        />
       </div>
       <div className=" hidden md:block">
         <CenterHederMonitor />
@@ -144,9 +149,6 @@ const HeaderContainer: React.FC = () => {
           DropdownIthem={DropdownIthem}
           setOpenMenu={setOpenMenu}
           OpenMenu={OpenMenu}
-          setOpenMiniShoppingcard={setOpenMiniShoppingcard}
-          cardQty={cardQty}
-          OpenMiniShoppingcard={OpenMiniShoppingcard}
         />
       </div>
 

@@ -77,6 +77,7 @@ export const SmsService = () => {
 // @desc  create OR add User
 // @route PUT http://localhost:5000/api/login
 export const UploadImageService = (formData: FormData) => {
+  console.log(token,"galery")
   const url = `${SERVER_URL}/upload-image`;
   const config = {
     headers: {

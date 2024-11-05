@@ -81,7 +81,7 @@ const Gallery: React.FC = () => {
   const onImgLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
     const crop = makeAspectCrop(
-      { unit: "px", width: 300 },
+      { unit: "px", width: 800 },
       aspecthand,
       width,
       height
