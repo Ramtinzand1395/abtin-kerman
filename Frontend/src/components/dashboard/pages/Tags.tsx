@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { MdAdd } from "react-icons/md";
 import {
   addCategoriesService,
   addTagService,
@@ -61,7 +60,7 @@ const Tags: React.FC = () => {
     getdata();
   }, [Loadingtag]);
   //  ? DELETE
-  const confirmAlertmodall = (tag:Tag) => {
+  const confirmAlertmodall = (tag: Tag) => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
@@ -93,7 +92,7 @@ const Tags: React.FC = () => {
       },
     });
   };
-  const handleDeleteTag = async (id:string) => {
+  const handleDeleteTag = async (id: string) => {
     setLoadingtag(true);
     try {
       const { data, status } = await delTagService(id);
@@ -109,7 +108,7 @@ const Tags: React.FC = () => {
   };
 
   //   !مثل هم هستند حذف بشن
-  const confirmAlertmodallcat = (cat:Category) => {
+  const confirmAlertmodallcat = (cat: Category) => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
@@ -141,7 +140,7 @@ const Tags: React.FC = () => {
       },
     });
   };
-  const handleDeleteCategory = async (id:string) => {
+  const handleDeleteCategory = async (id: string) => {
     setLoadingtag(true);
     try {
       const { data, status } = await delCatService(id);
@@ -175,7 +174,21 @@ const Tags: React.FC = () => {
               onClick={() => handleAddTag()}
               className="border-2 p-2 mx-2 hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-150 ease-in-out delay-150 rounded-xl"
             >
-              <MdAdd size={30} />
+              <svg
+                width="30px"
+                height="30px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 12H18M12 6V18"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </span>
           </div>
         </div>
@@ -196,7 +209,21 @@ const Tags: React.FC = () => {
               onClick={() => handleAddCategory()}
               className="border-2 p-2 mx-2 hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-150 ease-in-out delay-150 rounded-xl"
             >
-              <MdAdd size={30} />
+              <svg
+                width="30px"
+                height="30px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 12H18M12 6V18"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </span>
           </div>
         </div>

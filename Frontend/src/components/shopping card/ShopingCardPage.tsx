@@ -1,24 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import BtnTow from "../utils/BtnTow";
 import { useShopingcard } from "../context/ShopingCard";
 import ConnectedProducts from "../utils/ConnectedProducts";
-import { Link } from "react-router-dom";
-import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import IncreaseproductBtn from "../utils/IncreaseproductBtn";
+import { toast } from "react-toastify";
+import LoginModall from "../loginModall/LoginModall";
 
 const ShopingCardPage: React.FC = () => {
-  const {
-    CardItems,
-    InceraseCardQty,
-    DecreaseCardQty,
-    removeFromCard,
-    cardQty,
-  } = useShopingcard();
+  const { CardItems, cardQty } = useShopingcard();
   const totalPrice = CardItems.reduce((total, cardItem) => {
     const price = cardItem.data.price;
     return total + price * cardItem.ItemQty;
   }, 0);
+  const navigate = useNavigate();
+  const [OpenLoginModall, setOpenLoginModall] = useState(false);
+  const [User, setUser] = useState(localStorage.getItem("User"));
   const handleFinish = () => {
-    console.log("first");
+    if (User) {
+      navigate("/checkout/cart/info");
+    } else {
+      toast.error("باید وارد حساب کابری خود بشید.");
+      setOpenLoginModall(true);
+    }
   };
   return (
     <div className="md:container md:mx-auto mx-2 my-5">
@@ -40,41 +44,11 @@ const ShopingCardPage: React.FC = () => {
                     className="w-full h-full object-contain max-w-[15vw] max-h-[15vw]"
                     alt={item.data.image.imageName}
                   />
-
-                  <div className="flex items-center justify-around border-2 rounded-lg py-2 w-32 bg-white mt-5">
-                    <FaPlus
-                      size={10}
-                      className="cursor-pointer text-secondery"
-                      onClick={() =>
-                        InceraseCardQty(item?.id, null, {
-                          title: "",
-                          image: {
-                            imageName: "",
-                            direction: "",
-                            createdAt: "",
-                            _id: "",
-                          },
-                          price: 0,
-                          features: [],
-                          tags: [],
-                        })
-                      }
-                    />
-                    <span className=" text-secondery">{item.ItemQty}</span>
-                    {item.ItemQty === 1 ? (
-                      <FaTrash
-                        size={10}
-                        className="cursor-pointer text-secondery"
-                        onClick={() => removeFromCard(item.id)}
-                      />
-                    ) : (
-                      <FaMinus
-                        size={10}
-                        className="cursor-pointer text-secondery"
-                        onClick={() => DecreaseCardQty(item?.id)}
-                      />
-                    )}
-                  </div>
+                  {item.SelectedPlatform === null ? (
+                    <IncreaseproductBtn item={item} />
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div className="flex flex-col ite justify-between h-64">
                   <h3 className="text-black font-bold">{item.data.title}</h3>
@@ -103,16 +77,17 @@ const ShopingCardPage: React.FC = () => {
             <p> جمع سبد خرید </p>
             <p>{totalPrice} تومان</p>
           </div>
-          <Link to={"/checkout/cart/info"}>
-            <BtnTow
-              ButtonColor="bg-red-500 hover:from-red-500 hover:to-red-400 hover:ring-red-400 md:b-10 md:text-base text-xs my-5"
-              ButtonText=" تایید و تکمیل سفارش "
-              onClick={() => handleFinish()}
-            />
-          </Link>
+          <BtnTow
+            ButtonColor="bg-red-500 hover:from-red-500 hover:to-red-400 hover:ring-red-400 md:b-10 md:text-base text-xs my-5"
+            ButtonText=" تایید و تکمیل سفارش "
+            onClick={() => handleFinish()}
+          />
         </div>
       </div>
       <ConnectedProducts />
+      {OpenLoginModall && (
+        <LoginModall setOpenModall={setOpenLoginModall} setUser={setUser} />
+      )}
     </div>
   );
 };

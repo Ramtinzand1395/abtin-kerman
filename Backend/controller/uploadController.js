@@ -38,13 +38,14 @@ const storage = multer.diskStorage({
       try {
         await Image.create({
           imageName,
-          direction: `https://abtin-kerman-backend-new.vercel.app/uploads/weblog/${imageName}`,
+          direction: `http://localhost:5000/uploads/weblog/${imageName}`,
+          // direction: `https://abtin-kerman-backend-new.vercel.app/uploads/weblog/${imageName}`,
         });
         return res.status(201).json({
             uploaded: true,
             //! change
-            // url: `http://localhost:5000/uploads/weblog/${imageName}`
-            url: `https://abtin-kerman-backend-new.vercel.app/uploads/weblog/${imageName}`
+            url: `http://localhost:5000/uploads/weblog/${imageName}`
+            // url: `https://abtin-kerman-backend-new.vercel.app/uploads/weblog/${imageName}`
           });
       } catch (err) {
         console.log(err);

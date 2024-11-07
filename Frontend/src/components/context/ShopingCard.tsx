@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocallStorage";
 import { Feature, ImageType, Tag } from "../../types";
+import { toast } from "react-toastify";
 
 type shopingcardProps = {
   children: ReactNode;
@@ -16,13 +17,14 @@ type data = {
   price: number;
   features: Feature[];
   tags: Tag[];
+  mainQty:number,
 };
 type shopingcardContext = {
   getItemqty: (id: string) => number;
   InceraseCardQty: (
     id: string,
     SelectedPlatform: null | SelectedPlatform,
-    data: data
+    data: data,
   ) => void;
   DecreaseCardQty: (id: string) => void;
   removeFromCard: (id: string) => void;
@@ -54,10 +56,11 @@ export const ShopingcardProvider = ({ children }: shopingcardProps) => {
   const InceraseCardQty = (
     id: string,
     SelectedPlatform: SelectedPlatform | null,
-    data:data,
+    data: data
   ) => {
     setCardItems((prev) => {
       if (prev.find((item) => item.id === id) == null) {
+        toast.success("با موفقیت به سبد خرید اضافه شد.")
         return [...prev, { id, ItemQty: 1, SelectedPlatform, data }];
       } else {
         return prev?.map((item) => {

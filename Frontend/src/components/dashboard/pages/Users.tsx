@@ -9,18 +9,11 @@ const Users: React.FC = () => {
   const [orderDesc, setOrderDesc] = useState("newestFirst");
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  // const [LodaingGames, setLodaingUsers] = useState(false);
-  //   const [OpenModall, setOpenModall] = useState(false);
-  //   const [SelectedProduct, setSelectedProduct] = useState<User>(Users[0]);
-  //   const handleOpenModall = (product: User) => {
-  //     setOpenModall(true);
-  //     setSelectedProduct(product);
-  //   };
+
   useEffect(() => {
     const getUsers = async () => {
       try {
         const { data } = await getUsersService(pageNumber, orderDesc);
-        console.log(data);
         setUsers(data.users);
         setTotalPages(data.totalPages);
       } catch (err) {
@@ -29,7 +22,7 @@ const Users: React.FC = () => {
     };
     getUsers();
   }, [orderDesc, pageNumber]);
-  // if (LodaingGames === true)  <Spiner />;
+
   return (
     <div className="w-full md:container md:mx-auto mx-2 my-10">
       <select title="Order" onChange={(e) => setOrderDesc(e.target.value)}>

@@ -2,44 +2,45 @@ import { useEffect, useRef, useState } from "react";
 import "@neshan-maps-platform/mapbox-gl-react/dist/style.css";
 import mapboxgl from "@neshan-maps-platform/mapbox-gl";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { User } from "../../../types";
+import BtnTow from "../../utils/BtnTow";
+import Spiner from "../../utils/Spiner";
 
 interface GetGoogleAddressModallProps {
   setOpenInfo: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
-  address: string;
-  setAddress: React.Dispatch<React.SetStateAction<string>>;
-  setCity: React.Dispatch<React.SetStateAction<string>>;
-  setProvider: React.Dispatch<React.SetStateAction<string>>;
+  setUserInfo: React.Dispatch<React.SetStateAction<User>>;
 }
 
 const GetGoogleAddressModall: React.FC<GetGoogleAddressModallProps> = ({
   setOpenInfo,
   setOpenChange,
-  setAddress,
-  setCity,
-  setProvider,
+  setUserInfo,
 }) => {
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [currentPosition, setCurrentPosition] = useState<[number, number] | null>(null);
   const [altitude, setAltitude] = useState<mapboxgl.LngLat | null>(null);
+  const [loading, setLoading] = useState(true); // Loading state for the map
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
         setCurrentPosition([longitude, latitude]);
+        setLoading(false); // Stop loading when position is retrieved
       },
       (error) => {
         console.error("Error getting location", error);
         setCurrentPosition([51.392173, 35.730954]); // Default location
+        setLoading(false); // Stop loading even if using default location
       }
     );
   }, []);
 
   useEffect(() => {
     if (mapContainerRef.current && currentPosition) {
-      // Initialize map only if it doesn't already exist
       if (!mapRef.current) {
         mapRef.current = new mapboxgl.Map({
           mapType: mapboxgl.Map.mapTypes.neshanVector,
@@ -59,7 +60,6 @@ const GetGoogleAddressModall: React.FC<GetGoogleAddressModallProps> = ({
           drawMarkerOnMap(currentPosition);
         });
       } else {
-        // If map already exists, recenter it on `currentPosition`
         mapRef.current.setCenter(currentPosition);
       }
     }
@@ -95,33 +95,47 @@ const GetGoogleAddressModall: React.FC<GetGoogleAddressModallProps> = ({
       .then((response) => {
         const data = response.data;
         if (data.status === "OK") {
-          setAddress(data.formatted_address);
-          setCity(data.city);
-          setProvider(data.state);
+          setUserInfo((prev) => ({
+            ...prev,
+            address: {
+              ...prev.address,
+              address: data.formatted_address,
+              city: data.city,
+              provider: data.state,
+            },
+          }));
           setOpenInfo(true);
           setOpenChange(false);
         } else {
-          setAddress("آدرس پیدا نشد");
+          toast.error("آدرس پیدا نشد.");
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        setAddress("خطا در گرفتن آدرس");
+        toast.error("خطا در گرفتن آدرس");
       });
   };
 
   return (
     <>
-      <div
-        ref={mapContainerRef}
-        id="map"
-        style={{ width: "100%", height: "60vh" }}
-      />
-      <button
+      {loading ? (
+        <div className="flex items-center justify-center h-60vh">
+          <div className="loader">
+            <Spiner />
+          </div>
+        </div>
+      ) : (
+        <div ref={mapContainerRef} id="map" style={{ width: "100%", height: "60vh" }} />
+      )}
+      <div className="flex items-center justify-end">
+        <BtnTow
+          ButtonColor="bg-green-500 hover:from-green-500 hover:to-green-400 hover:ring-green-400 mt-5"
+         
+
+        ButtonText=" ثبت آدرس"
         onClick={() => altitude && fetchAddress(altitude.lat, altitude.lng)}
-      >
-        Get Address
-      </button>
+      />
+      </div>
     </>
   );
 };

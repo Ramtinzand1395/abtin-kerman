@@ -15,7 +15,6 @@ const NewestَAccountGame: React.FC = () => {
       try {
         const { data } = await getGameService(pageNumber, orderDesc);
         setGames(data.games);
-        console.log(data);
       } catch (err) {
         console.log(err);
       }
@@ -33,7 +32,7 @@ const NewestَAccountGame: React.FC = () => {
         </div>
       </Animations>
       <LeftAnimation>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 my-10 ">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 my-10 ">
           {Games?.length > 0 &&
             Games?.map((game) => (
               <AccountsGames

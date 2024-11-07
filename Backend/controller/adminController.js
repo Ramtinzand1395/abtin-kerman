@@ -48,7 +48,7 @@ exports.UploadImage = async (req, res) => {
         case "LIMIT_FILE_SIZE":
           return res
             .status(400)
-            .json({ error: "File size exceeds 20 KB limit." });
+            .json({ error: "File size exceeds 500 KB limit." });
         default:
           console.error(err);
           return res
@@ -494,14 +494,31 @@ exports.createBlog = async (req, res) => {
   }
 };
 exports.Blogs = async (req, res) => {
+  const { pageNumber = 1, sortOrder = "newestFirst" } = req.query;
+  const limit = 5;
+  const page = parseInt(pageNumber, 5);
+  if (isNaN(page) || page < 1) {
+    return res.status(400).json({ error: "Invalid page number" });
+  }
+
+  const skip = (page - 1) * limit;
+  const sortOption =
+    sortOrder === "newestFirst" ? { createdAt: -1 } : { createdAt: 1 };
   try {
-    const Allblog = await Blog.find().populate("primaryImage");
-    res.status(200).json({ data: Allblog });
+    const totalOrders = await Blog.countDocuments();
+    const totalPages = Math.ceil(totalOrders / limit);
+    const Allblog = await Blog.find()
+      .limit(limit)
+      .skip(skip)
+      .sort(sortOption)
+      .populate("primaryImage");
+    res.status(200).json({ data: Allblog , totalPages });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
   }
 };
+
 // * ORDERS
 // ? ADD ORDER
 exports.AddOrder = async (req, res) => {
@@ -543,11 +560,9 @@ exports.GetOrders = async (req, res) => {
     sortOrder === "newestFirst" ? { createdAt: -1 } : { createdAt: 1 };
 
   try {
-    // Count total orders
-    const totalOrders = await Order.countDocuments(); // You can add filters here if needed
-    const totalPages = Math.ceil(totalOrders / limit); // Calculate total pages
+    const totalOrders = await Order.countDocuments();
+    const totalPages = Math.ceil(totalOrders / limit);
 
-    // Fetch orders
     const orders = await Order.find()
       .populate("user")
       .limit(limit)

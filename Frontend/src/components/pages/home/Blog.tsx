@@ -5,15 +5,14 @@ import BlogCrad from "../../utils/BlogCrad";
 import { getBlogsService } from "../../../services/ApiServices";
 import BtnTow from "../../utils/BtnTow";
 import { Weblog } from "../../../types";
-interface Blog{
-
-}
+import { useNavigate } from "react-router-dom";
 const Blog: React.FC = () => {
-  const [Blogs, setBlogs] = useState<Weblog[] |null >(null);
+  const navigate = useNavigate();
+  const [Blogs, setBlogs] = useState<Weblog[] | null>(null);
   useEffect(() => {
     const getBlogs = async () => {
       try {
-        const { data } = await getBlogsService();
+        const { data } = await getBlogsService(1, "newestFirst");
         setBlogs(data.data);
       } catch (err) {
         console.log(err);
@@ -21,8 +20,8 @@ const Blog: React.FC = () => {
     };
     getBlogs();
   }, []);
-  const closeModall = () => {
-    console.log("first");
+  const navigateBlogs = () => {
+    navigate("/blogs");
   };
   return (
     <div>
@@ -35,14 +34,15 @@ const Blog: React.FC = () => {
         </div>
       </Animations>
       <LeftAnimation>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 my-10 ">
-          {Blogs && Blogs?.map((blog) => <BlogCrad key={blog._id} blog={blog} />)}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 my-10 ">
+          {Blogs &&
+            Blogs?.map((blog) => <BlogCrad key={blog._id} blog={blog} />)}
         </div>
       </LeftAnimation>
       <BtnTow
         ButtonColor="bg-green-500 hover:from-green-500 hover:to-green-400 hover:ring-green-400"
         ButtonText={"مشاهده بیشتر"}
-        onClick={closeModall}
+        onClick={navigateBlogs}
       />
     </div>
   );

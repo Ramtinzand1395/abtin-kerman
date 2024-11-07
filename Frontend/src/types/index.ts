@@ -59,9 +59,9 @@ export interface UserAddress {
   city: string;
   provider: string;
   address: string;
-  plaque: string;
-  unit: string;
-  postalCode: string;
+  plaque?: string;
+  unit?: string;
+  postalCode?: string;
 }
 export interface decodedUser {
   email: string;
@@ -78,7 +78,7 @@ export interface User {
   isAdmin: string;
   profile: string;
   createdAt?: string;
-  _id?: string;
+  _id: string;
 }
 export interface Product {
   _id?: string;

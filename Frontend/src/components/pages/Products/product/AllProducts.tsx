@@ -49,7 +49,7 @@ const AllProducts: React.FC = () => {
   return (
     <div className="md:container md:mx-auto mx-2">
       <Helmet>
-        <title>All Products</title>
+        <title>{category}</title>
         <meta name="description" content="Browse our wide range of products." />
       </Helmet>
 

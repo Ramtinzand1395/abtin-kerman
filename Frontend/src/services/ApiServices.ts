@@ -7,7 +7,6 @@ import {
   Product,
   Tag,
   User,
-  UserAddress,
   Weblog,
 } from "../types";
 interface LoginData {
@@ -48,8 +47,8 @@ type changeStatus = {
   orderId: string;
   statuss: string;
 };
-type UserInfo = {
-  userInfo: UserAddress | User;
+type UserInfoProps = {
+  UserInfo: User;
   userId: string;
 };
 const SERVER_URL = "http://localhost:5000/api";
@@ -77,7 +76,6 @@ export const SmsService = () => {
 // @desc  create OR add User
 // @route PUT http://localhost:5000/api/login
 export const UploadImageService = (formData: FormData) => {
-  console.log(token,"galery")
   const url = `${SERVER_URL}/upload-image`;
   const config = {
     headers: {
@@ -186,12 +184,16 @@ export const delTagService = (id: string) => {
 //? @route PUT http://localhost:5000/api/login
 export const addCategoriesService = (data: string) => {
   const url = `${SERVER_URL}/add-Categories`;
-  return axios.post(url, { categoryName: data },{
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token,
-    },
-  });
+  return axios.post(
+    url,
+    { categoryName: data },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    }
+  );
 };
 
 //? @desc  create OR add User
@@ -312,8 +314,15 @@ export const createBlogService = (WeblogData: Weblog) => {
 };
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
-export const getBlogsService = () => {
-  const url = `${SERVER_URL}/get-blogs`;
+export const getBlogsService = (pageNumber: number, sortOrder: string) => {
+  const url = `${SERVER_URL}/get-blogs?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
+  return axios.get(url);
+};
+// *blog
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const getBlogService = (blogId: string | undefined) => {
+  const url = `${SERVER_URL}/get-blog/${blogId}`;
   return axios.get(url);
 };
 // ? FILTER PRODUCTS
@@ -342,14 +351,14 @@ export const getFiltredAccountGamesService = (
 // ? USERINFO
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
-export const addUserInfoService = (data: UserInfo) => {
+export const addUserInfoService = (data: UserInfoProps) => {
   const url = `${SERVER_URL}/add-user-info`;
   return axios.post(url, data);
 };
 // ?UPDATEuSER
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
-export const updateUserInfoService = (data: UserInfo) => {
+export const updateUserInfoService = (data: UserInfoProps) => {
   const url = `${SERVER_URL}/update-user-info`;
   return axios.put(url, data);
 };
@@ -406,5 +415,10 @@ export const changeStatusService = (data: changeStatus) => {
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
 export const getUsersService = (pageNumber: number, sortOrder: string) => {
   const url = `${SERVER_URL}/get-users?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
-  return axios.get(url);
+  return axios.get(url, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  });
 };

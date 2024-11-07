@@ -1,20 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Spiner from "../../utils/Spiner";
-import usePagginationGames from "../../hooks/usePagginationGames";
-import AccountsGames from "../../utils/AccountsGames";
 import { Helmet } from "react-helmet";
-const AllAcountGames = () => {
+import usePaginationBlogs from "../../hooks/usePaginationBlogs";
+import BlogCrad from "../../utils/BlogCrad";
+const Blogs = () => {
   const [sortOrder, setSortOrder] = useState("");
   const { category } = useParams();
-  const safeCategory = category || "";
 
   const [pageNumber, setpageNumber] = useState(1);
-  const { FiltredAccountGames, hasMore, loading } = usePagginationGames(
-    pageNumber,
-    safeCategory,
-    sortOrder
-  );
+  const { Blogs, hasMore, loading } = usePaginationBlogs(pageNumber, sortOrder);
   const observer = useRef<IntersectionObserver | null>(null);
   const lastgame = useCallback(
     (node: HTMLElement | null) => {
@@ -38,12 +33,11 @@ const AllAcountGames = () => {
     const order = event.target.value;
     setSortOrder(order);
   };
-
   return (
     <div className="md:container md:mx-auto mx-2">
-              <Helmet>
-        <title>acount games</title>
-        <meta name="description" content="Browse our wide range of acount games." />
+      <Helmet>
+        <title>blogs</title>
+        <meta name="description" content="Browse our wide range of blogs." />
       </Helmet>
       {/* مرتب سازی */}
       <div className="">
@@ -54,36 +48,20 @@ const AllAcountGames = () => {
           onChange={handleSortChange}
           className="p-2 border border-gray-300 rounded"
         >
-          <option value="highToLow"> گرانترین </option>
-          <option value="lowToHigh"> ارزان ترین </option>
+          <option value="highToLow"> جدیدترین </option>
+          <option value="lowToHigh"> قدیمی ترین </option>
         </select>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-10">
-        {FiltredAccountGames &&
-          FiltredAccountGames?.map((game, index) =>
-            FiltredAccountGames.length === index + 1 ? (
+        {Blogs &&
+          Blogs?.map((blog, index) =>
+            Blogs.length === index + 1 ? (
               <div ref={lastgame} className="">
-                <AccountsGames
-                  primaryImage={game.primaryImage}
-                  additionalImages={game.additionalImages}
-                  title={game.title}
-                  info={game.info}
-                  _id={game._id}
-                  tags={game.tags}
-                  key={game._id}
-                />
+                <BlogCrad key={blog._id} blog={blog} />
               </div>
             ) : (
               <div className="">
-                <AccountsGames
-                  primaryImage={game.primaryImage}
-                  additionalImages={game.additionalImages}
-                  title={game.title}
-                  info={game.info}
-                  _id={game._id}
-                  tags={game.tags}
-
-                />
+                <BlogCrad key={blog._id} blog={blog} />
               </div>
             )
           )}
@@ -94,4 +72,4 @@ const AllAcountGames = () => {
     </div>
   );
 };
-export default AllAcountGames;
+export default Blogs;

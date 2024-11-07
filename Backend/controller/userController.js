@@ -1,3 +1,4 @@
+const Blog = require("../models/Blog");
 const Categorey = require("../models/Categorey");
 const Comment = require("../models/Comment");
 const Games = require("../models/Games");
@@ -52,22 +53,22 @@ exports.handleLogin = async (req, res, next) => {
 
 exports.handleUserInfo = async (req, res, next) => {
   try {
-    const { userId, userInfo } = req.body;
-    console.log(userInfo);
+    const { userId, UserInfo } = req.body;
+    console.log(UserInfo);
     const user = await User.findOne({ _id: userId });
     if (!user) {
       res.status(404).json({ message: "کاربر پیدا نشد." });
     } else {
-      user.firstName = userInfo.firstName;
-      user.lastName = userInfo.lastName;
-      user.phone = userInfo.phone;
+      user.firstName = UserInfo.firstName;
+      user.lastName = UserInfo.lastName;
+      user.phone = UserInfo.phone;
       user.address = {
-        plaque: userInfo.plaque,
-        unit: userInfo.unit,
-        postalCode: userInfo.postalCode,
-        address: userInfo.address,
-        city: userInfo.city,
-        provider: userInfo.provider,
+        plaque: UserInfo.address.plaque,
+        unit: UserInfo.address.unit,
+        postalCode: UserInfo.address.postalCode,
+        address: UserInfo.address.address,
+        city: UserInfo.address.city,
+        provider: UserInfo.address.provider,
       };
       await user.save();
       res.status(201).json({ message: "اطلاعات با موفقیت ذخیره شد.", user });
@@ -241,6 +242,18 @@ exports.handleFilterGames = async (req, res, next) => {
     });
   } catch (err) {
     next(err);
+  }
+};
+// ?GET BLOG
+exports.getBlog = async (req, res) => {
+  const {blogId} = req.params;
+  try {
+    const blog = await Blog.findById(blogId)
+      .populate("primaryImage");
+    res.status(200).json({ blog });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
   }
 };
 // exports.handleLogin = async (req, res, next) => {

@@ -1,38 +1,62 @@
 import React, { useEffect, useState } from "react";
-import { FaLocationDot } from "react-icons/fa6";
-import { Link } from "react-router-dom";
 import BtnTow from "../utils/BtnTow";
 import { useShopingcard } from "../context/ShopingCard";
-import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import AddressModall from "./modalls/AddressModall";
 import {
   addOrderService,
   getUserInfoService,
 } from "../../services/ApiServices";
 import { toast } from "react-toastify";
-import { User } from "../../types";
+import { decodedUser, User } from "../../types";
+import IncreaseproductBtn from "../utils/IncreaseproductBtn";
+import { jwtDecode } from "jwt-decode";
+import { Helmet } from "react-helmet";
 
 const ShopingInfo: React.FC = () => {
-  const {
-    CardItems,
-    InceraseCardQty,
-    removeFromCard,
-    DecreaseCardQty,
-    cardQty,
-  } = useShopingcard();
+  const { CardItems, cardQty } = useShopingcard();
   const totalPrice = CardItems.reduce((total, cardItem) => {
     const price = cardItem.data.price;
     return total + price * cardItem.ItemQty;
   }, 0);
   const [OpenModal, setOpenModal] = useState(false);
-  const [UserInfo, setUserInfo] = useState<User>();
-  const user = JSON.parse(localStorage.getItem("User") || "{}");
+  const [UserInfo, setUserInfo] = useState<User>({
+    address: {
+      plaque: "",
+      unit: "",
+      postalCode: "",
+      address: "",
+      city: "",
+      provider: "",
+    },
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    isAdmin: "",
+    profile: "",
+    _id: "",
+  });
   const [Loadingdata, setLoadingdata] = useState(false);
+  const user = localStorage.getItem("User") || "{}";
+  const decodedToken = jwtDecode<decodedUser>(user);
   useEffect(() => {
     const getUser = async () => {
       try {
-        const { data } = await getUserInfoService(user._id);
-        setUserInfo(data.user);
+        const { data } = await getUserInfoService(decodedToken.userId);
+        setUserInfo({
+          ...data.user,
+          address: {
+            plaque: data.user.address?.plaque || "",
+            unit: data.user.address?.unit || "",
+            postalCode: data.user.address?.postalCode || "",
+            address: data.user.address?.address || "",
+            city: data.user.address?.city || "",
+            provider: data.user.address?.provider || "",
+          },
+          firstName: data.user.firstName || "",
+          lastName: data.user.lastName || "",
+          phone: data.user.phone || "",
+        });
       } catch (err) {
         console.log(err);
       }
@@ -42,7 +66,10 @@ const ShopingInfo: React.FC = () => {
 
   const handleAddOrder = async () => {
     try {
-      const userId = user._id;
+      const userId = decodedToken.userId;
+      if (!userId) {
+        return toast.error("برای ثبت سفارش اول وارد شوید.");
+      }
       const { data } = await addOrderService({
         data: {
           CardItems,
@@ -56,6 +83,10 @@ const ShopingInfo: React.FC = () => {
   };
   return (
     <div className="md:container md:mx-auto mx-2 my-5">
+      <Helmet>
+        <title>confirm address </title>
+        <meta name="description" content="confirm address  page" />
+      </Helmet>
       <div className="grid grid-cols-12 gap-5">
         <div className="col-span-12 md:col-span-9 border-2 rounded-lg p-5 mb-10">
           <div className="border-2 mb-10 p-5 rounded-lg">
@@ -63,7 +94,29 @@ const ShopingInfo: React.FC = () => {
               آدرس تحویل سفارش
             </h3>
             <p className="flex items-center my-5">
-              <FaLocationDot className="ml-5" size={20} />
+              <svg
+                className="ml-5"
+                width="20px"
+                height="20px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12Z"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
               {UserInfo?.address
                 ? UserInfo?.address?.address
                 : "هنوز آدرسی وارد نشده"}
@@ -100,41 +153,11 @@ const ShopingInfo: React.FC = () => {
                     className="w-full h-full object-contain max-w-[100px] max-h-[100px]"
                     alt={item.data.image.imageName}
                   />
-
-                  <div className="flex items-center justify-around border-2 rounded-lg py-2 w-20 bg-white mt-5">
-                    <FaPlus
-                      size={10}
-                      className="cursor-pointer text-secondery"
-                      onClick={() =>
-                        InceraseCardQty(item?.id, null, {
-                          title: "",
-                          image: {
-                            imageName: "",
-                            direction: "",
-                            createdAt: "",
-                            _id: "",
-                          },
-                          price: 0,
-                          features: [],
-                          tags: [],
-                        })
-                      }
-                    />
-                    <span className=" text-secondery">{item.ItemQty}</span>
-                    {item.ItemQty === 1 ? (
-                      <FaTrash
-                        size={10}
-                        className="cursor-pointer text-secondery"
-                        onClick={() => removeFromCard(item.id)}
-                      />
-                    ) : (
-                      <FaMinus
-                        size={10}
-                        className="cursor-pointer text-secondery"
-                        onClick={() => DecreaseCardQty(item?.id)}
-                      />
-                    )}
-                  </div>
+                  {item.SelectedPlatform === null ? (
+                    <IncreaseproductBtn item={item} />
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             ))}
@@ -156,13 +179,11 @@ const ShopingInfo: React.FC = () => {
             <p>{totalPrice} تومان</p>
           </div>
 
-          <Link to={"/checkout/cart/info"}>
-            <BtnTow
-              ButtonColor="bg-red-500 hover:from-red-500 hover:to-red-400 hover:ring-red-400 md:b-10 md:text-base text-xs my-5"
-              ButtonText=" پرداخت"
-              onClick={() => handleAddOrder()}
-            />
-          </Link>
+          <BtnTow
+            ButtonColor="bg-red-500 hover:from-red-500 hover:to-red-400 hover:ring-red-400 md:b-10 md:text-base text-xs my-5"
+            ButtonText=" پرداخت"
+            onClick={() => handleAddOrder()}
+          />
         </div>
       </div>
       {OpenModal && UserInfo && (
@@ -170,6 +191,7 @@ const ShopingInfo: React.FC = () => {
           setOpenModal={setOpenModal}
           UserInfo={UserInfo}
           setLoadingdata={setLoadingdata}
+          setUserInfo={setUserInfo}
         />
       )}
     </div>

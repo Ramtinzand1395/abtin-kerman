@@ -13,6 +13,7 @@ export default {
         secondery: "#054f7e",
         // primary: "#00203F",
         seconderyGreen: "#acf0d1",
+        link:"#1E8EFF"
       },
     },
   },

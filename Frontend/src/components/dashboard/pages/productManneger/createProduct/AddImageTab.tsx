@@ -1,5 +1,4 @@
 import React from "react";
-import { MdAdd } from "react-icons/md";
 import AddImageModallProduct from "../../../AddImageModallProduct";
 import { Product } from "../../../../../types";
 interface AddImageTabProps {
@@ -23,7 +22,21 @@ const AddImageTab: React.FC<AddImageTabProps> = ({
             onClick={() => setOpenAddImageModall(!OpenAddImageModall)}
             className="border-2 p-2 mx-2 hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-150 ease-in-out delay-150 rounded-xl"
           >
-            <MdAdd />
+              <svg
+                width="20px"
+                height="20px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 12H18M12 6V18"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
           </span>
         </label>
       </div>

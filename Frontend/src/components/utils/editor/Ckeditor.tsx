@@ -5,7 +5,6 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import "ckeditor5/ckeditor5.css";
 import { createBlogService } from "../../../services/ApiServices";
 import { toast } from "react-toastify";
-import { MdAdd } from "react-icons/md";
 import { Weblog } from "../../../types";
 import EditorImageModall from "./EditorImageModall";
 import { Editor, EventInfo } from "ckeditor5";
@@ -28,7 +27,7 @@ const Ckeditor = () => {
     e: EventInfo<string, unknown>,
     editor: Editor
   ) => {
-    console.log(e)
+    console.log(e);
     const data = editor.getData();
     setWeblogData((prev) => ({
       ...prev,
@@ -57,7 +56,6 @@ const Ckeditor = () => {
   //   getBlogs();
   // }, []);
   const [OpenAddImageModall, setOpenAddImageModall] = useState(false);
-  console.log(WeblogData);
   const removePrimaryImage = () => {
     setWeblogData((prev) => ({
       ...prev,
@@ -81,7 +79,21 @@ const Ckeditor = () => {
             onClick={() => setOpenAddImageModall(!OpenAddImageModall)}
             className="border-2 p-2 mx-2 hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-150 ease-in-out delay-150 rounded-xl"
           >
-            <MdAdd />
+             <svg
+                width="20px"
+                height="20px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 12H18M12 6V18"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
           </span>
         </label>
         {OpenAddImageModall && (
@@ -91,14 +103,16 @@ const Ckeditor = () => {
             setOpenAddImageModall={setOpenAddImageModall}
           />
         )}
-        <img
-          onClick={() => removePrimaryImage()}
-          className="w-[20vh] h-[20vh] rounded-lg"
-          // src={`http://localhost:5000/${WeblogData?.primaryImage?.direction}`}
-              //! change
-              src={`${WeblogData?.primaryImage?.direction}`}
-          alt=""
-        />
+        {WeblogData?.primaryImage?.direction && (
+          <img
+            onClick={() => removePrimaryImage()}
+            className="w-[20vh] h-[20vh] rounded-lg"
+            // src={`http://localhost:5000/${WeblogData?.primaryImage?.direction}`}
+            //! change
+            src={`${WeblogData?.primaryImage?.direction}`}
+            alt={WeblogData?.primaryImage?.imageName}
+          />
+        )}
         <CKEditor
           editor={ClassicEditor}
           onReady={(editor) => {
@@ -111,20 +125,13 @@ const Ckeditor = () => {
           config={{
             ckfinder: {
               uploadUrl: "http://localhost:5000/api/upload", // Your API endpoint for handling image uploads
+              // uploadUrl: "https://abtin-kerman-backend-new.vercel.app/api/upload", // Your API endpoint for handling image uploads
             },
           }}
           onChange={handleCkeditorState}
         />
         <button type="submit">ساخت</button>
       </form>
-      {/* <div>
-        {Blogs.map((blog) => (
-          <div key={blog._id}>
-            <h2>{blog.title}</h2>
-            <div dangerouslySetInnerHTML={{ __html: blog.body }} />
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 };

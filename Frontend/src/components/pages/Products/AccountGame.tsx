@@ -9,7 +9,7 @@ import { useShopingcard } from "../../context/ShopingCard";
 
 const AccountGame: React.FC = () => {
   // !Context
-  const { InceraseCardQty, DecreaseCardQty } = useShopingcard();
+  const { InceraseCardQty, CardItems } = useShopingcard();
   const [game, setgame] = useState<GameData | null>(null);
   const { gameId } = useParams();
   const [currentImage, setCurrentImage] = useState<string>("");
@@ -69,6 +69,7 @@ const AccountGame: React.FC = () => {
         createdAt: "",
         _id: "",
       },
+      mainQty :1,
       price: SelectedPlatform?.price || 0,
       features: game?.features || [],
       tags: game?.tags || [],
@@ -192,15 +193,15 @@ const AccountGame: React.FC = () => {
             ) : (
               ""
             )}
-
-            <BtnTow
-              ButtonColor="bg-blue-500 hover:from-blue-500 hover:to-blue-400 hover:ring-blue-400"
-              ButtonText="افزودن به سبد خرید"
-              onClick={handleAddToCart}
-            />
-            <button onClick={() => game?._id && DecreaseCardQty(game?._id)}>
-              -
-            </button>
+            {CardItems.some((card) => card.id === game?._id) ? (
+              <p className="text-green-500 font-bold">در سبد خرید موجود است.</p>
+            ) : (
+              <BtnTow
+                ButtonColor="bg-blue-500 hover:from-blue-500 hover:to-blue-400 hover:ring-blue-400"
+                ButtonText="افزودن به سبد خرید"
+                onClick={handleAddToCart}
+              />
+            )}
           </div>
         </div>
       </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import { MdAdd } from "react-icons/md";
 import { GameData, ImageType } from "../../../../../types";
 import AddImageModall from "../../../AddImageModall";
 interface AddGameImageTabProps {
@@ -37,7 +36,21 @@ const AddGameImageTab: React.FC<AddGameImageTabProps> = ({
             onClick={() => setOpenAddImageModall(!OpenAddImageModall)}
             className="border-2 p-2 mx-2 hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-150 ease-in-out delay-150 rounded-xl"
           >
-            <MdAdd />
+               <svg
+                width="30px"
+                height="30px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 12H18M12 6V18"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
           </span>
         </label>
       </div>
@@ -48,10 +61,10 @@ const AddGameImageTab: React.FC<AddGameImageTabProps> = ({
             <div className="">
               <img
                 onClick={() => removePrimaryImage()}
-                className="w-[20vh] h-[20vh] rounded-lg"
+                className="rounded-lg"
                 // src={`http://localhost:5000/${GameData.primaryImage.direction}`}
                 //! change
-                src={`/${GameData.primaryImage.direction}`}
+                src={`${GameData.primaryImage.direction}`}
                 alt=""
               />
             </div>
@@ -61,17 +74,17 @@ const AddGameImageTab: React.FC<AddGameImageTabProps> = ({
             </div>
           )}
         </div>
-        <div className="">
+        <div className="mr-5">
           <label className="font-bold">عکس های فرعی</label>
           {GameData.additionalImages.length > 0 ? (
             <div className="">
-              <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8 gap-5">
+              <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8 gap-5 ">
                 {GameData.additionalImages.map((img, index) => (
                   <div className="">
                     <img
                       key={index}
                       onClick={() => removeAdditionalImage(img)}
-                      className="w-full h-[20vh] rounded-lg"
+                      className="rounded-lg"
                       // src={`http://localhost:5000/${img.direction}`}
                       //! change
                       src={`${img?.direction}`}

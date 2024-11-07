@@ -47,11 +47,11 @@ router.post(
   adminController.handleConfirmComment
 );
 // ? WEBLOG
-router.post("/upload", authenticated, uploadController.UploadWeblogImage);
+router.post("/upload", uploadController.UploadWeblogImage);
 router.post("/create-blog", authenticated, adminController.createBlog);
 router.get("/get-blogs", adminController.Blogs);
 // ? ADD ORDER
-router.post("/add-order", authenticated, adminController.AddOrder);
+router.post("/add-order",adminController.AddOrder);
 router.get("/get-orders",authenticated, adminController.GetOrders);
 router.post("/change-status", authenticated, adminController.Changestatus);
 // ? Users

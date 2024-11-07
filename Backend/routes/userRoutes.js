@@ -18,6 +18,8 @@ router.put("/update-user-info", userController.handleUpdateUserInfo);
 router.get("/get-user-info/:userId", userController.handleGetUser);
 // ?UserOrders
 router.get("/get-user-orders/:userId", userController.GetUserOrders);
+// ?BLOG
+router.get("/get-blog/:blogId", userController.getBlog);
 
 
 // router.get("/get-comment", userController.handleGetComments);

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getUserInfoService } from "../../../../services/ApiServices";
 import { useNavigate, useParams } from "react-router-dom";
 import { User } from "../../../../types";
-import { FaUser } from "react-icons/fa";
-import { MdEditNote } from "react-icons/md";
 import BtnTow from "../../../utils/BtnTow";
 
 const Pishkhan: React.FC = () => {
@@ -25,25 +23,41 @@ const Pishkhan: React.FC = () => {
   const IconData = [
     {
       id: 1,
-      icon: <FaUser />,
+      icon: <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="9" r="3" stroke="#1C274C" stroke-width="1.5"/>
+<circle cx="12" cy="12" r="10" stroke="#1C274C" stroke-width="1.5"/>
+<path d="M17.9691 20C17.81 17.1085 16.9247 15 11.9999 15C7.07521 15 6.18991 17.1085 6.03076 20" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+</svg>,
       text1: "پشتیبانی فنی",
       text2: "تماس با ما",
     },
     {
       id: 2,
-      icon: <FaUser />,
+      icon: <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="9" r="3" stroke="#1C274C" stroke-width="1.5"/>
+<circle cx="12" cy="12" r="10" stroke="#1C274C" stroke-width="1.5"/>
+<path d="M17.9691 20C17.81 17.1085 16.9247 15 11.9999 15C7.07521 15 6.18991 17.1085 6.03076 20" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+</svg>,
       text1: "پشتیبانی فنی",
       text2: "تماس با ما",
     },
     {
       id: 3,
-      icon: <FaUser />,
+      icon: <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="9" r="3" stroke="#1C274C" stroke-width="1.5"/>
+<circle cx="12" cy="12" r="10" stroke="#1C274C" stroke-width="1.5"/>
+<path d="M17.9691 20C17.81 17.1085 16.9247 15 11.9999 15C7.07521 15 6.18991 17.1085 6.03076 20" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+</svg>,
       text1: "پشتیبانی فنی",
       text2: "تماس با ما",
     },
     {
       id: 4,
-      icon: <FaUser />,
+      icon: <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="9" r="3" stroke="#1C274C" stroke-width="1.5"/>
+<circle cx="12" cy="12" r="10" stroke="#1C274C" stroke-width="1.5"/>
+<path d="M17.9691 20C17.81 17.1085 16.9247 15 11.9999 15C7.07521 15 6.18991 17.1085 6.03076 20" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+</svg>,
       text1: "پشتیبانی فنی",
       text2: "تماس با ما",
     },
@@ -82,7 +96,9 @@ const Pishkhan: React.FC = () => {
         <div className="col-span-1 shadowhand rounded-b-3xl p-5">
           <div className="flex items-center justify-between">
             <h5 className="font-tanha font-bold">ویرایش اطلاعات </h5>
-            <MdEditNote />
+            <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.5 21H4C4 17.134 7.13401 14 11 14C11.1681 14 11.3348 14.0059 11.5 14.0176M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7ZM12.5898 21L14.6148 20.595C14.7914 20.5597 14.8797 20.542 14.962 20.5097C15.0351 20.4811 15.1045 20.4439 15.1689 20.399C15.2414 20.3484 15.3051 20.2848 15.4324 20.1574L19.5898 16C20.1421 15.4477 20.1421 14.5523 19.5898 14C19.0376 13.4477 18.1421 13.4477 17.5898 14L13.4324 18.1574C13.3051 18.2848 13.2414 18.3484 13.1908 18.421C13.1459 18.4853 13.1088 18.5548 13.0801 18.6279C13.0478 18.7102 13.0302 18.7985 12.9948 18.975L12.5898 21Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
           </div>
           <div className="">
             <ul>

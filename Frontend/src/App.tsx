@@ -22,6 +22,8 @@ import EditeUserInfo from "./components/dashboard/pages/user/EditeUserInfo";
 import UserOrders from "./components/dashboard/pages/user/UserOrders";
 import Page404 from "./components/utils/validate/Page404";
 import ProtectedRoute from "./components/utils/validate/ProtectedRoutes";
+import Blogs from "./components/pages/blog/Blogs";
+import Blog from "./components/pages/blog/Blog";
 
 const App: React.FC = () => {
   return (
@@ -37,14 +39,6 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/"
-          element={
-            <MainLayout>
-              <Home />
-            </MainLayout>
-          }
-        />
-          <Route
           path="/"
           element={
             <MainLayout>
@@ -81,6 +75,23 @@ const App: React.FC = () => {
           element={
             <MainLayout>
               <ShopingInfo />
+            </MainLayout>
+          }
+        />
+        {/* *BLOG */}
+        <Route
+          path="/blogs"
+          element={
+            <MainLayout>
+              <Blogs />
+            </MainLayout>
+          }
+        />
+         <Route
+          path="/blog/:blogId"
+          element={
+            <MainLayout>
+              <Blog />
             </MainLayout>
           }
         />

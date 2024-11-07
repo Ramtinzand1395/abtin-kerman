@@ -1,17 +1,11 @@
 import React from "react";
-import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import BtnTow from "../utils/BtnTow";
 import { useShopingcard } from "../context/ShopingCard";
+import IncreaseproductBtn from "../utils/IncreaseproductBtn";
 
 const ShoppingCardData: React.FC = () => {
-  const {
-    CardItems,
-    removeFromCard,
-    setOpenMiniShoppingcard,
-    DecreaseCardQty,
-    InceraseCardQty,
-  } = useShopingcard();
+  const { CardItems, setOpenMiniShoppingcard } = useShopingcard();
   const totalPrice = CardItems.reduce((total, cardItem) => {
     const price = cardItem.data.price;
     return total + price * cardItem.ItemQty;
@@ -32,40 +26,11 @@ const ShoppingCardData: React.FC = () => {
               className="w-40 h-auto"
               alt={item.data.image.imageName}
             />
-            <div className="flex items-center justify-around border-2 rounded-lg py-2 w-32 bg-white">
-              <FaPlus
-                size={10}
-                className="cursor-pointer text-secondery"
-                onClick={() =>
-                  InceraseCardQty(item?.id, null, {
-                    title: "",
-                    image: {
-                      imageName: "",
-                      direction: "",
-                      createdAt: "",
-                      _id: "",
-                    },
-                    price: 0,
-                    features: [],
-                    tags: [],
-                  })
-                }
-              />
-              <span className=" text-secondery">{item.ItemQty}</span>
-              {item.ItemQty === 1 ? (
-                <FaTrash
-                  size={10}
-                  className="cursor-pointer text-secondery"
-                  onClick={() => removeFromCard(item.id)}
-                />
-              ) : (
-                <FaMinus
-                  size={10}
-                  className="cursor-pointer text-secondery"
-                  onClick={() => DecreaseCardQty(item?.id)}
-                />
-              )}
-            </div>
+            {item.SelectedPlatform === null ? (
+              <IncreaseproductBtn item={item} />
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="mr-5 flex flex-col items-start justify-between h-full">
