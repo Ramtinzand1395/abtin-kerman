@@ -1,6 +1,7 @@
 import React from "react";
 import { useShopingcard } from "../context/ShopingCard";
 import { Feature, ImageType, SelectedPlatform, Tag } from "../../types";
+
 interface cardItem {
   id: string;
   ItemQty: number;
@@ -15,16 +16,20 @@ interface data {
   tags: Tag[];
   mainQty: number;
 }
-const IncreaseproductBtn: React.FC<{ item: cardItem }> = ({ item }) => {
+const IncreaseproductBtn: React.FC< cardItem> = ({
+  id,
+  ItemQty,
+  data
+}) => {
   const { removeFromCard, DecreaseCardQty, InceraseCardQty } = useShopingcard();
-  console.log(item);
+
   return (
     <div className="flex items-center justify-around border-2 rounded-lg py-2 w-32 bg-white">
-      {item.ItemQty < item.data.mainQty ? (
+      {ItemQty < data.mainQty ? (
         <svg
           className="cursor-pointer text-secondery"
           onClick={() =>
-            InceraseCardQty(item?.id, null, {
+            InceraseCardQty(id, null, {
               title: "",
               image: {
                 imageName: "",
@@ -56,11 +61,11 @@ const IncreaseproductBtn: React.FC<{ item: cardItem }> = ({ item }) => {
         <p className="text-red-500 font-bold">حداکثر</p>
       )}
 
-      <span className=" text-secondery">{item.ItemQty}</span>
-      {item.ItemQty === 1 ? (
+      <span className=" text-secondery">{ItemQty}</span>
+      {ItemQty === 1 ? (
         <svg
           className="cursor-pointer text-secondery"
-          onClick={() => removeFromCard(item.id)}
+          onClick={() => removeFromCard(id)}
           width="20px"
           height="20px"
           viewBox="0 0 24 24"
@@ -101,7 +106,7 @@ const IncreaseproductBtn: React.FC<{ item: cardItem }> = ({ item }) => {
       ) : (
         <svg
           className="cursor-pointer text-secondery"
-          onClick={() => DecreaseCardQty(item?.id)}
+          onClick={() => DecreaseCardQty(id)}
           width="20px"
           height="20px"
           viewBox="0 0 24 24"

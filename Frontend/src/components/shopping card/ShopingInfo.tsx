@@ -154,7 +154,12 @@ const ShopingInfo: React.FC = () => {
                     alt={item.data.image.imageName}
                   />
                   {item.SelectedPlatform === null ? (
-                    <IncreaseproductBtn item={item} />
+                    <IncreaseproductBtn 
+                    id={item.id} 
+                    ItemQty={item.ItemQty} 
+                    SelectedPlatform={item.SelectedPlatform} 
+                    data={item.data}  
+                    />
                   ) : (
                     ""
                   )}

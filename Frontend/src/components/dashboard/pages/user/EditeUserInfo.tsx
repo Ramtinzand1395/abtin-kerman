@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 const EditUserInfo = () => {
   const { userId } = useParams();
   const [user, setUser] = useState<User>({
+    _id: "",
     firstName: "",
     lastName: "",
     phone: "",

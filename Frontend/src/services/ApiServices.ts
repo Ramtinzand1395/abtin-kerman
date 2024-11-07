@@ -48,7 +48,7 @@ type changeStatus = {
   statuss: string;
 };
 type UserInfoProps = {
-  UserInfo: User;
+  userInfo: User;
   userId: string;
 };
 const SERVER_URL = "http://localhost:5000/api";
