@@ -8,13 +8,22 @@ const addressSchema = new mongoose.Schema({
   unit: { type: String }, // Changed to String for flexibility
   postalCode: { type: String },
 });
+const favoritesSchema = new mongoose.Schema({
+  itemId: {
+    type: mongoose.Schema.Types.ObjectId,
+    refPath: "itemType",
+    // ref:"Product"
+  },
+  itemType: { type: String, enum: ["Product", "Games"] },
+});
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
     unique: true,
   },
-  order:[
+  favorites: [favoritesSchema],
+  order: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Order",

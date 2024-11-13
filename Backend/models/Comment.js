@@ -20,13 +20,14 @@ const commentSchema = new mongoose.Schema({
     enum: ["Product", "accountgame"], // Indicate the type of related document
     required: true,
   },
+  rating: { type: Number, min: 1, max: 5 },
   isValidated: {
     type: Boolean,
     default: false,
   },
   createdAt: {
-    type: String, 
-    default: () => moment().format('jYYYY/jM/jD HH:mm:ss'), 
+    type: String,
+    default: () => moment().format("jYYYY/jM/jD HH:mm:ss"),
   },
 });
 

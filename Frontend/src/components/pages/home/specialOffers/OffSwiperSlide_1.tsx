@@ -5,7 +5,6 @@ interface OffSwiperSlide_1Props {
   item:GameData
 }
 const OffSwiperSlide_1:React.FC<OffSwiperSlide_1Props> = ({ item }) => {
-  console.log(item)
   return (
     <div className="p-3 font-tanha">
       <img src={item.primaryImage?.direction} className="rounded-lg  w-full" alt="" />

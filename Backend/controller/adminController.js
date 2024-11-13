@@ -136,7 +136,7 @@ exports.GetGames = async (req, res) => {
 };
 
 // * GET SINGLE GAME
-// ! هذ ایف برای تک به تک اجرا بشه
+// ! sssss
 exports.GetGame = async (req, res) => {
   const { id } = req.params;
   try {
@@ -158,6 +158,14 @@ exports.GetGame = async (req, res) => {
     const comments = await Comment.find({
       _id: { $in: game.comments },
     }).populate("user", "profile email");
+    const ratings = comments
+      .map((comment) => comment.rating)
+      .filter((rating) => rating); // Get all ratings (excluding undefined/null)
+    const totalRatings = ratings.length;
+    const averageRating = totalRatings
+      ? ratings.reduce((sum, rating) => sum + rating, 0) / totalRatings
+      : 0;
+
     const gameWithDetails = {
       ...game.toObject(),
       tags: gameTags,
@@ -165,6 +173,15 @@ exports.GetGame = async (req, res) => {
       comments,
       primaryImage,
       additionalImages,
+      rating: {
+        averageRating: averageRating.toFixed(1), // Keeping one decimal place
+        totalRatings,
+        individualRatings: comments.map((comment) => ({
+          userId: comment.user._id,
+          rating: comment.rating,
+          commentId: comment._id,
+        })),
+      },
     };
     res.status(200).json(gameWithDetails);
   } catch (err) {
@@ -365,6 +382,7 @@ exports.Updateproduct = async (req, res) => {
   }
 };
 // * GET SINGLE PRODUCT
+// sssss
 exports.Getproduct = async (req, res) => {
   const { id } = req.params;
   try {
@@ -386,6 +404,14 @@ exports.Getproduct = async (req, res) => {
     const comments = await Comment.find({
       _id: { $in: product.comments },
     }).populate("user", "profile email");
+    const ratings = comments
+      .map((comment) => comment.rating)
+      .filter((rating) => rating); // Get all ratings (excluding undefined/null)
+    const totalRatings = ratings.length;
+    const averageRating = totalRatings
+      ? ratings.reduce((sum, rating) => sum + rating, 0) / totalRatings
+      : 0;
+
     const productWithDetails = {
       ...product.toObject(),
       tags: productTags,
@@ -393,6 +419,15 @@ exports.Getproduct = async (req, res) => {
       primaryImage,
       additionalImages,
       comments,
+      rating: {
+        averageRating: averageRating.toFixed(1), // Keeping one decimal place
+        totalRatings,
+        individualRatings: comments.map((comment) => ({
+          userId: comment.user._id,
+          rating: comment.rating,
+          commentId: comment._id,
+        })),
+      },
     };
     res.status(200).json(productWithDetails);
   } catch (err) {
@@ -402,7 +437,7 @@ exports.Getproduct = async (req, res) => {
 };
 // * DELETE PRODUCT
 exports.deleteProduct = async (req, res) => {
-  const { productId } = req.params;
+  const { productId } = req.body;
   try {
     const product = await Products.findByIdAndRemove(productId);
     res.status(200).json({ data: product, message: "محصول  حذف شد" });
@@ -512,7 +547,7 @@ exports.Blogs = async (req, res) => {
       .skip(skip)
       .sort(sortOption)
       .populate("primaryImage");
-    res.status(200).json({ data: Allblog , totalPages });
+    res.status(200).json({ data: Allblog, totalPages });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs

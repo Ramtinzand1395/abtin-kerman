@@ -1,8 +1,11 @@
+import * as Yup from "yup";
+
 import React from "react";
 import { addUserInfoService } from "../../../services/ApiServices";
 import { toast } from "react-toastify";
 import { User } from "../../../types";
 import BtnTow from "../../utils/BtnTow";
+import { userInfoValidationSchema } from "../../../validations/UserInfoValidation";
 interface GetUserInformationProps {
   UserInfo: User;
   setLoadingdata: React.Dispatch<React.SetStateAction<boolean>>;
@@ -42,16 +45,24 @@ const GetUserInformation: React.FC<GetUserInformationProps> = ({
   const handleAddUserInf = async () => {
     setLoadingdata(true);
     try {
+      await userInfoValidationSchema.validate(UserInfo, { abortEarly: false });
+
       const { data } = await addUserInfoService({
-        UserInfo,
+        userInfo: UserInfo,
         userId: UserInfo._id,
       });
       toast.success(data.message);
-    } catch (err) {
-      console.log(err);
-    } finally {
       setLoadingdata(false);
       setOpenModal(false);
+    } catch (err) {
+      console.log(err);
+      if (err instanceof Yup.ValidationError) {
+        const errorMessages = err.inner.reduce((acc, error) => {
+          acc[error.path as keyof User] = error.message;
+          return acc;
+        }, {} as Partial<Record<keyof User, string>>);
+        Object.values(errorMessages).forEach((message) => toast.error(message));
+      }
     }
   };
   return (
@@ -71,9 +82,21 @@ const GetUserInformation: React.FC<GetUserInformationProps> = ({
           onClick={() => setOpenChange(true)}
           className="text-secondery flex items-center mb-2"
         >
-         <svg className="ml-5" width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1ZM12 7.83335C12 7.4963 12.2088 7.19244 12.5291 7.06346C12.8494 6.93447 13.2181 7.00577 13.4632 7.2441L17.7489 11.4107C18.0837 11.7362 18.0837 12.2638 17.7489 12.5893L13.4632 16.7559C13.2181 16.9942 12.8494 17.0655 12.5291 16.9365C12.2088 16.8076 12 16.5037 12 16.1666V14H7C6.44771 14 6 13.5523 6 13V11C6 10.4477 6.44771 10 7 10H12V7.83335Z" fill="#1E8EFF"/>
-</svg>
+          <svg
+            className="ml-5"
+            width="30px"
+            height="30px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1ZM12 7.83335C12 7.4963 12.2088 7.19244 12.5291 7.06346C12.8494 6.93447 13.2181 7.00577 13.4632 7.2441L17.7489 11.4107C18.0837 11.7362 18.0837 12.2638 17.7489 12.5893L13.4632 16.7559C13.2181 16.9942 12.8494 17.0655 12.5291 16.9365C12.2088 16.8076 12 16.5037 12 16.1666V14H7C6.44771 14 6 13.5523 6 13V11C6 10.4477 6.44771 10 7 10H12V7.83335Z"
+              fill="#1E8EFF"
+            />
+          </svg>
           اصلاح موقیت مکانی روی نقشه
         </button>
       </div>

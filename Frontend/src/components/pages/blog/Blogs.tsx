@@ -56,7 +56,7 @@ const Blogs = () => {
         {Blogs &&
           Blogs?.map((blog, index) =>
             Blogs.length === index + 1 ? (
-              <div ref={lastgame} className="">
+              <div key={blog._id} ref={lastgame} className="">
                 <BlogCrad key={blog._id} blog={blog} />
               </div>
             ) : (

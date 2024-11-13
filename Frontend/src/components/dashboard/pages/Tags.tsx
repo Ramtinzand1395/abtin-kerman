@@ -184,9 +184,9 @@ const Tags: React.FC = () => {
                 <path
                   d="M6 12H18M12 6V18"
                   stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </span>
@@ -219,9 +219,9 @@ const Tags: React.FC = () => {
                 <path
                   d="M6 12H18M12 6V18"
                   stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </span>

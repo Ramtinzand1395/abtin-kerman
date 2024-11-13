@@ -93,6 +93,9 @@ const CommentManneger: React.FC = () => {
               متن نظر
             </th>
             <th scope="col" className="px-6 py-4 text-start">
+              امتیاز
+            </th>
+            <th scope="col" className="px-6 py-4 text-start">
               وضعیت تایید
             </th>
             <th scope="col" className="px-6 py-4 text-start">
@@ -116,6 +119,9 @@ const CommentManneger: React.FC = () => {
                 <textarea placeholder="ثبت نظر" title="comment">
                   {comment.body}
                 </textarea>
+              </td>
+              <td className="whitespace-nowrap px-6 py-4 font-medium">
+                {comment.rating}
               </td>
               <td className="whitespace-nowrap px-6 py-4 font-medium">
                 {comment.isValidated === false ? "تایید نشده" : "تایید شده"}

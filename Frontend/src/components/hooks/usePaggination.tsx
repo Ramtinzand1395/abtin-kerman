@@ -4,7 +4,8 @@ import { Product } from "../../types";
 
 export default function usePaggination(
   pageNumber: number,
-  category: string,
+  slug1: string,
+  slug2: string,
   sortOrder: string
 ) {
   const [FiltredProducts, setFiltredProducts] = useState<Product[]>([]);
@@ -16,7 +17,8 @@ export default function usePaggination(
     const getFiltredProducts = async () => {
       try {
         const { data } = await getFiltredProductsService(
-          category,
+          slug1,
+          slug2,
           pageNumber,
           sortOrder
         );
@@ -37,6 +39,6 @@ export default function usePaggination(
       }
     };
     getFiltredProducts();
-  }, [category, pageNumber, sortOrder]);
+  }, [slug1, slug2, pageNumber, sortOrder]);
   return { loading, FiltredProducts, hasMore };
 }

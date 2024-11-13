@@ -19,7 +19,7 @@ router.post("/add-product", authenticated, adminController.AddProduct);
 router.get("/get-products", adminController.GetProducts);
 router.get("/get-product/:id", adminController.Getproduct);
 router.delete(
-  "delete-product/:productId",
+  "/delete-product",
   authenticated,
   adminController.deleteProduct
 );

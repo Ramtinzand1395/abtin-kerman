@@ -24,6 +24,7 @@ import Page404 from "./components/utils/validate/Page404";
 import ProtectedRoute from "./components/utils/validate/ProtectedRoutes";
 import Blogs from "./components/pages/blog/Blogs";
 import Blog from "./components/pages/blog/Blog";
+import UserFavorites from "./components/dashboard/pages/user/UserFavorites";
 
 const App: React.FC = () => {
   return (
@@ -96,8 +97,17 @@ const App: React.FC = () => {
           }
         />
         {/* PRODUCT & PRODUCTS RPUTES */}
+        {/* sssss */}
         <Route
-          path="/products/:category"
+          path="/products/:slug1"
+          element={
+            <MainLayout>
+              <AllProducts />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/products/:slug1/:slug2"
           element={
             <MainLayout>
               <AllProducts />
@@ -216,6 +226,22 @@ const App: React.FC = () => {
             <DashboardLayout>
               <UserOrders />
             </DashboardLayout>
+          }
+        />
+        <Route
+          path="/dashboard/userfavorites/:userId"
+          element={
+            <DashboardLayout>
+              <UserFavorites />
+            </DashboardLayout>
+          }
+        />
+          <Route
+          path="*"
+          element={
+            <MainLayout>
+              <Page404 />
+            </MainLayout>
           }
         />
       </Routes>

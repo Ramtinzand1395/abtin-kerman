@@ -24,7 +24,6 @@ const HeaderContainer: React.FC = () => {
     } else {
       setisLogedIn(false);
     }
-    console.log("login");
   }, [User, token]);
 
   useEffect(() => {

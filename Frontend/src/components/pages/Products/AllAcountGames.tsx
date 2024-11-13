@@ -62,7 +62,7 @@ const AllAcountGames = () => {
         {FiltredAccountGames &&
           FiltredAccountGames?.map((game, index) =>
             FiltredAccountGames.length === index + 1 ? (
-              <div ref={lastgame} className="">
+              <div key={game._id} ref={lastgame} className="">
                 <AccountsGames
                   primaryImage={game.primaryImage}
                   additionalImages={game.additionalImages}

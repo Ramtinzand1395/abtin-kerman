@@ -13,15 +13,16 @@ const ShopingCard = React.lazy(() => import("../../../utils/ShopingCard"));
 import { Helmet } from "react-helmet";
 const AllProducts: React.FC = () => {
   const [sortOrder, setSortOrder] = useState("");
-  const { category } = useParams();
-  const safeCategory = category || "";
+  const { slug1 = "" , slug2 ="" } = useParams();
 
   const [pageNumber, setPageNumber] = useState(1);
   const { FiltredProducts, hasMore, loading } = usePaggination(
     pageNumber,
-    safeCategory,
-    sortOrder
+    slug1,
+    slug2,
+    sortOrder,
   );
+ 
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastProductRef = useCallback(
@@ -40,16 +41,15 @@ const AllProducts: React.FC = () => {
 
   useEffect(() => {
     setPageNumber(1);
-  }, [category, sortOrder]);
+  }, [slug1 , slug2, sortOrder]);
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(event.target.value);
   };
-
   return (
     <div className="md:container md:mx-auto mx-2">
       <Helmet>
-        <title>{category}</title>
+        <title>{slug1}</title>
         <meta name="description" content="Browse our wide range of products." />
       </Helmet>
 

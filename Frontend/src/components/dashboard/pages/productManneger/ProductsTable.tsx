@@ -45,6 +45,7 @@ const ProductsTable: React.FC = () => {
       setLodaingProducts(false);
     }
   };
+  console.log(LodaingProducts)
   //  ? DELETE
   const confirmAlertmodall = (game: Product) => {
     confirmAlert({
@@ -92,7 +93,7 @@ const ProductsTable: React.FC = () => {
               <thead className="border-b border-neutral-200 font-medium ">
                 <tr>
                   <th scope="col" className="px-6 py-4 text-start">
-                    اسم بازی
+                    اسم محصول
                   </th>
                   <th scope="col" className="px-6 py-4 text-start">
                     قیمت

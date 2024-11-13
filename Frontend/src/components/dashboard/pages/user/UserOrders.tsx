@@ -4,6 +4,7 @@ import { Order, OrderItems } from "../../../../types";
 import { useParams } from "react-router-dom";
 import OrderTab from "../orderTable/OrderTab";
 import BtnTow from "../../../utils/BtnTow";
+import { Helmet } from "react-helmet";
 
 const UserOrders: React.FC = () => {
   const [Orders, setOrders] = useState<Order[] | null>(null);
@@ -26,10 +27,9 @@ const UserOrders: React.FC = () => {
       }
     };
     getOrders();
-  }, [orderDesc, pageNumber]);
+  }, [orderDesc, pageNumber, userId]);
 
   const calculateTotalPrice = (items: OrderItems[]) => {
-    console.log(items);
     return items.reduce((total, item) => {
       const price =
         item?.itemType === "Games"
@@ -41,6 +41,10 @@ const UserOrders: React.FC = () => {
 
   return (
     <div className=" w-full md:container md:mx-auto mx-2">
+      <Helmet>
+        <title>Orders</title>
+        <meta name="description" content="User Orders Products" />
+      </Helmet>
       <select title="Order" onChange={(e) => setOrderDesc(e.target.value)}>
         <option value="newestFirst">جدیدترین</option>
         <option value="oldestFirst">قدیمی ترین</option>
@@ -67,38 +71,42 @@ const UserOrders: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {Orders?.map((data) => (
-                    <tr
-                      key={data._id}
-                      className="border-b text-start border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100"
-                    >
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <BtnTow
-                          ButtonColor="bg-green-500 hover:from-green-500 hover:to-green-400 hover:ring-green-400"
-                          ButtonText="مشاهده سفارش"
-                          onClick={() => {
-                            setOpenModall(true);
-                            data && setSelectedOrder(data);
-                          }}
-                        />
-                        {OpenModall && SelectedOrder?._id === data._id && (
-                          <OrderTab
-                            data={SelectedOrder}
-                            setOpenModall={setOpenModall}
+                  {Orders && Orders?.length <= 0 ? (
+                    <td className="font-bold">سفارشی برای شما ثبت نشده</td>
+                  ) : (
+                    Orders?.map((data) => (
+                      <tr
+                        key={data._id}
+                        className="border-b text-start border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100"
+                      >
+                        <td className="whitespace-nowrap px-6 py-4">
+                          <BtnTow
+                            ButtonColor="bg-green-500 hover:from-green-500 hover:to-green-400 hover:ring-green-400"
+                            ButtonText="مشاهده سفارش"
+                            onClick={() => {
+                              setOpenModall(true);
+                              data && setSelectedOrder(data);
+                            }}
                           />
-                        )}
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {calculateTotalPrice(data.items)} تومان
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {data.TrackingCode}
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {data.status}
-                      </td>
-                    </tr>
-                  ))}
+                          {OpenModall && SelectedOrder?._id === data._id && (
+                            <OrderTab
+                              data={SelectedOrder}
+                              setOpenModall={setOpenModall}
+                            />
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4">
+                          {calculateTotalPrice(data.items)} تومان
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4">
+                          {data.TrackingCode}
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4">
+                          {data.status}
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>

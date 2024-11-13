@@ -47,6 +47,7 @@ export interface Comment {
   relatedModel: string;
   isValidated?: boolean;
   createdAt?: string;
+  rating: number;
   _id?: string;
   // ! حتما بعدا بررسی بشه
   relatedData?: Product | GameData;
@@ -132,4 +133,13 @@ interface PopulatedData {
   title: string;
   _id: string;
   price: number | undefined;
+}
+export interface FavoritespopulatedProps {
+  itemId: Product;
+  itemType: string;
+  _id:string;
+}
+export interface FavoritesProps {
+  itemId: string;
+  itemType: string;
 }

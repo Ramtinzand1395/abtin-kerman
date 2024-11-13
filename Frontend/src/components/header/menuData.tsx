@@ -19,29 +19,29 @@ export const MenuData = [
         title: "پلی استیشن",
         options: [
           { label: "پلی استیشن", link: "/products/playstations" },
-          { label: "پلی استیشن 5", link: "/products/playstation-5" },
-          { label: "پلی استیشن 4", link: "/products/playstation-4" },
+          { label: "پلی استیشن 5", link: "/products/playstations/playstation-5" },
+          { label: "پلی استیشن 4", link: "/products/playstations/playstation-4" },
         ],
       },
       {
         title: "ایکس باکس",
         options: [
-          { label: "ایکس باکس سریز", link: "/products/xbox-series" },
-          { label: "ایکس باکس وان", link: "/products/xbox-one" },
+          { label: "ایکس باکس سریز", link: "/products/xboxs/xbox-series" },
+          { label: "ایکس باکس وان", link: "/products/xboxs/xbox-one" },
         ],
       },
       {
         title: "کنسول‌های کلاسیک",
         options: [
-          { label: "پلی استیشن 2", link: "/products/playstation-2" },
-          { label: "سوپر سگا", link: "/products/super-sega" },
+          { label: "پلی استیشن 2", link: "/products/playstations/playstation-2" },
+          { label: "سوپر سگا", link: "/products/playstations/super-sega" },
         ],
       },
       {
         title: "کنسول‌های کارکرده",
         options: [
-          { label: "پلی استیشن 4", link: "/products/used-playstation-4" },
-          { label: "پلی استیشن 3", link: "/products/used-playstation-3" },
+          { label: "پلی استیشن 4", link: "/products/playstations/used-playstation-4" },
+          { label: "پلی استیشن 3", link: "/products/playstations/used-playstation-3" },
         ],
       },
     ],

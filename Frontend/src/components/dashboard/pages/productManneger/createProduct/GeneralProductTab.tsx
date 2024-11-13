@@ -8,12 +8,14 @@ import AddCatsandTags from "./AddCatsandTags";
 import AddProductSepicifications from "./AddProductSepicifications";
 import AddAboutProductTab from "./AddAboutProductTab";
 import { Product } from "../../../../../types";
+import AddMenu from "./AddMenu";
 
 type TabKey =
   | "ProductImage"
   | "ProductInfo"
   | "ProductSepicifications"
   | "AboutProduct"
+  | "AddMenu"
   | "ProductCatsandTags";
 
 const GeneralProductTab: React.FC = () => {
@@ -27,6 +29,8 @@ const GeneralProductTab: React.FC = () => {
     { key: "ProductCatsandTags", label: "دسته بندی و تگ های محصول" },
     { key: "ProductSepicifications", label: "اطلاعات فنی محصول" },
     { key: "AboutProduct", label: "درباره محصول" },
+    { key: "AddMenu", label: " منو" },
+
   ];
 
   const [OpenAddImageModall, setOpenAddImageModall] = useState(false);
@@ -65,7 +69,12 @@ const GeneralProductTab: React.FC = () => {
     AboutProduct: (
       <AddAboutProductTab Product={Product} setProduct={setProduct} />
     ),
+    AddMenu:(
+      <AddMenu  setProduct={setProduct} />
+
+    )
   };
+  console.log(Product)
 
   const handleCreateProduct = async () => {
     try {

@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 exports.authenticated = (req, res, next) => {
   const token = req.get("Authorization");
-  console.log(token,"ttt")
   try {
     if (!token) {
       const error = new Error("مجوز کافی ندارید");

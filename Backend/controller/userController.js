@@ -11,7 +11,6 @@ const jwt = require("jsonwebtoken");
 exports.handleLogin = async (req, res, next) => {
   try {
     const { email } = req.body;
-    console.log(email)
     let user = await User.findOne({ email });
 
     if (user) {
@@ -53,22 +52,21 @@ exports.handleLogin = async (req, res, next) => {
 
 exports.handleUserInfo = async (req, res, next) => {
   try {
-    const { userId, UserInfo } = req.body;
-    console.log(UserInfo);
+    const { userId, userInfo } = req.body;
     const user = await User.findOne({ _id: userId });
     if (!user) {
       res.status(404).json({ message: "کاربر پیدا نشد." });
     } else {
-      user.firstName = UserInfo.firstName;
-      user.lastName = UserInfo.lastName;
-      user.phone = UserInfo.phone;
+      user.firstName = userInfo.firstName;
+      user.lastName = userInfo.lastName;
+      user.phone = userInfo.phone;
       user.address = {
-        plaque: UserInfo.address.plaque,
-        unit: UserInfo.address.unit,
-        postalCode: UserInfo.address.postalCode,
-        address: UserInfo.address.address,
-        city: UserInfo.address.city,
-        provider: UserInfo.address.provider,
+        plaque: userInfo.address.plaque,
+        unit: userInfo.address.unit,
+        postalCode: userInfo.address.postalCode,
+        address: userInfo.address.address,
+        city: userInfo.address.city,
+        provider: userInfo.address.provider,
       };
       await user.save();
       res.status(201).json({ message: "اطلاعات با موفقیت ذخیره شد.", user });
@@ -81,8 +79,6 @@ exports.handleUserInfo = async (req, res, next) => {
 exports.handleUpdateUserInfo = async (req, res, next) => {
   try {
     const { userId, userInfo } = req.body;
-    console.log(userInfo);
-    console.log(userInfo);
     const user = await User.findOne({ _id: userId });
     if (!user) {
       res.status(404).json({ message: "کاربر پیدا نشد." });
@@ -106,10 +102,8 @@ exports.handleUpdateUserInfo = async (req, res, next) => {
   }
 };
 exports.handleGetUser = async (req, res, next) => {
-  const { userId, userInfo } = req.body;
-
+  const { userId } = req.params;
   try {
-    const { userId } = req.params;
     const user = await User.findOne({ _id: userId });
     if (!user) {
       res.status(404).json({ message: "کاربر پیدا نشد" });
@@ -189,20 +183,14 @@ exports.handleAddComments = async (req, res, next) => {
 };
 // ? PRODUCTS PAGE DATA
 exports.handleFilterProducts = async (req, res, next) => {
-  const { category } = req.params;
+  const { slug1, slug2 } = req.params;
   const { pageNumber = 1, sortOrder = "lowToHigh" } = req.query;
   const limit = 10;
+  const filter = slug2 && slug2 !== "undefined" ? { slug2 } : { slug1 };
   try {
-    const foundCategory = await Categorey.findOne({ categoryName: category });
-
-    if (!foundCategory) {
-      return res.status(404).json({ message: "Category not found" });
-    }
     const skip = (parseInt(pageNumber, 10) - 1) * limit;
     const sortOption = sortOrder === "lowToHigh" ? { price: 1 } : { price: -1 };
-    const filteredProducts = await Products.find({
-      categories: foundCategory._id,
-    })
+    const filteredProducts = await Products.find(filter)
       .populate("primaryImage")
       .populate("tags")
       .limit(limit) // Limit the number of products
@@ -246,116 +234,176 @@ exports.handleFilterGames = async (req, res, next) => {
 };
 // ?GET BLOG
 exports.getBlog = async (req, res) => {
-  const {blogId} = req.params;
+  const { blogId } = req.params;
   try {
-    const blog = await Blog.findById(blogId)
-      .populate("primaryImage");
+    const blog = await Blog.findById(blogId).populate("primaryImage");
     res.status(200).json({ blog });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
   }
 };
-// exports.handleLogin = async (req, res, next) => {
-//   const { username, password } = req.body;
+// ? searchRes
+exports.searchRes = async (req, res) => {
+  const { title } = req.body;
+  const searchTitle = title.trim().toLowerCase();
+  console.log(searchTitle);
+  try {
+    const products = await Products.find({
+      title: { $regex: searchTitle, $options: "i" },
+    })
+      .select("_id title primaryImage")
+      .populate("primaryImage");
 
-//   try {
-//     const user = await User.findOne({ username });
-//     if (!user) {
-//       return res.status(400).send("آدرس ایمیل یا کلمه عبور اشتباه است");
-//     }
-//     const isEqual = await bcrypt.compare(password, user.password);
-//     if (isEqual) {
-//       res.status(200).json({ user });
-//     } else {
-//       res.status(400).send("آدرس ایمیل یا کلمه عبور اشتباه است");
-//     }
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+    const games = await Games.find({
+      title: { $regex: searchTitle, $options: "i" },
+    }).select("_id title primaryImage");
+    // Adding a link to each product and game
+    const productsWithLinks = products.map((product) => ({
+      _id: product._id,
+      title: product.title,
+      primaryImage: product.primaryImage, // Assuming primaryImage is an object with a URL field
+      link: `/product/${product._id}`, // Constructing the link for products
+    }));
 
-// exports.updateUser = async (req, res, next) => {
-//   const { username, email } = req.body;
-//   const userId = "65b50acf8257bc5b5327263b";
-//   try {
-//     const user = await User.findOne({ _id: userId });
-//     // Check if the user exists
-//     if (!user) {
-//       return res.status(404).json({ message: "User not found" });
-//     }
+    const gamesWithLinks = games.map((game) => ({
+      _id: game._id,
+      title: game.title,
+      primaryImage: game.primaryImage, // Assuming primaryImage is an object with a URL field
+      link: `/accountgame/${game._id}`, // Constructing the link for games
+    }));
 
-//     user.username = username;
-//     user.email = email;
-//     await user.save();
-//     res.status(201).json({ message: "تغغیرات با موفقیت انجام شد." });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+    // Combine both products and games into one array
+    const combinedResults = [...productsWithLinks, ...gamesWithLinks];
 
-// exports.getInfo = async (req, res) => {
-//   try {
-//     const data = await User.find();
-//     res.status(200).json(data);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(400).json("مشکلی سمت سرور پیش آمده");
-//   }
-// };
+    res.status(200).json({ results: combinedResults });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+// ? ADD TO FAVORITES
+//  * add
+exports.addFavorites = async (req, res) => {
+  const { userId, itemId, itemType } = req.body;
+  try {
+    const user = await User.findById(userId);
 
-// exports.handleResetPassword = async (req, res, next) => {
-//   const userId = "65b50acf8257bc5b5327263b";
+    if (!user) {
+      return res.status(404).json({ message: "باید وارد حساب کاربری بشوید." });
+    }
 
-//   const { oldPassword, newPassword, confirmPassword } = req.body;
-//   const user = await User.findOne({ _id: userId });
-//   const { password } = user;
-//   const isEqual = await bcrypt.compare(oldPassword, password);
+    // Check if item is already in favorites
+    const isFavorite = user.favorites.some(
+      (fav) => fav.itemId.toString() === itemId && fav.itemType === itemType
+    );
 
-//   try {
-//     if (!isEqual) {
-//       return res.status(400).send("کلمه عبور قبلی  اشتباه");
-//     } else if (newPassword !== confirmPassword) {
-//       return res.status(400).send("کلمه عبور با هم مشابه نیست");
-//     }
-//     if (!user) {
-//       return res.status(404).json({ message: "User not found" });
-//     }
+    if (isFavorite) {
+      // Remove the item from favorites
+      user.favorites = user.favorites.filter(
+        (fav) =>
+          !(fav.itemId.toString() === itemId && fav.itemType === itemType)
+      );
 
-//     user.password = newPassword;
-//     await user.save();
+      res.status(200).json({
+        favorites: user.favorites,
+        message: "آیتم از لیست علاقه مندی ها حذف شد.",
+      });
+    } else {
+      // Add the item to favorites
+      user.favorites.push({ itemId, itemType });
+      res.status(200).json({
+        favorites: user.favorites,
+        message: "با موفقیت به لیست مورد علاقه شما اضافه شد.",
+      });
+    }
 
-//     res.status(200).json({ message: "عملیات با موفقیت انجام شد" });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+    // Save the updated user object
+    await user.save();
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
-// exports.handleAbout = async (req, res) => {
-//   const { newAbout, newinstagram, newlinkdine, newpintrest, newyoutube } =
-//     req.body;
-//   const userId = "65b50acf8257bc5b5327263b";
-//   try {
-//     // Use await to get the user object
-//     const user = await User.findOne({ _id: userId });
+// * GET favorite
+exports.getFavorite = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json({ favorites: user.favorites });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
+  }
+};
+// * GET favorites
 
-//     // Check if the user exists
-//     if (!user) {
-//       return res.status(404).json({ message: "User not found" });
-//     }
+exports.getFavorites = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    // Change `const` to `let` to allow reassignment
+    let user = await User.findById(userId);
 
-//     // Update the about field
-//     user.about = newAbout;
-//     user.instagram = newinstagram;
-//     user.linkdine = newlinkdine;
-//     user.pintrest = newpintrest;
-//     user.youtube = newyoutube;
-//     // Save the changes
-//     await user.save();
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const favoritesWithDetails = await Promise.all(
+      user.favorites.map(async (favorite) => {
+        // Conditionally populate based on itemType
+        if (favorite.itemType === "Product") {
+          favorite.itemId = await Products.findById(favorite.itemId).populate(
+            "primaryImage"
+          ); // Populate with Product model
+        } else if (favorite.itemType === "Games") {
+          favorite.itemId = await Games.findById(favorite.itemId).populate(
+            "primaryImage"
+          ); // Populate with Game model
+        }
+        return favorite;
+      })
+    );
 
-//     res.status(201).json({ message: "تغییرات با موفقیت انجام شد." });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// };
+    res.status(200).json({ favorites: favoritesWithDetails });
+  } catch (err) {
+    console.error("Error populating favorites:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+// * remove favorite
+exports.removeFavorite = async (req, res) => {
+  const { userId, itemId } = req.body;
+console.log(itemId)
+  try {
+
+    let user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const favoriteExists = user.favorites.some(
+      (favorite) => favorite._id.toString() === itemId
+    );
+
+    if (!favoriteExists) {
+      return res.status(404).json({ error: "Item not found in favorites" });
+    }
+
+    user.favorites = user.favorites.filter(
+      (favorite) => favorite._id.toString() !== itemId
+    );
+
+    await user.save();
+    res.status(200).json({
+      favorites: user.favorites,
+      message: "با موفقیت حذف شد.",
+    });
+  } catch (err) {
+    console.error("Error removing favorite:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

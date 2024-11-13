@@ -66,6 +66,19 @@ const productSchema = new mongoose.Schema({
     type: String, 
     default: () => moment().format('jYYYY/jM/jD HH:mm:ss'), 
   },
+  menuLink:{
+    type: String,
+    enum: ["products", "games"],
+    required: true,
+  },
+  slug1:{
+    type: String,
+    required: true,
+  },
+  slug2:{
+    type: String,
+    required: true,
+  }
 });
 
 module.exports =

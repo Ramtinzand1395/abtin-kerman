@@ -132,9 +132,9 @@ const AddImageModallProduct: React.FC<AddImageModallProps> = ({
                         ? "#137E00"
                         : "#555555"
                     }
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </button>

@@ -89,9 +89,9 @@ const Ckeditor = () => {
                 <path
                   d="M6 12H18M12 6V18"
                   stroke="#fff"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
           </span>

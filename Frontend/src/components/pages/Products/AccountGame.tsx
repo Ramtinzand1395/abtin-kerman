@@ -1,11 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ConnectedProducts from "../../utils/ConnectedProducts";
 import BtnTow from "../../utils/BtnTow";
-import { getGameSingleService } from "../../../services/ApiServices";
+import {  getGameSingleService } from "../../../services/ApiServices";
 import { useParams } from "react-router-dom";
-import { GameData } from "../../../types";
+import {  GameData } from "../../../types";
 import Tabs from "../../utils/tab/Tabs";
 import { useShopingcard } from "../../context/ShopingCard";
+
 
 const AccountGame: React.FC = () => {
   // !Context
@@ -13,13 +14,20 @@ const AccountGame: React.FC = () => {
   const [game, setgame] = useState<GameData | null>(null);
   const { gameId } = useParams();
   const [currentImage, setCurrentImage] = useState<string>("");
+  // const user = localStorage.getItem("User") || "{}";
+  // const decodedToken = jwtDecode<decodedUser>(user);
 
+  // const [Favorites, setFavorites] = useState([]);
   useEffect(() => {
     if (!gameId) return;
     const getGame = async () => {
       try {
         const { data } = await getGameSingleService(gameId);
+        // const { data: favorites } = await getUserFavoritesService(
+        //   decodedToken.userId
+        // );
         setgame(data);
+        // setFavorites(favorites.favorites);
         setCurrentImage(data?.primaryImage?.direction);
       } catch (err) {
         console.log(err);
@@ -69,7 +77,7 @@ const AccountGame: React.FC = () => {
         createdAt: "",
         _id: "",
       },
-      mainQty :1,
+      mainQty: 1,
       price: SelectedPlatform?.price || 0,
       features: game?.features || [],
       tags: game?.tags || [],
@@ -89,6 +97,20 @@ const AccountGame: React.FC = () => {
   };
   const hasMultiplePrices = game?.info && game.info.length > 1;
 
+  // const handleAddToFavorites = async () => {
+  //   try {
+  //     const { data } = await addUserFavoritesService(
+  //       decodedToken.userId,
+  //       gameId,
+  //       "Product"
+  //     );
+  //     setFavorites(data.favorites);
+  //     toast.success(data.message);
+  //   } catch (err) {
+  //     toast.error(err.response.data.message);
+  //     console.log(err);
+  //   }
+  // };
   return (
     <div className="md:container md:mx-auto mx-2">
       {/* First Section */}

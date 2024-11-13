@@ -9,7 +9,7 @@ router.get("/loginSms", userController.handleSms);
 
 router.post("/add-comment", userController.handleAddComments);
 // ?FILTRED PRODUCTS
-router.get("/get-filtred-products/:category", userController.handleFilterProducts);
+router.get("/get-filtred-products/:slug1/:slug2", userController.handleFilterProducts);
 // ?FILTRED GAMES
 router.get("/get-filtred-games/:category", userController.handleFilterGames);
 // ? USERINFO   
@@ -20,7 +20,13 @@ router.get("/get-user-info/:userId", userController.handleGetUser);
 router.get("/get-user-orders/:userId", userController.GetUserOrders);
 // ?BLOG
 router.get("/get-blog/:blogId", userController.getBlog);
-
+// ?BLOSEARCHG
+router.post("/search-res", userController.searchRes);
+// ? ADD FAVORITES
+router.post("/user-favorites", userController.addFavorites);
+router.get("/get-user-favorites/:userId", userController.getFavorites);
+router.get("/get-user-favorite/:userId", userController.getFavorite);
+router.post("/remove-user-favorite", userController.removeFavorite);
 
 // router.get("/get-comment", userController.handleGetComments);
 // router.post("/login", userController.handleLogin);

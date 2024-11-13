@@ -255,8 +255,9 @@ export const updateProductService = (data: Product) => {
 // //? @route DELETE http://localhost:5000/api/update-game
 export const deleteProductService = (id: string) => {
   const url = `${SERVER_URL}/delete-product`;
+  console.log(id);
   return axios.delete(url, {
-    data: { gameId: id },
+    data: { productId: id },
 
     headers: {
       "Content-Type": "application/json",
@@ -293,7 +294,8 @@ export const deleteCommentService = (commentId: string) => {
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
 export const confirmCommentService = (commentId: string) => {
   const url = `${SERVER_URL}/confirm-comment/${commentId}`;
-  return axios.post(url, {
+  console.log(token,"tok")
+  return axios.post(url,{}, {
     headers: {
       "Content-Type": "application/json",
       Authorization: token,
@@ -325,15 +327,18 @@ export const getBlogService = (blogId: string | undefined) => {
   const url = `${SERVER_URL}/get-blog/${blogId}`;
   return axios.get(url);
 };
+// sssssss
 // ? FILTER PRODUCTS
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
 export const getFiltredProductsService = (
-  category: string,
+  slug1: string,
+  slug2: string,
   pageNumber: number,
   sortOrder: string
 ) => {
-  const url = `${SERVER_URL}/get-filtred-products/${category}?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
+  console.log(slug1, slug2, "category");
+  const url = `${SERVER_URL}/get-filtred-products/${slug1}/${slug2}?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
   return axios.get(url);
 };
 // !FILTRED GAMES
@@ -421,4 +426,44 @@ export const getUsersService = (pageNumber: number, sortOrder: string) => {
       Authorization: token,
     },
   });
+};
+// ? SEARCH
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const getSearchresService = (title: string) => {
+  const url = `${SERVER_URL}/search-res`;
+  return axios.post(url, { title });
+};
+
+// ? FAVORITES
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const addUserFavoritesService = (
+  userId: string,
+  itemId: string,
+  itemType: string
+) => {
+  const url = `${SERVER_URL}/user-favorites`;
+  return axios.post(url, { userId, itemId, itemType });
+};
+
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const getUserFavoritesService = (userId: string) => {
+  const url = `${SERVER_URL}/get-user-favorites/${userId}`;
+  return axios.get(url);
+};
+
+//* @desc  confirm comment
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const getUserFavoriteService = (userId: string) => {
+  const url = `${SERVER_URL}/get-user-favorite/${userId}`;
+  return axios.get(url);
+};
+
+//* @desc  REMOVE FAVORITES
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const remUserFavoriteService = (userId: string, itemId: string) => {
+  const url = `${SERVER_URL}/remove-user-favorite`;
+  return axios.post(url, { userId, itemId });
 };

@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { User } from "../../../../types";
 import BtnTow from "../../../utils/BtnTow";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const EditUserInfo = () => {
   const { userId } = useParams();
@@ -81,6 +82,10 @@ const EditUserInfo = () => {
 
   return (
     <div className="w-full max-w-3xl mx-auto my-10 p-4 bg-gray-100 shadow-lg rounded-lg">
+         <Helmet>
+      <title> Edite Info</title>
+      <meta name="description" content="Edite user Information" />
+      </Helmet>
       <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
         ویرایش اطلاعات کاربری
       </h2>
