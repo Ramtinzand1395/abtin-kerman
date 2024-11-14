@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from "axios";
 import {
-  Comment,
   CommentStrProps,
   Feature,
   GameData,
