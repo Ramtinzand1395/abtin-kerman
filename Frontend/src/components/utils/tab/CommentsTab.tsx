@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { addCommentService } from "../../../services/ApiServices";
 import { toast } from "react-toastify";
-import { Comment, decodedUser, GameData, Product } from "../../../types";
+import { Comment, CommentStrProps, decodedUser, GameData, Product } from "../../../types";
 import BtnTow from "../BtnTow";
 import { jwtDecode } from "jwt-decode";
 
@@ -41,7 +41,7 @@ const CommentsTab: React.FC<CommentsTabProps> = ({ Product }) => {
       ? "Product"
       : "accountgame";
     const relatedId = productId || gameId;
-    const commentData = {
+    const commentData:CommentStrProps = {
       body: commentBody,
       user: decodedToken.userId, // Ensure user ID is retrieved correctly
       relatedId: relatedId,
@@ -59,10 +59,10 @@ const CommentsTab: React.FC<CommentsTabProps> = ({ Product }) => {
     }
   };
 
-  const handleRating = (rate) => {
+  const handleRating = (rate:number) => {
     setRating(rate);
   };
-
+console.log(Product)
   return (
     <div className="relative ">
       <h5>نظرات کاربران</h5>
@@ -71,7 +71,7 @@ const CommentsTab: React.FC<CommentsTabProps> = ({ Product }) => {
           {Product?.comments &&
             Product.comments.map((comment: Comment) => {
               // Find the rating for this specific user
-              const userRating = Product.rating.individualRatings.find(
+              const userRating = Product?.rating?.individualRatings?.find(
                 (star) => star.commentId === comment._id
               );
               return (
@@ -116,8 +116,8 @@ const CommentsTab: React.FC<CommentsTabProps> = ({ Product }) => {
 
         <div className="flex flex-col sticky top-20 self-start shadowhand p-5 rounded-xl">
           {" "}
-          {Product.rating?.totalRatings} نظر
-          {Product.rating.averageRating} میانگین
+          {Product?.rating?.totalRatings} نظر
+          {Product?.rating?.averageRating} میانگین
           <textarea
             name="comment" // Use a consistent name
             value={commentBody} // Bind to commentBody state

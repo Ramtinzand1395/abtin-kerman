@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import {
   Comment,
+  CommentStrProps,
   Feature,
   GameData,
   ImageType,
@@ -268,7 +269,7 @@ export const deleteProductService = (id: string) => {
 
 //* @desc  add comment
 //* @route post http://localhost:5000/api/update-game
-export const addCommentService = (data: Comment) => {
+export const addCommentService = (data: CommentStrProps) => {
   const url = `${SERVER_URL}/add-comment`;
   return axios.post(url, data);
 };

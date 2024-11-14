@@ -13,6 +13,7 @@ export interface GameData {
   comments?: Comment[];
   features: Feature[];
   additionalExplanations: string;
+  rating?: ratingProps;
 }
 export interface GameDataInfo {
   platform: string;
@@ -98,8 +99,19 @@ export interface Product {
   inStock?: boolean;
   createdAt?: string;
   additionalExplanations?: string;
+  rating?: ratingProps;
 }
-
+export interface ratingProps {
+  averageRating: string;
+  individualRatings: [
+    {
+      commentId: string;
+      rating: number;
+      userId: string;
+    }
+  ];
+  totalRatings: number;
+}
 export interface Weblog {
   _id?: string;
   title: string;
@@ -137,9 +149,18 @@ interface PopulatedData {
 export interface FavoritespopulatedProps {
   itemId: Product;
   itemType: string;
-  _id:string;
+  _id: string;
 }
 export interface FavoritesProps {
   itemId: string;
   itemType: string;
+}
+export interface CommentStrProps {
+  body: string;
+  user: string;
+  relatedId?: string;
+  relatedModel: string;
+  isValidated?: boolean;
+  createdAt?: string;
+  rating: number;
 }
