@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from "react";
-import {
-  deleteProductService,
-  getProductsService,
-} from "../../../../services/ApiServices";
 import { Product } from "../../../../types";
 import BtnTow from "../../../utils/BtnTow";
 import { confirmAlert } from "react-confirm-alert";
@@ -15,11 +11,12 @@ import {
   fetchProducts,
 } from "../../../../features/product/productSlice";
 import Spiner from "../../../utils/Spiner";
+import { AppDispatch, RootState } from "../../../../app/store";
 
 const ProductsTable: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { loading, products, error, totallPage } = useSelector(
-    (state) => state.product
+    (state:RootState) => state.product
   );
 
   const [orderDesc, setOrderDesc] = useState("newestFirst");
@@ -44,31 +41,9 @@ const ProductsTable: React.FC = () => {
       dispatch(clearError());
     }
   }, [error, dispatch]);
-  // useEffect(() => {
-  //   const getProducts = async () => {
-  //     try {
-  //       const { data } = await getProductsService(pageNumber, orderDesc);
-  //       setProducts(data.products);
-  //       setTotalPages(data.totalPages);
-  //       console.log(Products);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   getProducts();
-  // }, [orderDesc, pageNumber, LodaingProducts]);
+
   const handleDeleteGame = async (id: string) => {
     dispatch(deleteProduct(id));
-
-    // setLodaingProducts(true);
-    // try {
-    //   const { data } = await deleteProductService(id);
-    //   toast.success(data.message);
-    // } catch (err) {
-    //   console.log(err);
-    // } finally {
-    //   setLodaingProducts(false);
-    // }
   };
 
   //  ? DELETE

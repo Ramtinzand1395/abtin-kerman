@@ -11,16 +11,18 @@ import { toast } from "react-toastify";
 
 interface GameState {
   games: GameData[] | null;
+  game: GameData | null;
   loading: boolean;
   error: string | null;
-  totallPage: number | null;
+  totallPage: number ;
 }
 
 const initialState: GameState = {
   loading: false,
   games: null,
+  game: null,
   error: null,
-  totallPage: null,
+  totallPage: 1,
 };
 
 // Async thunk to fetch games
@@ -124,7 +126,7 @@ const gameSlice = createSlice({
       .addCase(fetchGame.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.games = action.payload;
+        state.game = action.payload;
       })
       .addCase(fetchGame.rejected, (state, action) => {
         state.loading = false;

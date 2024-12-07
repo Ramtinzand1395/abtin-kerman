@@ -41,6 +41,7 @@ type cardItemType = {
 type AddOrderData = {
   CardItems: cardItemType[];
   userId: string;
+  totalPrice:number
 };
 
 type changeStatus = {

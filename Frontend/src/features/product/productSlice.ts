@@ -14,7 +14,7 @@ interface ProductState {
   product: Product | null;
   loading: boolean;
   error: string | null;
-  totallPage: number | null;
+  totallPage: number ;
 }
 
 const initialState: ProductState = {
@@ -22,7 +22,7 @@ const initialState: ProductState = {
   products: null,
   product: null,
   error: null,
-  totallPage: null,
+  totallPage: 1,
 };
 
 // Async thunk to fetch Products

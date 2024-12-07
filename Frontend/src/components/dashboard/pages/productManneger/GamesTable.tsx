@@ -5,7 +5,7 @@ import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
 import EditeGameModall from "./editeGame/EditeGameModall";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../../../app/store";
+import { AppDispatch, RootState } from "../../../../app/store";
 import {
   clearError,
   deleteGame,
@@ -16,7 +16,7 @@ import Spiner from "../../../utils/Spiner";
 const GamesTable: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { games, loading, error, totallPage } = useSelector(
-    (state) => state.game
+    (state:RootState) => state.game
   );
 
   const [orderDesc, setOrderDesc] = useState("newestFirst");

@@ -5,22 +5,22 @@ import { useParams } from "react-router-dom";
 import Tabs from "../../utils/tab/Tabs";
 import { useShopingcard } from "../../context/ShopingCard";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../../app/store";
+import { AppDispatch, RootState } from "../../../app/store";
 import { clearError, fetchGame } from "../../../features/game/gameSlice";
 import Spiner from "../../utils/Spiner";
 import { toast } from "react-toastify";
 
 const AccountGame: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { games, loading, error } = useSelector((state) => state.game);
+  const { game, loading, error } = useSelector((state:RootState) => state.game);
   // !Context
   const { InceraseCardQty, CardItems } = useShopingcard();
   const { gameId } = useParams();
   const [currentImage, setCurrentImage] = useState<string>("");
 
   useEffect(() => {
-    dispatch(fetchGame(gameId));
-    setCurrentImage(games?.primaryImage?.direction);
+    gameId && dispatch(fetchGame(gameId));
+    setCurrentImage(game?.primaryImage?.direction || "");
   }, [dispatch, gameId]);
 
   useEffect(() => {
@@ -30,8 +30,8 @@ const AccountGame: React.FC = () => {
     }
   }, [error, dispatch]);
 
-  const sortedPrices = games?.info
-    ? [...games.info].sort((a, b) => a.price - b.price)
+  const sortedPrices = game?.info
+    ? [...game.info].sort((a, b) => a.price - b.price)
     : [];
 
   const [SelectedPlatform, setSelectedPlatform] = useState({
@@ -48,8 +48,8 @@ const AccountGame: React.FC = () => {
     });
   };
   const isInStock = () => {
-    if (games?.info) {
-      const gameInfo = games.info.find(
+    if (game?.info) {
+      const gameInfo = game.info.find(
         (item) =>
           item.platform === SelectedPlatform.platform &&
           item.capacity === SelectedPlatform.capacity &&
@@ -65,8 +65,8 @@ const AccountGame: React.FC = () => {
   };
   const handleAddToCart = () => {
     const data = {
-      title: games?.title || "",
-      image: games?.primaryImage || {
+      title: game?.title || "",
+      image: game?.primaryImage || {
         imageName: "",
         direction: "",
         createdAt: "",
@@ -74,10 +74,10 @@ const AccountGame: React.FC = () => {
       },
       mainQty: 1,
       price: SelectedPlatform?.price || 0,
-      features: games?.features || [],
-      tags: games?.tags || [],
+      features: game?.features || [],
+      tags: game?.tags || [],
     };
-    games?._id && InceraseCardQty(games?._id, SelectedPlatform, data);
+    game?._id && InceraseCardQty(game?._id, SelectedPlatform, data);
   };
   useEffect(() => {
     if (
@@ -90,7 +90,7 @@ const AccountGame: React.FC = () => {
   const handleImageClick = (imageDirection: string) => {
     setCurrentImage(imageDirection);
   };
-  const hasMultiplePrices = games?.info && games.info.length > 1;
+  const hasMultiplePrices = game?.info && game.info.length > 1;
 
   if (loading === true) return <Spiner />;
   return (
@@ -107,7 +107,7 @@ const AccountGame: React.FC = () => {
             className=" h-full object-contain w-full max-h-[60vh] my-5"
           />
           <div className=" items-center hidden md:flex mb-10">
-            {games?.additionalImages?.map((img) => (
+            {game?.additionalImages?.map((img) => (
               <img
                 key={img._id}
                 // src={`http://localhost:5000/${img?.direction}`}
@@ -121,19 +121,19 @@ const AccountGame: React.FC = () => {
             <img
               // src={`http://localhost:5000/${game?.primaryImage?.direction}`}
               //! change
-              src={`${games?.primaryImage?.direction}`}
+              src={`${game?.primaryImage?.direction}`}
               alt=""
               className="w-full h-full object-contain max-w-[70px] max-h-[70px] border-2 border-primary rounded-lg p-2 mx-2 cursor-pointer"
               onClick={() =>
-                games?.primaryImage?.direction &&
-                handleImageClick(games?.primaryImage?.direction)
+                game?.primaryImage?.direction &&
+                handleImageClick(game?.primaryImage?.direction)
               }
             />
           </div>
         </div>
         {/* Select  */}
         <div className="flex flex-col items-start justify-evenly">
-          <h1 className="font-tanha text-4xl font-bold">{games?.title}</h1>
+          <h1 className="font-tanha text-4xl font-bold">{game?.title}</h1>
           <p>
             {hasMultiplePrices ? (
               <>
@@ -143,7 +143,7 @@ const AccountGame: React.FC = () => {
                 </p>
               </>
             ) : (
-              games?.info.map((item, index) => (
+              game?.info.map((item, index) => (
                 <div key={index} className="my-2">
                   {item.price} تومان
                 </div>
@@ -197,7 +197,7 @@ const AccountGame: React.FC = () => {
             ) : (
               ""
             )}
-            {CardItems.some((card) => card.id === games?._id) ? (
+            {CardItems.some((card) => card.id === game?._id) ? (
               <p className="text-green-500 font-bold">در سبد خرید موجود است.</p>
             ) : SelectedPlatform.price > 0 ? (
               <BtnTow
@@ -212,7 +212,7 @@ const AccountGame: React.FC = () => {
         </div>
       </div>
       {/* Secont tabs */}
-      <div className=" my-10">{games && <Tabs Product={games} />}</div>
+      <div className=" my-10">{game && <Tabs Product={game} />}</div>
       <div className="my-10">
         <ConnectedProducts />
       </div>

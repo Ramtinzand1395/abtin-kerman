@@ -7,6 +7,7 @@ import ProductAdditionalExplanations from "../../../CkEditor/ProductAdditionalEx
 import EditProductTag from "./EditProductTag";
 import { useDispatch } from "react-redux";
 import { updateProduct } from "../../../../../features/product/productSlice";
+import { AppDispatch } from "../../../../../app/store";
 interface EditeProductModallProps {
   SelectedProduct: Product;
   setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,6 +23,8 @@ const EditeProductModall: React.FC<EditeProductModallProps> = ({
   setOpenModall,
   setSelectedProduct,
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [activeTab, setActiveTab] = useState<TabKey>("productImage");
   const renderContent = () => tabContent[activeTab] || tabContent.productImage;
 
@@ -40,7 +43,7 @@ const EditeProductModall: React.FC<EditeProductModallProps> = ({
       document.body.style.overflow = "unset";
     };
   }, []);
-  const dispatch = useDispatch();
+  
   const handleUpdateProduct = async () => {
     dispatch(updateProduct(SelectedProduct));
     setOpenModall(false);

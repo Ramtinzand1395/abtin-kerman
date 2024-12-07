@@ -10,11 +10,9 @@ const NewestَAccountGame: React.FC = () => {
 
   useEffect(() => {
     const getGames = async () => {
-    
       try {
         const { data } = await getGamesService(1, "newestFirst");
         setGames(data.games);
-        console.log(data);
       } catch (err) {
         console.log(err);
       }

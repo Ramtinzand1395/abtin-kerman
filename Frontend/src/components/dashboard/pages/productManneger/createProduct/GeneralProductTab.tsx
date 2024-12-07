@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import BtnTow from "../../../../utils/BtnTow";
-import { toast } from "react-toastify";
-import { addProductService } from "../../../../../services/ApiServices";
 import AddImageTab from "./AddImageTab";
 import AddTitleTab from "./AddTitleTab";
 import AddCatsandTags from "./AddCatsandTags";
@@ -11,6 +9,7 @@ import { Product } from "../../../../../types";
 import AddMenu from "./AddMenu";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../../../../features/product/productSlice";
+import { AppDispatch } from "../../../../../app/store";
 
 type TabKey =
   | "ProductImage"
@@ -21,7 +20,7 @@ type TabKey =
   | "ProductCatsandTags";
 
 const GeneralProductTab: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [activeTab, setActiveTab] = useState<TabKey>("ProductImage");
   const [OpenAddImageModall, setOpenAddImageModall] = useState(false);
