@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { addCommentService } from "../../../services/ApiServices";
 import { toast } from "react-toastify";
-import { Comment, CommentStrProps, decodedUser, GameData, Product } from "../../../types";
+import {
+  Comment,
+  CommentStrProps,
+  decodedUser,
+  GameData,
+  Product,
+} from "../../../types";
 import BtnTow from "../BtnTow";
 import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { addComments } from "../../../features/comments/commentsSlice";
 
 interface CommentsTabProps {
   Product: Product | GameData;
 }
 const CommentsTab: React.FC<CommentsTabProps> = ({ Product }) => {
-  const { gameId, productId } = useParams(); // Correctly calling useParams as a function
+  const dispatch = useDispatch();
   const location = useLocation();
-  const user = localStorage.getItem("User") || "";
-  const decodedToken = jwtDecode<decodedUser>(user);
+  const { gameId, productId } = useParams();
 
-  const [commentBody, setCommentBody] = useState(""); // Only storing the comment text
+  const [commentBody, setCommentBody] = useState("");
   const [rating, setRating] = useState(0);
 
   const handleChange = (
@@ -24,7 +30,14 @@ const CommentsTab: React.FC<CommentsTabProps> = ({ Product }) => {
     const { value } = e.target;
     setCommentBody(value); // Update the comment body directly
   };
-  const handleAddComment = async () => {
+  let decodedToken: decodedUser | null = null;
+
+  // Get the decoded user token if available
+  const user = localStorage.getItem("User") || "";
+  if (user) {
+    decodedToken = jwtDecode<decodedUser>(user);
+  }
+  const handleAddComment = () => {
     if (!decodedToken) {
       toast.error("برای ثبت نظر اول وارد شوید"); // Validation
       return;
@@ -41,28 +54,29 @@ const CommentsTab: React.FC<CommentsTabProps> = ({ Product }) => {
       ? "Product"
       : "accountgame";
     const relatedId = productId || gameId;
-    const commentData:CommentStrProps = {
+    const commentData: CommentStrProps = {
       body: commentBody,
       user: decodedToken.userId, // Ensure user ID is retrieved correctly
       relatedId: relatedId,
       relatedModel: relatedModel,
       rating,
     };
-    try {
-      const { data } = await addCommentService(commentData);
-      toast.success(data.message); // Corrected the spelling of 'message'
-      setCommentBody(""); 
-    setRating(0);
-    } catch (err) {
-      console.log(err);
-      toast.error("Error adding comment."); // Optional error notification
-    }
+    dispatch(addComments(commentData));
+    // try {
+    //   const { data } = await addCommentService(commentData);
+    //   toast.success(data.message); // Corrected the spelling of 'message'
+    //   setCommentBody("");
+    //   setRating(0);
+    // } catch (err) {
+    //   console.log(err);
+    //   toast.error("Error adding comment."); // Optional error notification
+    // }
   };
 
-  const handleRating = (rate:number) => {
+  const handleRating = (rate: number) => {
     setRating(rate);
   };
-console.log(Product)
+
   return (
     <div className="relative ">
       <h5>نظرات کاربران</h5>
@@ -89,29 +103,27 @@ console.log(Product)
                   </div>
                   <p>{comment?.body}</p>
                   <div className="flex items-center justify-between">
-
-                  {userRating && (
-                    <div className="flex items-center space-x-2 mt-2">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <span
-                          key={star}
-                          className={` text-2xl ${
-                            star <= userRating.rating
-                              ? "text-yellow-400"
-                              : "text-gray-400"
-                          }`}
-                        >
-                          ★
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                  <p>{comment?.createdAt}</p>
+                    {userRating && (
+                      <div className="flex items-center space-x-2 mt-2">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <span
+                            key={star}
+                            className={` text-2xl ${
+                              star <= userRating.rating
+                                ? "text-yellow-400"
+                                : "text-gray-400"
+                            }`}
+                          >
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <p>{comment?.createdAt}</p>
                   </div>
                 </div>
               );
             })}
-
         </div>
 
         <div className="flex flex-col sticky top-20 self-start shadowhand p-5 rounded-xl">

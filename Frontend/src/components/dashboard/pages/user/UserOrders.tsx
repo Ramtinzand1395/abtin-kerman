@@ -1,33 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { getUserOrdersService } from "../../../../services/ApiServices";
 import { Order, OrderItems } from "../../../../types";
 import { useParams } from "react-router-dom";
 import OrderTab from "../orderTable/OrderTab";
 import BtnTow from "../../../utils/BtnTow";
 import { Helmet } from "react-helmet";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearError,
+  fetchUserOrders,
+} from "../../../../features/order/OrderSlice";
+import { toast } from "react-toastify";
+import Spiner from "../../../utils/Spiner";
 
 const UserOrders: React.FC = () => {
-  const [Orders, setOrders] = useState<Order[] | null>(null);
+  const { userId } = useParams();
+  const dispatch = useDispatch();
+  const { loading, userOrders, error, totallPage } = useSelector(
+    (state) => state.order
+  );
+
   const [orderDesc, setOrderDesc] = useState("newestFirst");
   const [pageNumber, setPageNumber] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [OpenModall, setOpenModall] = useState(false);
   const [SelectedOrder, setSelectedOrder] = useState<Order | null>(null);
-  const { userId } = useParams();
+
   useEffect(() => {
-    const getOrders = async () => {
-      if (userId) {
-        const { data } = await getUserOrdersService(
-          userId,
-          pageNumber,
-          orderDesc
-        );
-        setOrders(data.userOrders);
-        setTotalPages(data.totalPages);
-      }
-    };
-    getOrders();
-  }, [orderDesc, pageNumber, userId]);
+    dispatch(
+      fetchUserOrders({ userId, pageNumber: 1, orderDesc: "newestFirst" })
+    );
+  }, [dispatch, orderDesc, pageNumber, userId]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
+  // console.log("first");
+  // useEffect(() => {
+  //   const getOrders = async () => {
+  //     if (userId) {
+  //       const { data } = await getUserOrdersService(
+  //         userId,
+  //         pageNumber,
+  //         orderDesc
+  //       );
+  //       setOrders(data.userOrders);
+  //       setTotalPages(data.totalPages);
+  //     }
+  //   };
+  //   getOrders();
+  // }, [orderDesc, pageNumber, userId]);
 
   const calculateTotalPrice = (items: OrderItems[]) => {
     return items.reduce((total, item) => {
@@ -39,6 +62,8 @@ const UserOrders: React.FC = () => {
     }, 0);
   };
 
+  if (loading) return <Spiner />;
+console.log(userOrders)
   return (
     <div className=" w-full md:container md:mx-auto mx-2">
       <Helmet>
@@ -71,10 +96,10 @@ const UserOrders: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {Orders && Orders?.length <= 0 ? (
+                  {userOrders && userOrders?.length <= 0 ? (
                     <td className="font-bold">سفارشی برای شما ثبت نشده</td>
                   ) : (
-                    Orders?.map((data) => (
+                    userOrders?.map((data) => (
                       <tr
                         key={data._id}
                         className="border-b text-start border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100"
@@ -126,7 +151,7 @@ const UserOrders: React.FC = () => {
               Previous
             </button>
           </li>
-          {[...Array(totalPages)].map((_, index) => (
+          {[...Array(totallPage)].map((_, index) => (
             <li key={index}>
               <button
                 className={`relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 ${
@@ -143,12 +168,12 @@ const UserOrders: React.FC = () => {
           <li>
             <button
               className={`relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 ${
-                pageNumber === totalPages
+                pageNumber === totallPage
                   ? "pointer-events-none text-surface/50"
                   : ""
               }`}
               onClick={() =>
-                setPageNumber((prev) => Math.min(prev + 1, totalPages))
+                setPageNumber((prev) => Math.min(prev + 1, totallPage))
               }
             >
               Next

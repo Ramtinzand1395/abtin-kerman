@@ -4,9 +4,18 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "./hero.css";  // Ensure this only includes necessary styles
 
-import test from "../../../../assets/Hero/ps5-Hero.jpg";
-import test2 from "../../../../assets/Hero/redDead-Hero.jpg";
-import test3 from "../../../../assets/Hero/gta-Hero.jpg";
+// import test from "../../../../assets/Hero/ps5-Hero.jpg";
+// import test2 from "../../../../assets/Hero/redDead-Hero.jpg";
+// import test3 from "../../../../assets/Hero/gta-Hero.jpg";
+import test3 from "../../../../assets/Hero/488598f9-6aca-4f29-8d85-1c6a3281a47c.jpg";
+import Stest3 from "../../../../assets/Hero/as-requested-the-individual-layers-to-the-gta-vi-key-art-v0-ig1e88inlh4c1-copy1.png";
+
+import test2 from "../../../../assets/Hero/Kerfin7_NEA_2337.jpg";
+import Stest2 from "../../../../assets/Hero/as-requested-the-individual-layers-to-the-gta-vi-key-art-v0-ig1e88inlh4c1New.png";
+
+import test from "../../../../assets/Hero/d65b8f21-ba9f-421a-9daf-c5c20446d502.jpg";
+// import Stest from "../../../../assets/Hero/as-requested-the-individual-layers-to-the-gta-vi-key-art-v0-ig1e88inlh4c1new3.png";
+
 import SliderpageTest from "../SliderpageTest";
 
 const Hero: React.FC = () => {
@@ -14,6 +23,7 @@ const Hero: React.FC = () => {
     {
       id: 1,
       img: test,
+      // simg:Stest ,
       btn: "مشاهده",
       topText: "انواع کنسول های بازی ",
       bottomText: "از جدیدترین کنسول های بازی روز دنیا تا کنسول های کلاسیک ",
@@ -21,6 +31,7 @@ const Hero: React.FC = () => {
     {
       id: 2,
       img: test2,
+      simg:Stest2 ,
       btn: "مشاهده",
       topText: "جدیدترین بازی ها",
       bottomText: "جدیدترین بازی ها هم به صورت دیسک هم به صورت اکانت های ظرفیتی ",
@@ -28,6 +39,7 @@ const Hero: React.FC = () => {
     {
       id: 3,
       img: test3,
+      simg:Stest3 ,
       btn: "مشاهده",
       topText: "آخرین اخبار دنیای بازی",
       bottomText: "با مطالعه وبلاگ از آخرین آپدیت ها و اخبار روز دنیای بازی مطلع شوید.",
@@ -36,7 +48,7 @@ const Hero: React.FC = () => {
 
   return (
     <Swiper
-      navigation={true}
+      // navigation={true}
       modules={[Navigation, Autoplay]}
       spaceBetween={10}
       slidesPerView={1}
@@ -45,11 +57,11 @@ const Hero: React.FC = () => {
         delay: 5000,
         disableOnInteraction: false,
       }}
-      className="mySwiper md:mx-auto md:container mx-2 rounded-lg"
+      className="mySwiper  rounded-lg h-[30vh] md:h-[40vh] my-5 lg:h-[70vh]"
     >
       {SliderImage.map((img) => (
         <SwiperSlide key={img.id}>
-          <SliderpageTest img={img.img} topText={img.topText} bottomText={img.bottomText} />
+          <SliderpageTest simg={img.simg} img={img.img} topText={img.topText} bottomText={img.bottomText} />
         </SwiperSlide>
       ))}
     </Swiper>

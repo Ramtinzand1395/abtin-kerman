@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { useEffect, useState } from "react";
 import { GameData } from "../../../../types";
-import { getGameService } from "../../../../services/ApiServices";
+import { getGamesService } from "../../../../services/ApiServices";
 import OffSwiperSlide_1 from "./OffSwiperSlide_1";
 const SpesialOffers = () => {
   const [Games, setGames] = useState<GameData[]>([]);
@@ -20,7 +20,7 @@ const SpesialOffers = () => {
       const pageNumber = 1;
       const orderDesc = "newestFirst";
       try {
-        const { data } = await getGameService(pageNumber, orderDesc);
+        const { data } = await getGamesService(pageNumber, orderDesc);
         setGames(data.games);
       } catch (err) {
         console.log(err);

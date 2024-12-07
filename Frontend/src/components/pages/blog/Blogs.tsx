@@ -33,6 +33,7 @@ const Blogs = () => {
     const order = event.target.value;
     setSortOrder(order);
   };
+
   return (
     <div className="md:container md:mx-auto mx-2">
       <Helmet>
@@ -40,6 +41,8 @@ const Blogs = () => {
         <meta name="description" content="Browse our wide range of blogs." />
       </Helmet>
       {/* مرتب سازی */}
+      {
+        loading ? <Spiner /> :
       <div className="">
         <select
           id="sortOrder"
@@ -48,10 +51,11 @@ const Blogs = () => {
           onChange={handleSortChange}
           className="p-2 border border-gray-300 rounded"
         >
-          <option value="highToLow"> جدیدترین </option>
-          <option value="lowToHigh"> قدیمی ترین </option>
+          <option value="newestFirst"> جدیدترین </option>
+          <option value="newestLast"> قدیمی ترین </option>
         </select>
       </div>
+      }
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-10">
         {Blogs &&
           Blogs?.map((blog, index) =>

@@ -3,11 +3,11 @@ const moment = require("moment-jalaali");
 const CategorySchema = new mongoose.Schema({
   categoryName: {
     type: String,
+    required: true,
   },
-
   createdAt: {
-    type: String, 
-    default: () => moment().format('jYYYY/jM/jD'), 
+    type: String,
+    default: () => moment().format("jYYYY/jM/jD"),
   },
 });
 

@@ -1,35 +1,42 @@
-import React, { useEffect, useState } from "react";
-import { Weblog } from "../../../types";
-import { getBlogService } from "../../../services/ApiServices";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Spiner from "../../utils/Spiner";
+import { useDispatch, useSelector } from "react-redux";
+import { clearError, fetchBlog } from "../../../features/blog/blogSlice";
+import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const Blog: React.FC = () => {
   const { blogId } = useParams();
-  const [Blog, setBlog] = useState<Weblog | null>(null);
-  const [LoadingBlog, setLoadingBlog] = useState(false);
+  const dispatch = useDispatch();
+  const { loading, blogs, error } = useSelector((state) => state.blog);
+
   useEffect(() => {
-    setLoadingBlog(true);
-    const getBlog = async () => {
-      try {
-        const { data } = await getBlogService(blogId);
-        setBlog(data.blog);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoadingBlog(false);
-      }
-    };
-    getBlog();
-  }, []);
-  if (LoadingBlog) return <Spiner />;
+    dispatch(fetchBlog(blogId));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
+
+  if (loading) return <Spiner />;
   return (
-    <div
-      dangerouslySetInnerHTML={{
-        __html: Blog?.body || "",
-      }}
-      className="p-5 rounded-xl bg-white"
-    ></div>
+    <>
+      <Helmet>
+      <title>{blogs.title}</title>
+      <meta name="description" content="explore the blog" />
+      </Helmet>
+
+      <div
+        dangerouslySetInnerHTML={{
+          __html: blogs?.body || "",
+        }}
+        className="p-5 rounded-xl bg-white"
+      ></div>
+    </>
   );
 };
 

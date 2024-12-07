@@ -38,12 +38,15 @@ const AllAcountGames = () => {
     const order = event.target.value;
     setSortOrder(order);
   };
-
+console.log(FiltredAccountGames)
   return (
     <div className="md:container md:mx-auto mx-2">
-              <Helmet>
+      <Helmet>
         <title>acount games</title>
-        <meta name="description" content="Browse our wide range of acount games." />
+        <meta
+          name="description"
+          content="Browse our wide range of acount games."
+        />
       </Helmet>
       {/* مرتب سازی */}
       <div className="">
@@ -66,6 +69,7 @@ const AllAcountGames = () => {
                 <AccountsGames
                   primaryImage={game.primaryImage}
                   additionalImages={game.additionalImages}
+                  averageRating={game.averageRating}
                   title={game.title}
                   info={game.info}
                   _id={game._id}
@@ -82,7 +86,8 @@ const AllAcountGames = () => {
                   info={game.info}
                   _id={game._id}
                   tags={game.tags}
-
+                  averageRating={game.averageRating}
+                  key={game._id}
                 />
               </div>
             )

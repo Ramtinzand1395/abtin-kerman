@@ -27,6 +27,9 @@ router.post("/user-favorites", userController.addFavorites);
 router.get("/get-user-favorites/:userId", userController.getFavorites);
 router.get("/get-user-favorite/:userId", userController.getFavorite);
 router.post("/remove-user-favorite", userController.removeFavorite);
+// *zarin
+router.post("/payment", userController.zarinPay);
+router.get("/payment-callback", userController.zarinCheck);
 
 // router.get("/get-comment", userController.handleGetComments);
 // router.post("/login", userController.handleLogin);

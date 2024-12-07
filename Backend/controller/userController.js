@@ -7,7 +7,7 @@ const Products = require("../models/Products");
 const User = require("../models/User");
 const { sendSms } = require("../utils/Send-Msg");
 const jwt = require("jsonwebtoken");
-
+const ZarinpalCheckout = require("zarinpal-checkout");
 exports.handleLogin = async (req, res, next) => {
   try {
     const { email } = req.body;
@@ -117,9 +117,10 @@ exports.handleGetUser = async (req, res, next) => {
 // ?USER ORDERS
 exports.GetUserOrders = async (req, res) => {
   const { pageNumber = 1, sortOrder = "newestFirst" } = req.query;
+
   const { userId } = req.params;
-  const limit = 5;
-  const page = parseInt(pageNumber, 5);
+  const limit = 10;
+  const page = parseInt(pageNumber, 10);
 
   if (isNaN(page) || page < 1) {
     return res.status(400).json({ error: "Invalid page number" });
@@ -196,8 +197,26 @@ exports.handleFilterProducts = async (req, res, next) => {
       .limit(limit) // Limit the number of products
       .skip(skip)
       .sort(sortOption); // Skip products based on pagination
+
+    const productsWithRatings = filteredProducts.map((game) => {
+      const ratings = game.comments
+        .filter((comment) => typeof comment.rating === "number") // Ensure `rating` is a number
+        .map((comment) => comment.rating);
+
+      const totalRatings = ratings.length;
+      const averageRating =
+        totalRatings > 0
+          ? ratings.reduce((sum, rating) => sum + rating, 0) / totalRatings
+          : 0;
+
+      return {
+        ...game._doc, // Spread the game document fields
+        averageRating,
+      };
+    });
+
     res.status(200).json({
-      filteredProducts,
+      filteredProducts: productsWithRatings,
     });
   } catch (err) {
     next(err);
@@ -222,11 +241,30 @@ exports.handleFilterGames = async (req, res, next) => {
       .populate("primaryImage")
       .populate("additionalImages")
       .populate("tags")
+      .populate("comments")
       .limit(limit) // Limit the number of products
       .skip(skip)
       .sort(sortOption); // Skip products based on pagination
+
+    const gamesWithRatings = filteredProducts.map((game) => {
+      const ratings = game.comments
+        .filter((comment) => typeof comment.rating === "number") // Ensure `rating` is a number
+        .map((comment) => comment.rating);
+
+      const totalRatings = ratings.length;
+      const averageRating =
+        totalRatings > 0
+          ? ratings.reduce((sum, rating) => sum + rating, 0) / totalRatings
+          : 0;
+
+      return {
+        ...game._doc, // Spread the game document fields
+        averageRating,
+      };
+    });
+
     res.status(200).json({
-      filteredProducts,
+      filteredProducts: gamesWithRatings,
     });
   } catch (err) {
     next(err);
@@ -247,7 +285,7 @@ exports.getBlog = async (req, res) => {
 exports.searchRes = async (req, res) => {
   const { title } = req.body;
   const searchTitle = title.trim().toLowerCase();
-  console.log(searchTitle);
+
   try {
     const products = await Products.find({
       title: { $regex: searchTitle, $options: "i" },
@@ -376,9 +414,7 @@ exports.getFavorites = async (req, res) => {
 // * remove favorite
 exports.removeFavorite = async (req, res) => {
   const { userId, itemId } = req.body;
-console.log(itemId)
   try {
-
     let user = await User.findById(userId);
 
     if (!user) {
@@ -405,5 +441,108 @@ console.log(itemId)
   } catch (err) {
     console.error("Error removing favorite:", err);
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+// *zarin
+const zarinpal = ZarinpalCheckout.create(
+  "06da4771-454f-4dd8-8b03-6f6145d95ed0",
+  false
+); // true for sandbox mode
+
+exports.zarinPay = async (req, res) => {
+  const { amount, description, callbackUrl } = req.body;
+  console.log(req.body);
+  try {
+    const response = await zarinpal.PaymentRequest({
+      Amount: amount, // Fixed syntax error (removed extra single quote)
+      CallbackURL: "https://kermanatari.ir/payment-callback", // Replace with your actual callback URL
+      Description: description, // Transaction description
+    });
+
+    if (response.status === 100) {
+      res.status(200).json({ url: response.url });
+    } else {
+      res
+        .status(400)
+        .json({ error: "Error creating payment request", details: response });
+    }
+  } catch (err) {
+    console.error("Error during payment request:", err);
+    res
+      .status(500)
+      .json({ error: "Internal server error", details: err.message });
+  }
+};
+
+exports.zarinCheck = async (req, res) => {
+  const { Authority, Status, orderId } = req.query;
+
+  try {
+    console.log("Payment verification initiated");
+    console.log("Query params:", req.query);
+
+    // Check payment status from query params
+    if (Status !== "OK") {
+      return res.status(400).json({
+        message: "Payment was not successful or canceled by the user.",
+      });
+    }
+
+    // Find the order in the database
+    const order = await Order.findById(orderId);
+    console.log(order);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found." });
+    }
+    console.log(orderId);
+    console.log(order.payment.ammount, "order.payment.ammount");
+    // Verify the payment with ZarinPal
+    const response = await zarinpal.PaymentVerification({
+      Amount: order.payment.ammount, // Ensure this matches the payment amount
+      Authority, // Authority code from the query string
+    });
+
+    console.log("Payment verification response:", response);
+
+    // Update order payment details based on ZarinPal response
+    if (response.status === 101) {
+      // Payment successful
+      order.payment = {
+        status: response.status,
+        message: response.message,
+        cardHash: response.cardHash,
+        cardPan: response.cardPan,
+        refId: response.refId,
+        feeType: response.feeType,
+        fee: response.fee,
+      };
+      await order.save();
+
+      return res.status(200).json({
+        message: "Payment successful!",
+        refId: response.refId,
+        orderId: order._id,
+      });
+    } else {
+      // Payment failed or not verified
+      order.payment = {
+        ...order.payment,
+        status: response.status,
+        message: "Payment failed or not verified",
+      };
+      await order.save();
+
+      return res.status(400).json({
+        message: "Payment failed or not verified.",
+        status: response.status,
+      });
+    }
+  } catch (err) {
+    console.error("Error during payment verification:", err);
+
+    return res.status(500).json({
+      error: "Internal server error",
+      details: err.message,
+    });
   }
 };

@@ -74,7 +74,7 @@ const AllProducts: React.FC = () => {
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-10">
         <Suspense fallback={<Spiner />}>
           {FiltredProducts &&
-            FiltredProducts.map((product, index) => (
+            FiltredProducts?.map((product, index) => (
               <div
                 key={product._id}
                 ref={
@@ -88,6 +88,7 @@ const AllProducts: React.FC = () => {
                   additionalImages={product.additionalImages}
                   _id={product._id}
                   tags={product.tags}
+                  averageRating={product.averageRating}
                 />
               </div>
             ))}

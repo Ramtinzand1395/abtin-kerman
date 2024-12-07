@@ -1,28 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import LeftAnimation from "../../utils/LeftAnimation";
 import Animations from "../../utils/Animations";
 import BlogCrad from "../../utils/BlogCrad";
-import { getBlogsService } from "../../../services/ApiServices";
 import BtnTow from "../../utils/BtnTow";
-import { Weblog } from "../../../types";
 import { useNavigate } from "react-router-dom";
+import { clearError, fetchBlogs } from "../../../features/blog/blogSlice";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import Spiner from "../../utils/Spiner";
 const Blog: React.FC = () => {
   const navigate = useNavigate();
-  const [Blogs, setBlogs] = useState<Weblog[] | null>(null);
+  const dispatch = useDispatch();
+  const { loading, blogs, error } = useSelector((state) => state.blog);
+
   useEffect(() => {
-    const getBlogs = async () => {
-      try {
-        const { data } = await getBlogsService(1, "newestFirst");
-        setBlogs(data.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getBlogs();
-  }, []);
+    dispatch(fetchBlogs({ pageNumber: 1, sortOrder: "newestFirst" }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
+
   const navigateBlogs = () => {
     navigate("/blogs");
   };
+
+  if (loading) return <Spiner />;
+
   return (
     <div>
       <Animations>
@@ -34,14 +41,14 @@ const Blog: React.FC = () => {
         </div>
       </Animations>
       <LeftAnimation>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 my-10 ">
-          {Blogs &&
-            Blogs?.map((blog) => <BlogCrad key={blog._id} blog={blog} />)}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 my-10 ">
+          {blogs &&
+            blogs?.map((blog) => <BlogCrad key={blog._id} blog={blog} />)}
         </div>
       </LeftAnimation>
       <BtnTow
         ButtonColor="bg-green-500 hover:from-green-500 hover:to-green-400 hover:ring-green-400"
-        ButtonText={"مشاهده بیشتر"}
+        ButtonText={" همه مقالات"}
         onClick={navigateBlogs}
       />
     </div>

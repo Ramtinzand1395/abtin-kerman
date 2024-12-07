@@ -47,7 +47,8 @@ const ProductAdditionalExplanations: React.FC<
           ckfinder: {
             //! change
             // uploadUrl: "http://localhost:5000/api/upload",
-            uploadUrl: "https://abtin-kerman-backend-new.vercel.app/api/upload",
+            // uploadUrl: "https://abtin-kerman-backend-new.vercel.app/api/upload",
+            uploadUrl: "https://api.kermanatari.ir/api/upload",
           },
         }}
         onChange={handleCkeditorState}

@@ -80,7 +80,7 @@ const AddGameImageTab: React.FC<AddGameImageTabProps> = ({
             <div className="">
               <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8 gap-5 ">
                 {GameData.additionalImages.map((img, index) => (
-                  <div className="">
+                  <div key={img._id} className="">
                     <img
                       key={index}
                       onClick={() => removeAdditionalImage(img)}

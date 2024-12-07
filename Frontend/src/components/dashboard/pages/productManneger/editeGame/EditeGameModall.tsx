@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { GameData } from "../../../../../types";
 import EditeImageTab from "./EditeImageTab";
 import BtnTow from "../../../../utils/BtnTow";
-import { toast } from "react-toastify";
-import { updateGameService } from "../../../../../services/ApiServices";
 import EditeGameDataTab from "./EditeCapacityTab";
 import AccountGameAdditionalExplanations from "../../../CkEditor/AccountGameAdditionalExplanations";
 import EditeGameInfo from "./EditeGameInfo";
 import EditGameTag from "./EditGameTag";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../../../app/store";
+import { updateGame } from "../../../../../features/game/gameSlice";
 interface EditeGameModallProps {
   SelectedProduct: GameData;
   setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedProduct: React.Dispatch<React.SetStateAction<GameData>>;
-  setLodaingGames: React.Dispatch<React.SetStateAction<boolean>>;
 }
 type TabKey =
   | "gameImage"
@@ -25,7 +25,6 @@ const EditeGameModall: React.FC<EditeGameModallProps> = ({
   SelectedProduct,
   setOpenModall,
   setSelectedProduct,
-  setLodaingGames,
 }) => {
   const [activeTab, setActiveTab] = useState<TabKey>("gameImage");
   const renderContent = () => tabContent[activeTab] || tabContent.gameImage;
@@ -46,18 +45,17 @@ const EditeGameModall: React.FC<EditeGameModallProps> = ({
       document.body.style.overflow = "unset";
     };
   }, []);
-  const handleUpdateGame = async () => {
-    setLodaingGames(true);
+
+  const dispatch = useDispatch<AppDispatch>();
+  const handleUpdateGame = () => {
     try {
-      const { data } = await updateGameService(SelectedProduct);
-      console.log(SelectedProduct, "SelectedProduct");
-      toast.success(data.message);
+      dispatch(updateGame(SelectedProduct));
+      setOpenModall(false);
     } catch (err) {
       console.log(err);
-    } finally {
-      setLodaingGames(false);
     }
   };
+
   const closeModall = () => {
     setOpenModall(false);
   };
@@ -112,7 +110,7 @@ const EditeGameModall: React.FC<EditeGameModallProps> = ({
             size={30}
             className="m-4 cursor-pointer text-black"
           /> */}
-             <svg
+          <svg
             className="cursor-pointer m-4 "
             onClick={() => setOpenModall(false)}
             width="30px"

@@ -1,39 +1,35 @@
-import React, { useEffect, useState } from "react";
-import {
-  confirmCommentService,
-  deleteCommentService,
-  getCommentsService,
-} from "../../../services/ApiServices";
+import React, { useEffect } from "react";
+
 import BtnTow from "../../utils/BtnTow";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import { Comment } from "../../../types";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearError,
+  confirmComment,
+  deleteComment,
+  fetchComments,
+} from "../../../features/comments/commentsSlice";
+import Spiner from "../../utils/Spiner";
+import { Helmet } from "react-helmet";
 
 const CommentManneger: React.FC = () => {
-  const [Comments, setComments] = useState<Comment[]>([]);
-  const [LoadingComments, setLoadingComments] = useState(false);
+  const dispatch = useDispatch();
+  const { comments, loading, error } = useSelector((state) => state.comment);
+
   useEffect(() => {
-    const getComments = async () => {
-      try {
-        const { data } = await getCommentsService();
-        setComments(data.data);
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getComments();
-  }, [LoadingComments]);
-  const handleDeleteGame = async (commentId: string) => {
-    setLoadingComments(true);
-    try {
-      const { data } = await deleteCommentService(commentId);
-      toast.success(data.message);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoadingComments(false);
+    dispatch(fetchComments());
+  }, [dispatch]);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
     }
+  }, [error, dispatch]);
+
+  const handleDeleteGame = async (commentId: string) => {
+    dispatch(deleteComment(commentId));
   };
   //  ? DELETE
   const confirmAlertmodall = (comment: Comment) => {
@@ -64,25 +60,21 @@ const CommentManneger: React.FC = () => {
       },
     });
   };
-  const handleConfirmComment = async (commentId: string) => {
-    setLoadingComments(true);
-    try {
-      const { data } = await confirmCommentService(commentId);
-      toast.success(data.message);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoadingComments(false);
-    }
+  const handleConfirmComment = (commentId: string) => {
+    dispatch(confirmComment(commentId));
   };
+
+  if (loading === true) return <Spiner />;
+
   return (
     <div className=" w-full md:container md:mx-auto mx-2 my-10">
+      <Helmet>
+        <title>comments Manneger</title>
+        <meta name="description" content="mannege user Comments" />
+      </Helmet>
       <table className="min-w-full  text-sm font-light text-surface my-10">
         <thead className="border-b border-neutral-200 font-medium ">
           <tr>
-            {/* <th scope="col" className="px-6 py-4 text-start">
-                عکس
-            </th> */}
             <th scope="col" className="px-6 py-4 text-start">
               اسم محصول
             </th>
@@ -104,7 +96,7 @@ const CommentManneger: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {Comments?.map((comment) => (
+          {comments?.map((comment) => (
             <tr
               key={comment._id}
               className="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 text-start "
@@ -116,9 +108,7 @@ const CommentManneger: React.FC = () => {
                 {comment.user.email}
               </td>{" "}
               <td className="whitespace-nowrap px-6 py-4 font-medium">
-                <textarea placeholder="ثبت نظر" title="comment">
-                  {comment.body}
-                </textarea>
+                {comment.body}
               </td>
               <td className="whitespace-nowrap px-6 py-4 font-medium">
                 {comment.rating}
@@ -135,7 +125,9 @@ const CommentManneger: React.FC = () => {
                 <BtnTow
                   ButtonColor="bg-green-500 hover:from-green-500 hover:to-green-400 hover:ring-green-400"
                   ButtonText={"تایید"}
-                  onClick={() => comment._id && handleConfirmComment(comment._id)}
+                  onClick={() =>
+                    comment._id && handleConfirmComment(comment._id)
+                  }
                 />
               </td>
             </tr>

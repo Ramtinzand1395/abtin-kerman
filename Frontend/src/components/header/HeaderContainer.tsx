@@ -123,7 +123,7 @@ const HeaderContainer: React.FC = () => {
     useShopingcard();
 
   return (
-    <div>
+    <div className="bg-white">
       <div className=" hidden md:block">
         <Topheader />
       </div>

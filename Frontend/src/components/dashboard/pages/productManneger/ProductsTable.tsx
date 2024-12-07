@@ -8,52 +8,77 @@ import BtnTow from "../../../utils/BtnTow";
 import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
 import EditeProductModall from "./editeProduct/EditeProductModall";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearError,
+  deleteProduct,
+  fetchProducts,
+} from "../../../../features/product/productSlice";
+import Spiner from "../../../utils/Spiner";
 
 const ProductsTable: React.FC = () => {
-  const [Products, setProducts] = useState<Product[]>([]);
+  const dispatch = useDispatch();
+  const { loading, products, error, totallPage } = useSelector(
+    (state) => state.product
+  );
+
   const [orderDesc, setOrderDesc] = useState("newestFirst");
   const [pageNumber, setPageNumber] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [LodaingProducts, setLodaingProducts] = useState(false);
   const [OpenModall, setOpenModall] = useState(false);
-  const [SelectedProduct, setSelectedProduct] = useState<Product>(Products[0]);
+  const [SelectedProduct, setSelectedProduct] = useState<Product>(
+    {} as Product
+  );
+  
   const handleOpenModall = (product: Product) => {
     setOpenModall(true);
     setSelectedProduct(product);
   };
+
   useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const { data } = await getProductsService(pageNumber, orderDesc);
-        setProducts(data.products);
-        setTotalPages(data.totalPages);
-        console.log(Products);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getProducts();
-  }, [orderDesc, pageNumber, LodaingProducts]);
-  const handleDeleteGame = async (id: string) => {
-    setLodaingProducts(true);
-    try {
-      const { data } = await deleteProductService(id);
-      toast.success(data.message);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLodaingProducts(false);
+    dispatch(fetchProducts({ pageNumber, orderDesc }));
+  }, [dispatch, pageNumber, orderDesc]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
     }
+  }, [error, dispatch]);
+  // useEffect(() => {
+  //   const getProducts = async () => {
+  //     try {
+  //       const { data } = await getProductsService(pageNumber, orderDesc);
+  //       setProducts(data.products);
+  //       setTotalPages(data.totalPages);
+  //       console.log(Products);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getProducts();
+  // }, [orderDesc, pageNumber, LodaingProducts]);
+  const handleDeleteGame = async (id: string) => {
+    dispatch(deleteProduct(id));
+
+    // setLodaingProducts(true);
+    // try {
+    //   const { data } = await deleteProductService(id);
+    //   toast.success(data.message);
+    // } catch (err) {
+    //   console.log(err);
+    // } finally {
+    //   setLodaingProducts(false);
+    // }
   };
-  console.log(LodaingProducts)
+
   //  ? DELETE
   const confirmAlertmodall = (game: Product) => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <div className="bg-primary border-2 rounded-2xl p-4 border-white w-[50vw] h-auto">
+          <div className="bg-secondery border-2 rounded-2xl p-4 border-white w-[50vw] h-auto">
             <p className="text-white font-vazir my-5 ">
-              از حذف
+              آیا از حذف
               <span className="text-red-400 font-bold text-xl">
                 {" "}
                 {game.title}{" "}
@@ -80,6 +105,9 @@ const ProductsTable: React.FC = () => {
       },
     });
   };
+
+  if (loading === true) return <Spiner />;
+
   return (
     <div className="w-full md:container md:mx-auto mx-2 my-10">
       <select title="Order" onChange={(e) => setOrderDesc(e.target.value)}>
@@ -111,7 +139,7 @@ const ProductsTable: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {Products?.map((data) => (
+                {products?.map((data) => (
                   <tr
                     key={data._id}
                     className="border-b text-start border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100  "
@@ -177,7 +205,7 @@ const ProductsTable: React.FC = () => {
               Previous
             </button>
           </li>
-          {[...Array(totalPages)].map((_, index) => (
+          {[...Array(totallPage)].map((_, index) => (
             <li key={index}>
               <button
                 className={`relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 ${
@@ -194,12 +222,12 @@ const ProductsTable: React.FC = () => {
           <li>
             <button
               className={`relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 ${
-                pageNumber === totalPages
+                pageNumber === totallPage
                   ? "pointer-events-none text-surface/50"
                   : ""
               }`}
               onClick={() =>
-                setPageNumber((prev) => Math.min(prev + 1, totalPages))
+                setPageNumber((prev) => Math.min(prev + 1, totallPage))
               }
             >
               Next
@@ -212,7 +240,6 @@ const ProductsTable: React.FC = () => {
           SelectedProduct={SelectedProduct}
           setSelectedProduct={setSelectedProduct}
           setOpenModall={setOpenModall}
-          setLodaingProducts={setLodaingProducts}
         />
       )}
     </div>

@@ -25,6 +25,7 @@ import ProtectedRoute from "./components/utils/validate/ProtectedRoutes";
 import Blogs from "./components/pages/blog/Blogs";
 import Blog from "./components/pages/blog/Blog";
 import UserFavorites from "./components/dashboard/pages/user/UserFavorites";
+import PaymentCheck from "./components/utils/PaymentCheck";
 
 const App: React.FC = () => {
   return (
@@ -119,6 +120,14 @@ const App: React.FC = () => {
           element={
             <MainLayout>
               <ProductPage />
+            </MainLayout>
+          }
+        />
+         <Route
+          path="/payment-callback"
+          element={
+            <MainLayout>
+              <PaymentCheck />
             </MainLayout>
           }
         />

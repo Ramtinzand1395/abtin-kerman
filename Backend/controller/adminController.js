@@ -66,13 +66,14 @@ exports.UploadImage = async (req, res) => {
     const imageName = req.file.filename;
 
     try {
-      await Image.create({
+      const createdImage = await Image.create({
         imageName,
-        direction: `https://abtin-kerman-backend-new.vercel.app/uploads/${imageName}`,
+        // direction: `https://abtin-kerman-backend-new.vercel.app/uploads/${imageName}`,
+        direction: `https://api.kermanatari.ir/api/uploads/${imageName}`,
       });
       return res.status(201).json({
-        message: "Image successfully added.",
-        filename: req.file.filename,
+        message: "عکس با موفقیت اضافه شد",
+        Image: createdImage,
       });
     } catch (err) {
       console.error("Error saving image to database:", err);
@@ -101,18 +102,17 @@ exports.AddGame = async (req, res) => {
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
   }
 };
-// * GET GAME
-// !sssss
+// * GET GAMES
 exports.GetGames = async (req, res) => {
   const { pageNumber = 1, sortOrder = "newestFirst" } = req.query;
-  const limit = 5;
-  const page = parseInt(pageNumber, 5);
+
+  const limit = 10;
+  const page = parseInt(pageNumber, 10);
+  const skip = (page - 1) * limit;
 
   if (isNaN(page) || page < 1) {
     return res.status(400).json({ error: "Invalid page number" });
   }
-  const skip = (page - 1) * limit;
-
   const sortOption =
     sortOrder === "newestFirst" ? { createdAt: -1 } : { createdAt: 1 };
 
@@ -124,11 +124,29 @@ exports.GetGames = async (req, res) => {
       .populate("categories")
       .populate("primaryImage")
       .populate("additionalImages")
+      .populate("comments")
       .limit(limit)
       .skip(skip)
       .sort(sortOption);
 
-    res.status(200).json({ games, totalPages });
+    const gamesWithRatings = games.map((game) => {
+      const ratings = game.comments
+        .filter((comment) => typeof comment.rating === "number")
+        .map((comment) => comment.rating);
+
+      const totalRatings = ratings.length;
+      const averageRating =
+        totalRatings > 0
+          ? ratings.reduce((sum, rating) => sum + rating, 0) / totalRatings
+          : 0;
+
+      return {
+        ...game._doc, // Spread the game document fields
+        averageRating,
+      };
+    });
+
+    res.status(200).json({ games: gamesWithRatings, totalPages });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
@@ -136,29 +154,21 @@ exports.GetGames = async (req, res) => {
 };
 
 // * GET SINGLE GAME
-// ! sssss
 exports.GetGame = async (req, res) => {
   const { id } = req.params;
+
   try {
-    const game = await Games.findById({ _id: id });
+    const game = await Games.findById(id)
+      .populate("tags")
+      .populate("categories")
+      .populate("primaryImage")
+      .populate("additionalImages")
+      .populate("comments");
     if (!game) {
       return res.status(404).json({ error: "Game not found" }); // Handle if game is not found
     }
 
-    const gameTags = await Tag.find({ _id: { $in: game.tags || [] } }); // Fetch tags
-    const gameCats = await categorey.find({
-      _id: { $in: game.categories || [] },
-    }); // Fetch categories
-    const primaryImage = await Image.findOne({
-      _id: { $in: game.primaryImage },
-    });
-    const additionalImages = await Image.find({
-      _id: { $in: game.additionalImages },
-    });
-    const comments = await Comment.find({
-      _id: { $in: game.comments },
-    }).populate("user", "profile email");
-    const ratings = comments
+    const ratings = game?.comments
       .map((comment) => comment.rating)
       .filter((rating) => rating); // Get all ratings (excluding undefined/null)
     const totalRatings = ratings.length;
@@ -168,21 +178,17 @@ exports.GetGame = async (req, res) => {
 
     const gameWithDetails = {
       ...game.toObject(),
-      tags: gameTags,
-      categories: gameCats,
-      comments,
-      primaryImage,
-      additionalImages,
       rating: {
         averageRating: averageRating.toFixed(1), // Keeping one decimal place
         totalRatings,
-        individualRatings: comments.map((comment) => ({
+        individualRatings: game?.comments.map((comment) => ({
           userId: comment.user._id,
           rating: comment.rating,
           commentId: comment._id,
         })),
       },
     };
+
     res.status(200).json(gameWithDetails);
   } catch (err) {
     console.log(err);
@@ -203,20 +209,27 @@ exports.UpdateGame = async (req, res) => {
     additionalExplanations,
   } = req.body;
   try {
-    const game = await Games.findById({ _id });
+    let game = await Games.findById({ _id });
+
     if (!game) {
       return res.status(404).json({ message: "بازی پیدا نشد" });
     }
-    game.info = info;
-    game.title = title;
-    game.primaryImage = primaryImage;
-    game.additionalImages = additionalImages;
-    game.features = features;
-    game.categories = categories;
-    game.additionalExplanations = additionalExplanations;
-    game.tags = tags;
+    game.info = info || game.info;
+    game.title = title || game.title;
+    game.primaryImage = primaryImage || game.primaryImage;
+    game.additionalImages = additionalImages || game.additionalImages;
+    game.features = features || game.features;
+    game.categories = categories || game.categories;
+    game.additionalExplanations =
+      additionalExplanations || game.additionalExplanations;
+    game.tags = tags || game.tags;
     // Save the changes
     await game.save();
+    await game.populate("tags");
+    await game.populate("primaryImage");
+    await game.populate("categories");
+    await game.populate("additionalImages");
+
     res.status(200).json({ data: game, message: "بازی آپدیت شد" });
   } catch (err) {
     console.log(err);
@@ -298,7 +311,6 @@ exports.DelCategory = async (req, res) => {
 };
 
 // ?  PRODUCT API
-// sssssss
 // * ADD PRODUCT
 exports.AddProduct = async (req, res) => {
   try {
@@ -309,11 +321,11 @@ exports.AddProduct = async (req, res) => {
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
   }
 };
-// * GET PRODUCT
+// * GET PRODUCTS
 exports.GetProducts = async (req, res) => {
   const { pageNumber = 1, sortOrder = "newestFirst" } = req.query;
-  const limit = 5;
-  const page = parseInt(pageNumber, 5);
+  const limit = 10;
+  const page = parseInt(pageNumber, 10);
   if (isNaN(page) || page < 1) {
     return res.status(400).json({ error: "Invalid page number" });
   }
@@ -332,7 +344,25 @@ exports.GetProducts = async (req, res) => {
       .limit(limit)
       .skip(skip)
       .sort(sortOption);
-    res.status(200).json({ products, totalPages });
+
+    const gamesWithRatings = products.map((game) => {
+      const ratings = game.comments
+        .filter((comment) => typeof comment.rating === "number") // Ensure `rating` is a number
+        .map((comment) => comment.rating);
+
+      const totalRatings = ratings.length;
+      const averageRating =
+        totalRatings > 0
+          ? ratings.reduce((sum, rating) => sum + rating, 0) / totalRatings
+          : 0;
+
+      return {
+        ...game._doc, // Spread the game document fields
+        averageRating,
+      };
+    });
+
+    res.status(200).json({ products: gamesWithRatings, totalPages });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
@@ -356,25 +386,30 @@ exports.Updateproduct = async (req, res) => {
     description,
   } = req.body;
   try {
-    const product = await Products.findById({ _id });
+    let product = await Products.findById({ _id });
     if (!product) {
       return res.status(404).json({ message: "بازی پیدا نشد" });
     }
-    product.info = info;
-    product.title = title;
-    product.primaryImage = primaryImage;
-    product.additionalImages = additionalImages;
-    product.features = features;
-    product.categories = categories;
-    product.additionalExplanations = additionalExplanations;
-    product.Specifications = Specifications;
-    product.quantity = quantity;
-    product.tags = tags;
-    product.price = price;
-    product.description = description;
+    product.info = info || product.info;
+    product.title = title || product.title;
+    product.primaryImage = primaryImage || product.primaryImage;
+    product.additionalImages = additionalImages || product.additionalImages;
+    product.features = features || product.features;
+    product.categories = categories || product.categories;
+    product.additionalExplanations =
+      additionalExplanations || product.additionalExplanations;
+    product.Specifications = Specifications || product.Specifications;
+    product.quantity = quantity || product.quantity;
+    product.tags = tags || product.tags;
+    product.price = price || product.price;
+    product.description = description || product.description;
 
     // Save the changes
     await product.save();
+    await product.populate("tags");
+    await product.populate("primaryImage");
+    await product.populate("categories");
+    await product.populate("additionalImages");
     res.status(200).json({ data: product, message: "بازی آپدیت شد" });
   } catch (err) {
     console.log(err);
@@ -382,29 +417,20 @@ exports.Updateproduct = async (req, res) => {
   }
 };
 // * GET SINGLE PRODUCT
-// sssss
 exports.Getproduct = async (req, res) => {
   const { id } = req.params;
   try {
-    const product = await Products.findById({ _id: id });
+    const product = await Products.findById({ _id: id })
+      .populate("tags")
+      .populate("categories")
+      .populate("primaryImage")
+      .populate("additionalImages")
+      .populate("comments");
     if (!product) {
       return res.status(404).json({ error: "محصولی پیدا نشد." }); // Handle if game is not found
     }
 
-    const productTags = await Tag.find({ _id: { $in: product.tags || [] } }); // Fetch tags
-    const productCats = await categorey.find({
-      _id: { $in: product.categories || [] },
-    }); // Fetch categories
-    const primaryImage = await Image.findOne({
-      _id: { $in: product.primaryImage },
-    });
-    const additionalImages = await Image.find({
-      _id: { $in: product.additionalImages },
-    });
-    const comments = await Comment.find({
-      _id: { $in: product.comments },
-    }).populate("user", "profile email");
-    const ratings = comments
+    const ratings = product.comments
       .map((comment) => comment.rating)
       .filter((rating) => rating); // Get all ratings (excluding undefined/null)
     const totalRatings = ratings.length;
@@ -414,15 +440,10 @@ exports.Getproduct = async (req, res) => {
 
     const productWithDetails = {
       ...product.toObject(),
-      tags: productTags,
-      categories: productCats,
-      primaryImage,
-      additionalImages,
-      comments,
       rating: {
         averageRating: averageRating.toFixed(1), // Keeping one decimal place
         totalRatings,
-        individualRatings: comments.map((comment) => ({
+        individualRatings: product.comments.map((comment) => ({
           userId: comment.user._id,
           rating: comment.rating,
           commentId: comment._id,
@@ -450,7 +471,9 @@ exports.deleteProduct = async (req, res) => {
 
 exports.handleGetComments = async (req, res, next) => {
   try {
-    const foundComments = await Comment.find().populate("user");
+    const foundComments = await Comment.find()
+      .populate("user")
+      .sort({ createdAt: -1 });
 
     const populatedComments = await Promise.all(
       foundComments.map(async (comment) => {
@@ -530,8 +553,8 @@ exports.createBlog = async (req, res) => {
 };
 exports.Blogs = async (req, res) => {
   const { pageNumber = 1, sortOrder = "newestFirst" } = req.query;
-  const limit = 5;
-  const page = parseInt(pageNumber, 5);
+  const limit = 10;
+  const page = parseInt(pageNumber, 10);
   if (isNaN(page) || page < 1) {
     return res.status(400).json({ error: "Invalid page number" });
   }
@@ -553,11 +576,10 @@ exports.Blogs = async (req, res) => {
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs
   }
 };
-
 // * ORDERS
 // ? ADD ORDER
 exports.AddOrder = async (req, res) => {
-  const { CardItems, userId } = req.body;
+  const { CardItems, userId, totalPrice } = req.body;
   try {
     const items = CardItems.map((item) => ({
       ...item,
@@ -567,13 +589,19 @@ exports.AddOrder = async (req, res) => {
       user: userId,
       items,
       TrackingCode: Math.floor(1000000 + Math.random() * 9000000),
+      payment: {
+        ammount: totalPrice, // Include the total price here
+      },
     });
     const user = await User.findById(req.body.userId);
     user.order.push(orderData._id);
     await user.save();
-    res
-      .status(200)
-      .json({ data: orderData, message: "سفارش شما با موفقیت ثبت شد." });
+    console.log(orderData);
+    res.status(200).json({
+      data: orderData,
+      orderId: orderData._id,
+      message: "سفارش شما با موفقیت ثبت شد.",
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" }); // Sending an error response if an error occurs

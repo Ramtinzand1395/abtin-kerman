@@ -14,6 +14,7 @@ export interface GameData {
   features: Feature[];
   additionalExplanations: string;
   rating?: ratingProps;
+  averageRating:number;
 }
 export interface GameDataInfo {
   platform: string;
@@ -100,6 +101,7 @@ export interface Product {
   createdAt?: string;
   additionalExplanations?: string;
   rating?: ratingProps;
+  averageRating:number;
 }
 export interface ratingProps {
   averageRating: string;

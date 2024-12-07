@@ -9,6 +9,8 @@ import AddProductSepicifications from "./AddProductSepicifications";
 import AddAboutProductTab from "./AddAboutProductTab";
 import { Product } from "../../../../../types";
 import AddMenu from "./AddMenu";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../../../../features/product/productSlice";
 
 type TabKey =
   | "ProductImage"
@@ -19,22 +21,10 @@ type TabKey =
   | "ProductCatsandTags";
 
 const GeneralProductTab: React.FC = () => {
+  const dispatch = useDispatch();
+
   const [activeTab, setActiveTab] = useState<TabKey>("ProductImage");
-
-  const renderContent = () => tabContent[activeTab] || tabContent.ProductImage;
-
-  const tabs: { key: TabKey; label: string }[] = [
-    { key: "ProductImage", label: "عکس محصول" },
-    { key: "ProductInfo", label: "اطلاعات اصلی محصول" },
-    { key: "ProductCatsandTags", label: "دسته بندی و تگ های محصول" },
-    { key: "ProductSepicifications", label: "اطلاعات فنی محصول" },
-    { key: "AboutProduct", label: "درباره محصول" },
-    { key: "AddMenu", label: " منو" },
-
-  ];
-
   const [OpenAddImageModall, setOpenAddImageModall] = useState(false);
-
   const [Product, setProduct] = useState<Product>({
     title: "",
     price: 0,
@@ -48,7 +38,19 @@ const GeneralProductTab: React.FC = () => {
     sellOne: false,
     quantity: 1,
     additionalExplanations: "",
+    averageRating: 0,
   });
+
+  const renderContent = () => tabContent[activeTab] || tabContent.ProductImage;
+
+  const tabs: { key: TabKey; label: string }[] = [
+    { key: "ProductImage", label: "عکس محصول" },
+    { key: "ProductInfo", label: "اطلاعات اصلی محصول" },
+    { key: "ProductCatsandTags", label: "دسته بندی و تگ های محصول" },
+    { key: "ProductSepicifications", label: "اطلاعات فنی محصول" },
+    { key: "AboutProduct", label: "درباره محصول" },
+    { key: "AddMenu", label: " منو" },
+  ];
 
   const tabContent = {
     ProductImage: (
@@ -69,21 +71,10 @@ const GeneralProductTab: React.FC = () => {
     AboutProduct: (
       <AddAboutProductTab Product={Product} setProduct={setProduct} />
     ),
-    AddMenu:(
-      <AddMenu  setProduct={setProduct} />
-
-    )
+    AddMenu: <AddMenu setProduct={setProduct} />,
   };
-  console.log(Product)
-
-  const handleCreateProduct = async () => {
-    try {
-      const { data } = await addProductService(Product);
-      toast.success(data.message);
-    } catch (err) {
-      console.error(err);
-      toast.error("Error creating product. Please try again.");
-    }
+  const handleCreateProduct = () => {
+    dispatch(addProduct(Product));
   };
 
   return (

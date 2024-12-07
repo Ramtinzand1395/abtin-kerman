@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Animations from "../../utils/Animations";
 import LeftAnimation from "../../utils/LeftAnimation";
 import { GameData } from "../../../types";
-import { getGameService } from "../../../services/ApiServices";
+import { getGamesService } from "../../../services/ApiServices";
 import AccountsGames from "../../utils/AccountsGames";
 
 const NewestَAccountGame: React.FC = () => {
@@ -10,17 +10,18 @@ const NewestَAccountGame: React.FC = () => {
 
   useEffect(() => {
     const getGames = async () => {
-      const pageNumber = 1;
-      const orderDesc = "newestFirst";
+    
       try {
-        const { data } = await getGameService(pageNumber, orderDesc);
+        const { data } = await getGamesService(1, "newestFirst");
         setGames(data.games);
+        console.log(data);
       } catch (err) {
         console.log(err);
       }
     };
     getGames();
   }, []);
+
   return (
     <div>
       <Animations>
@@ -32,7 +33,7 @@ const NewestَAccountGame: React.FC = () => {
         </div>
       </Animations>
       <LeftAnimation>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 my-10 ">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5 my-10 ">
           {Games?.length > 0 &&
             Games?.map((game) => (
               <AccountsGames
@@ -42,6 +43,7 @@ const NewestَAccountGame: React.FC = () => {
                 info={game.info}
                 _id={game._id}
                 tags={game.tags}
+                averageRating={game.averageRating}
                 key={game._id}
               />
             ))}

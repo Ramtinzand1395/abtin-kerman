@@ -5,6 +5,7 @@ import AddressModall from "./modalls/AddressModall";
 import {
   addOrderService,
   getUserInfoService,
+  zarinpalService,
 } from "../../services/ApiServices";
 import { toast } from "react-toastify";
 import { decodedUser, User } from "../../types";
@@ -13,7 +14,7 @@ import { jwtDecode } from "jwt-decode";
 import { Helmet } from "react-helmet";
 
 const ShopingInfo: React.FC = () => {
-  const { CardItems, cardQty  , removeFromCard} = useShopingcard();
+  const { CardItems, cardQty, removeFromCard } = useShopingcard();
   const totalPrice = CardItems.reduce((total, cardItem) => {
     const price = cardItem.data.price;
     return total + price * cardItem.ItemQty;
@@ -63,7 +64,7 @@ const ShopingInfo: React.FC = () => {
     };
     getUser();
   }, [Loadingdata]);
-
+  // zarin
   const handleAddOrder = async () => {
     try {
       const userId = decodedToken.userId;
@@ -74,9 +75,17 @@ const ShopingInfo: React.FC = () => {
         data: {
           CardItems,
           userId,
+          totalPrice
         },
       });
       toast.success(data.message);
+      localStorage.setItem("orderId" , data.orderId)
+      const { data: zarin, status } = await zarinpalService(totalPrice , "desc" ,"https://kermanatari.ir/payment-callback" );
+      console.log(zarin,"zarinres");
+      console.log(status, "status");
+      if (status === 200) {
+        window.location.href = zarin.url;
+    }
     } catch (err) {
       console.log(err);
     }
@@ -89,7 +98,7 @@ const ShopingInfo: React.FC = () => {
       </Helmet>
       <div className="grid grid-cols-12 gap-5">
         <div className="col-span-12 md:col-span-9 border-2 rounded-lg p-5 mb-10">
-          <div className="border-2 mb-10 p-5 rounded-lg">
+          <div className="border-2 mb-10 p-5 rounded-lg bg-white">
             <h3 className="text-gray-600 text-xs font-tanha">
               آدرس تحویل سفارش
             </h3>
@@ -132,14 +141,14 @@ const ShopingInfo: React.FC = () => {
               تغییر یا ویرایش آدرس
             </button>
           </div>
-          <div className="border-2 mb-10 p-5 rounded-lg">
+          <div className="border-2 mb-10 p-5 rounded-lg bg-white">
             <h3 className="text-gray-600 text-xs font-tanha">کد تخفیف</h3>
             <p> کد تخفیف</p>
 
             <input title="DiscountCode" type="text" className="border-2" />
             <button>اعمال کد</button>
           </div>
-          <div className="grid grid-cols-6 gap-5 ">
+          <div className="grid grid-cols-6 gap-5 bg-white">
             {CardItems?.map((item) => (
               <div
                 key={item.id}
@@ -154,53 +163,53 @@ const ShopingInfo: React.FC = () => {
                     alt={item.data.image.imageName}
                   />
                   {item.SelectedPlatform === null ? (
-                    <IncreaseproductBtn 
-                    id={item.id} 
-                    ItemQty={item.ItemQty} 
-                    SelectedPlatform={item.SelectedPlatform} 
-                    data={item.data}  
+                    <IncreaseproductBtn
+                      id={item.id}
+                      ItemQty={item.ItemQty}
+                      SelectedPlatform={item.SelectedPlatform}
+                      data={item.data}
                     />
                   ) : (
                     <svg
-                    className="cursor-pointer bg-red-500 w-full p-2 mt-5"
-                    onClick={() => removeFromCard(item.id)}
-                    width="30px"
-                    height="30px"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.17065 4C9.58249 2.83481 10.6937 2 11.9999 2C13.3062 2 14.4174 2.83481 14.8292 4"
-                      stroke="#fff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M20.5 6H3.49988"
-                      stroke="#fff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5"
-                      stroke="#fff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M9.5 11L10 16"
-                      stroke="#fff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M14.5 11L14 16"
-                      stroke="#fff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
+                      className="cursor-pointer bg-red-500 w-full p-2 mt-5"
+                      onClick={() => removeFromCard(item.id)}
+                      width="30px"
+                      height="30px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.17065 4C9.58249 2.83481 10.6937 2 11.9999 2C13.3062 2 14.4174 2.83481 14.8292 4"
+                        stroke="#fff"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M20.5 6H3.49988"
+                        stroke="#fff"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5"
+                        stroke="#fff"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M9.5 11L10 16"
+                        stroke="#fff"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M14.5 11L14 16"
+                        stroke="#fff"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
                   )}
                 </div>
               </div>

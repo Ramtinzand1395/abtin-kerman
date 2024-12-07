@@ -27,7 +27,7 @@ const ShopingCardPage: React.FC = () => {
   return (
     <div className="md:container md:mx-auto mx-2 my-5">
       <div className="grid grid-cols-12 gap-5">
-        <div className="col-span-12 md:col-span-9 border-2 rounded-lg p-5 mb-10">
+        <div className="col-span-12 md:col-span-9 border-2 rounded-lg p-5 mb-10 bg-white">
           <p className=" mb-2">سبد خرید</p>
           <span className="font-tanha text-gray-300">{cardQty} کالا</span>
           <div className="flex flex-col ">

@@ -1,51 +1,49 @@
 import React, { useEffect, useState } from "react";
-import {
-  deleteGameService,
-  getGameService,
-} from "../../../../services/ApiServices";
 import { GameData } from "../../../../types";
 import BtnTow from "../../../utils/BtnTow";
 import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
 import EditeGameModall from "./editeGame/EditeGameModall";
-// import Spiner from "../../../utils/Spiner";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../../../app/store";
+import {
+  clearError,
+  deleteGame,
+  fetchGames,
+} from "../../../../features/game/gameSlice";
+import Spiner from "../../../utils/Spiner";
 
 const GamesTable: React.FC = () => {
-  const [Games, setGames] = useState<GameData[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { games, loading, error, totallPage } = useSelector(
+    (state) => state.game
+  );
+
   const [orderDesc, setOrderDesc] = useState("newestFirst");
   const [pageNumber, setPageNumber] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [LodaingGames, setLodaingGames] = useState(false);
   const [OpenModall, setOpenModall] = useState(false);
-  const [SelectedProduct, setSelectedProduct] = useState<GameData>(Games[0]);
+  const [SelectedProduct, setSelectedProduct] = useState<GameData>(
+    {} as GameData
+  );
+
+  useEffect(() => {
+    dispatch(fetchGames({ pageNumber, orderDesc }));
+  }, [dispatch, pageNumber, orderDesc]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
+
   const handleOpenModall = (product: GameData) => {
     setOpenModall(true);
     setSelectedProduct(product);
   };
-  useEffect(() => {
-    const getGames = async () => {
-      try {
-        const { data } = await getGameService(pageNumber, orderDesc);
-        console.log(data)
-        setGames(data.games);
-        setTotalPages(data.totalPages);
-      } catch (err) {
-        console.log(err);
-      } 
-    };
-    getGames();
-  }, [orderDesc, pageNumber , LodaingGames]);
-  // !ادیت گیم حذف بشه و مدال اضافه بشه
-  const handleDeleteGame = async (id: string) => {
-    setLodaingGames(true);
-    try {
-      const { data } = await deleteGameService(id);
-      toast.success(data.message);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLodaingGames(false);
-    }
+
+  const handleDeleteGame = (id: string) => {
+    dispatch(deleteGame(id));
   };
   //  ? DELETE
   const confirmAlertmodall = (game: GameData) => {
@@ -81,7 +79,8 @@ const GamesTable: React.FC = () => {
       },
     });
   };
-  // if (LodaingGames === true)  <Spiner />;
+  
+  if (loading === true) return <Spiner />;
   return (
     <div className="w-full md:container md:mx-auto mx-2 my-10">
       <select title="Order" onChange={(e) => setOrderDesc(e.target.value)}>
@@ -112,7 +111,7 @@ const GamesTable: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {Games?.map((data) => (
+                {games?.map((data: GameData) => (
                   <tr
                     key={data._id}
                     className="border-b text-start border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100  "
@@ -183,7 +182,7 @@ const GamesTable: React.FC = () => {
               Previous
             </button>
           </li>
-          {[...Array(totalPages)].map((_, index) => (
+          {[...Array(totallPage)].map((_, index) => (
             <li key={index}>
               <button
                 className={`relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 ${
@@ -200,12 +199,12 @@ const GamesTable: React.FC = () => {
           <li>
             <button
               className={`relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 ${
-                pageNumber === totalPages
+                pageNumber === totallPage
                   ? "pointer-events-none text-surface/50"
                   : ""
               }`}
               onClick={() =>
-                setPageNumber((prev) => Math.min(prev + 1, totalPages))
+                setPageNumber((prev) => Math.min(prev + 1, totallPage))
               }
             >
               Next
@@ -218,7 +217,6 @@ const GamesTable: React.FC = () => {
           SelectedProduct={SelectedProduct}
           setSelectedProduct={setSelectedProduct}
           setOpenModall={setOpenModall}
-          setLodaingGames={setLodaingGames}
         />
       )}
     </div>

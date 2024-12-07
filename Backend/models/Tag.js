@@ -3,10 +3,11 @@ const moment = require("moment-jalaali");
 const TagSchema = new mongoose.Schema({
   tagName: {
     type: String,
+    required: true,
   },
   createdAt: {
-    type: String, 
-    default: () => moment().format('jYYYY/jM/jD HH:mm:ss'), 
+    type: String,
+    default: () => moment().format("jYYYY/jM/jD HH:mm:ss"),
   },
 });
 

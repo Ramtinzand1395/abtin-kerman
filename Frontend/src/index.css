@@ -43,7 +43,9 @@ span {
   box-sizing: border-box;
   font-family: "vazir", Courier, monospace;
 }
-
+body {
+  background-color: #fdfafa;
+}
 .fixedImage {
   background-image: url("./assets/Off picture.png");
   background-size: 60%; /* or contain, or specific dimensions */
@@ -172,7 +174,7 @@ span {
 
 .primaryImage {
   display: block; /* Ensures the image is displayed */
-  height: 50vh; /* Set your desired height */
+  height: 30vh; /* Set your desired height */
   opacity: 1; /* Fully visible */
   transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth transition for opacity and transform */
 }
@@ -191,9 +193,11 @@ span {
 }
 
 .divhover:hover .secondImage {
-  height: 50vh; /* Full height on hover */
+  height: 35vh; /* Full height on hover */
+  border-radius: 10%;
   opacity: 1; /* Fade in the second image */
   transform: translateY(0); /* Move to its original position */
+  padding: 15px;
 }
 
 /* 404 */
@@ -213,3 +217,34 @@ span {
     top: 0px;
   }
 }
+/* account games card */
+.accountgames-background {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.8s ease-in-out;
+}
+
+
+
+/* Default styles for larger screens */
+.scale-bg {
+  width: 100%;
+  height: 100%;
+  transform: translateY(60%);
+  transition: transform 0.4s ease-in-out;
+}
+
+.accountgames-background:hover .scale-bg {
+  transform: translateY(0%);
+}
+
+/* Override for small screens */
+@media (max-width: 640px) {
+  .scale-bg {
+    width: 100%;
+    height: 100%;
+    transform: translateY(0); /* Reset transform for smaller screens */
+  }
+}
+

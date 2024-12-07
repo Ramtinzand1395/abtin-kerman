@@ -2,32 +2,30 @@ import React, { useEffect, useState } from "react";
 import { Product } from "../../../../../types";
 import EditeImageTab from "./EditeImageTab";
 import BtnTow from "../../../../utils/BtnTow";
-import { toast } from "react-toastify";
-import { updateProductService } from "../../../../../services/ApiServices";
 import EditeProductInfo from "./EditeProductInfo";
 import ProductAdditionalExplanations from "../../../CkEditor/ProductAdditionalExplanations";
 import EditProductTag from "./EditProductTag";
+import { useDispatch } from "react-redux";
+import { updateProduct } from "../../../../../features/product/productSlice";
 interface EditeProductModallProps {
   SelectedProduct: Product;
   setOpenModall: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedProduct: React.Dispatch<React.SetStateAction<Product>>;
-  setLodaingProducts: React.Dispatch<React.SetStateAction<boolean>>;
 }
 type TabKey =
   | "productImage"
   | "productInfo"
   | "aboutProduct"
-  | "createProducts"
+  | "createProducts";
 const EditeProductModall: React.FC<EditeProductModallProps> = ({
   SelectedProduct,
   setOpenModall,
   setSelectedProduct,
-  setLodaingProducts,
 }) => {
   const [activeTab, setActiveTab] = useState<TabKey>("productImage");
   const renderContent = () => tabContent[activeTab] || tabContent.productImage;
 
-    const tabs: { key: TabKey; label: string }[] = [
+  const tabs: { key: TabKey; label: string }[] = [
     { key: "productImage", label: " عکس محصول " },
     { key: "productInfo", label: "  اطلاعات فنی محصول " },
     { key: "aboutProduct", label: " درباره محصول " },
@@ -42,17 +40,10 @@ const EditeProductModall: React.FC<EditeProductModallProps> = ({
       document.body.style.overflow = "unset";
     };
   }, []);
+  const dispatch = useDispatch();
   const handleUpdateProduct = async () => {
-    setLodaingProducts(true);
-    try {
-      const { data } = await updateProductService(SelectedProduct);
-      console.log(SelectedProduct, "SelectedProduct");
-      toast.success(data.message);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLodaingProducts(false);
-    }
+    dispatch(updateProduct(SelectedProduct));
+    setOpenModall(false);
   };
   const closeModall = () => {
     setOpenModall(false);
@@ -97,7 +88,7 @@ const EditeProductModall: React.FC<EditeProductModallProps> = ({
       >
         <div className="flex items-center justify-between sticky bg-white top-0">
           <p className="flex items-center"> ویرایش {SelectedProduct.title}</p>
-             <svg
+          <svg
             className="cursor-pointer m-4 "
             onClick={() => setOpenModall(false)}
             width="30px"

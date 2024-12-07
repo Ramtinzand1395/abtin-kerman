@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import { Weblog } from "../../../types";
 import EditorImageModall from "./EditorImageModall";
 import { Editor, EventInfo } from "ckeditor5";
+import { useDispatch } from "react-redux";
+import { addBlog } from "../../../features/blog/blogSlice";
 const Ckeditor = () => {
   const [WeblogData, setWeblogData] = useState<Weblog>({
     title: "",
@@ -34,27 +36,12 @@ const Ckeditor = () => {
       body: data,
     }));
   };
-  const handleAddBlog = async (e: React.FormEvent) => {
+  const dispatch = useDispatch();
+  const handleAddBlog = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const { data } = await createBlogService(WeblogData);
-      toast.success(data.message);
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch(addBlog(WeblogData));
   };
-  // const [Blogs, setBlogs] = useState([]);
-  // useEffect(() => {
-  //   const getBlogs = async () => {
-  //     try {
-  //       const { data } = await getBlogsService();
-  //       setBlogs(data.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   getBlogs();
-  // }, []);
+
   const [OpenAddImageModall, setOpenAddImageModall] = useState(false);
   const removePrimaryImage = () => {
     setWeblogData((prev) => ({
@@ -79,21 +66,21 @@ const Ckeditor = () => {
             onClick={() => setOpenAddImageModall(!OpenAddImageModall)}
             className="border-2 p-2 mx-2 hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-150 ease-in-out delay-150 rounded-xl"
           >
-             <svg
-                width="20px"
-                height="20px"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6 12H18M12 6V18"
-                  stroke="#fff"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+            <svg
+              width="20px"
+              height="20px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 12H18M12 6V18"
+                stroke="#fff"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </span>
         </label>
         {OpenAddImageModall && (
@@ -124,8 +111,13 @@ const Ckeditor = () => {
           }}
           config={{
             ckfinder: {
-              uploadUrl: "http://localhost:5000/api/upload", // Your API endpoint for handling image uploads
+              // uploadUrl: "http://localhost:5000/api/upload", // Your API endpoint for handling image uploads
               // uploadUrl: "https://abtin-kerman-backend-new.vercel.app/api/upload", // Your API endpoint for handling image uploads
+              uploadUrl: "https://api.kermanatari.ir/api/upload", // Your API endpoint for handling image uploads
+              options: { language: "fa" },
+            },
+            alignment: {
+              options: ["left", "right", "center", "justify"],
             },
           }}
           onChange={handleCkeditorState}

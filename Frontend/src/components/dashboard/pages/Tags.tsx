@@ -1,76 +1,69 @@
 import React, { useEffect, useState } from "react";
-import {
-  addCategoriesService,
-  addTagService,
-  delCatService,
-  delTagService,
-  getCategoriesService,
-  getTagService,
-} from "../../../services/ApiServices";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import { Category, Tag } from "../../../types";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../../app/store";
+import {
+  addCategory,
+  addTag,
+  clearError,
+  fetchCats,
+  fetchTags,
+  removeCategory,
+  removeTags,
+} from "../../../features/tag&cat/tag&cat";
+import Spiner from "../../utils/Spiner";
 
 const Tags: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { categories, tags, loading, error } = useSelector(
+    (state) => state.cats_tags
+  );
+
   const [Tag, setTag] = useState("");
   const [category, setcategory] = useState("");
-  const [Tags, setTags] = useState<Tag[]>([]);
-  const [categories, setcategories] = useState<Category[]>([]);
-  const [Loadingtag, setLoadingtag] = useState(false);
-  const handleAddTag = async () => {
-    setLoadingtag(true);
-    try {
-      const { data, status } = await addTagService(Tag);
-      if (status === 201) {
-        toast.success(data.message);
-        return;
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoadingtag(false);
+
+  useEffect(() => {
+    dispatch(fetchTags());
+    dispatch(fetchCats());
+  }, [dispatch]);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
     }
+  }, [error, dispatch]);
+
+  const handleAddTag = () => {
+    dispatch(addTag(Tag));
+    setTag("");
+  };
+  const handleAddCategory = () => {
+    dispatch(addCategory(category));
+    setcategory("");
   };
 
-  const handleAddCategory = async () => {
-    setLoadingtag(true);
-    try {
-      const { data, status } = await addCategoriesService(category);
-      if (status === 201) {
-        toast.success(data.message);
-        return;
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoadingtag(false);
-    }
+  const handleDeleteTag = async (id: string) => {
+    dispatch(removeTags(id));
   };
-  useEffect(() => {
-    const getdata = async () => {
-      try {
-        const { data } = await getTagService();
-        const { data: cats } = await getCategoriesService();
-        setcategories(cats);
-        setTags(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getdata();
-  }, [Loadingtag]);
+  const handleDeleteCategory = async (id: string) => {
+    dispatch(removeCategory(id));
+  };
+
   //  ? DELETE
   const confirmAlertmodall = (tag: Tag) => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <div className="bg-[#0007ff] border-2 rounded-2xl p-4 border-white w-[50vw] h-auto">
+          <div className="bg-secondery border-2 rounded-2xl p-4 border-white w-[40vw] h-auto">
             <p className="text-white font-vazir my-5 ">
-              are you sure you want to Delete
+              آیا مطمعنی میخواهی
               <span className="text-red-400 font-bold text-xl">
                 {" "}
                 {tag.tagName}{" "}
               </span>
+              را حذف کنی؟
             </p>
             <button
               onClick={() => {
@@ -79,32 +72,18 @@ const Tags: React.FC = () => {
               }}
               className="bg-green-500 rounded-lg py-2 px-10 border-white border-2 text-black hover:bg-green-400 ml-5"
             >
-              yes iam sure
+              بله
             </button>
             <button
               onClick={onClose}
               className="bg-red-500 rounded-lg py-2 px-10 border-white border-2 text-black hover:bg-red-400 ml-5"
             >
-              exite
+              کنسل
             </button>
           </div>
         );
       },
     });
-  };
-  const handleDeleteTag = async (id: string) => {
-    setLoadingtag(true);
-    try {
-      const { data, status } = await delTagService(id);
-      if (status === 202) {
-        toast.success(data.message);
-        return;
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoadingtag(false);
-    }
   };
 
   //   !مثل هم هستند حذف بشن
@@ -140,20 +119,9 @@ const Tags: React.FC = () => {
       },
     });
   };
-  const handleDeleteCategory = async (id: string) => {
-    setLoadingtag(true);
-    try {
-      const { data, status } = await delCatService(id);
-      if (status === 202) {
-        toast.success(data.message);
-        return;
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoadingtag(false);
-    }
-  };
+
+  if (loading === true) return <Spiner />;
+
   return (
     <div className=" w-full md:container md:mx-auto mx-2 my-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -239,7 +207,7 @@ const Tags: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {Tags?.map((tag) => (
+              {tags?.map((tag) => (
                 <tr
                   key={tag._id}
                   className="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 text-start "

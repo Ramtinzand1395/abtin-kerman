@@ -9,6 +9,7 @@ export default function usePaginationBlogs(
   const [Blogs, setBlogs] = useState<Weblog[]>(
     []
   );
+  
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(false);
 
@@ -25,7 +26,7 @@ export default function usePaginationBlogs(
         } else {
           setBlogs((prev) => [...prev, ...data.data]);
         }
-        if (data.data.length < 5) {
+        if (data.data.length < 4) {
           setHasMore(false);
         } else {
           setHasMore(true);

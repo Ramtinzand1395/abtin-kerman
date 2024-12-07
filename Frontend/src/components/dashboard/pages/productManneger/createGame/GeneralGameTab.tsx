@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import BtnTow from "../../../../utils/BtnTow";
-import { toast } from "react-toastify";
-import { addGameService } from "../../../../../services/ApiServices";
 import { GameData } from "../../../../../types";
 import AddGameImageTab from "./AddGameImageTab";
 import AddGameTitleTab from "./AddGameTitleTab";
 import AddGameCatsandTags from "./AddGameCatsandTags";
 import AddGameSepicifications from "./AddGameSepicifications";
 import AddAboutGameTab from "./AddAboutGameTab";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../../../app/store";
+import { addGame } from "../../../../../features/game/gameSlice";
 
 type TabKey =
   | "GameImage"
@@ -17,8 +18,9 @@ type TabKey =
   | "GameCatsandTags";
 
 const GeneralGameTab: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<TabKey>("GameImage");
+  const dispatch = useDispatch<AppDispatch>();
 
+  const [activeTab, setActiveTab] = useState<TabKey>("GameImage");
   const renderContent = () => tabContent[activeTab] || tabContent.GameImage;
 
   const tabs: { key: TabKey; label: string }[] = [
@@ -43,6 +45,7 @@ const GeneralGameTab: React.FC = () => {
     tags: [],
     features: [],
     additionalExplanations: "",
+    averageRating: 0,
   });
 
   const tabContent = {
@@ -59,10 +62,7 @@ const GeneralGameTab: React.FC = () => {
       <AddGameCatsandTags GameData={GameData} setGameData={setGameData} />
     ),
     GameSepicifications: (
-      <AddGameSepicifications
-        GameData={GameData}
-        setGameData={setGameData}
-      />
+      <AddGameSepicifications GameData={GameData} setGameData={setGameData} />
     ),
     AboutGame: (
       <AddAboutGameTab GameData={GameData} setGameData={setGameData} />
@@ -71,8 +71,7 @@ const GeneralGameTab: React.FC = () => {
 
   const handleAddGame = async () => {
     try {
-      const { data } = await addGameService(GameData);
-      toast.success(data.message);
+      dispatch(addGame(GameData));
     } catch (err) {
       console.log(err);
     }

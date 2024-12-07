@@ -15,7 +15,7 @@ export default {
         seconderyGreen: "#acf0d1",
         link:"#1E8EFF"
       },
+      
     },
   },
-  plugins: [],
 };

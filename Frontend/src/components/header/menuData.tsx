@@ -18,7 +18,7 @@ export const MenuData = [
       {
         title: "پلی استیشن",
         options: [
-          { label: "پلی استیشن", link: "/products/playstations" },
+          { label: "پلی استیشن", link: "/products/playstations/" },
           { label: "پلی استیشن 5", link: "/products/playstations/playstation-5" },
           { label: "پلی استیشن 4", link: "/products/playstations/playstation-4" },
         ],
@@ -40,8 +40,8 @@ export const MenuData = [
       {
         title: "کنسول‌های کارکرده",
         options: [
-          { label: "پلی استیشن 4", link: "/products/playstations/used-playstation-4" },
-          { label: "پلی استیشن 3", link: "/products/playstations/used-playstation-3" },
+          { label: "پلی استیشن 4", link: "/products/playstations/playstation-4" },
+          { label: "پلی استیشن 3", link: "/products/playstations/playstation-3" },
         ],
       },
     ],

@@ -53,6 +53,7 @@ type UserInfoProps = {
 };
 const SERVER_URL = "http://localhost:5000/api";
 // const SERVER_URL = "https://abtin-kerman-backend-new.vercel.app/api";
+// const SERVER_URL = "https://api.kermanatari.ir/api";
 
 const token = localStorage.getItem("User");
 
@@ -72,6 +73,7 @@ export const SmsService = () => {
   const url = `${SERVER_URL}/loginSms`;
   return axios.get(url);
 };
+// *ریداکس
 // !UploadServices
 // @desc  create OR add User
 // @route PUT http://localhost:5000/api/login
@@ -86,7 +88,7 @@ export const UploadImageService = (formData: FormData) => {
 
   return axios.post(url, formData, config);
 };
-
+// *ریداکس
 // @desc  create OR add User
 // @route PUT http://localhost:5000/api/login
 export const GetImageService = () => {
@@ -109,13 +111,13 @@ export const addGameService = (data: GameData) => {
 
 //* @desc  get game
 //* @route GET http://localhost:5000/api/login
-export const getGameService = (pageNumber: number, sortOrder: string) => {
+export const getGamesService = (pageNumber: number, sortOrder: string) => {
   const url = `${SERVER_URL}/get-game?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
   return axios.get(url);
 };
 //? @desc  get game
 //? @route GET http://localhost:5000/api/login
-export const getGameSingleService = (gameId: string) => {
+export const getSingleGameService = (gameId: string) => {
   const url = `${SERVER_URL}/get-singleGame/${gameId}`;
   return axios.get(url);
 };
@@ -255,10 +257,8 @@ export const updateProductService = (data: Product) => {
 // //? @route DELETE http://localhost:5000/api/update-game
 export const deleteProductService = (id: string) => {
   const url = `${SERVER_URL}/delete-product`;
-  console.log(id);
   return axios.delete(url, {
     data: { productId: id },
-
     headers: {
       "Content-Type": "application/json",
       Authorization: token,
@@ -294,13 +294,16 @@ export const deleteCommentService = (commentId: string) => {
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
 export const confirmCommentService = (commentId: string) => {
   const url = `${SERVER_URL}/confirm-comment/${commentId}`;
-  console.log(token,"tok")
-  return axios.post(url,{}, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token,
-    },
-  });
+  return axios.post(
+    url,
+    {},
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    }
+  );
 };
 // ?BLOG
 //* @desc  confirm comment
@@ -327,7 +330,7 @@ export const getBlogService = (blogId: string | undefined) => {
   const url = `${SERVER_URL}/get-blog/${blogId}`;
   return axios.get(url);
 };
-// sssssss
+// ! LAST REDUX
 // ? FILTER PRODUCTS
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
@@ -341,6 +344,7 @@ export const getFiltredProductsService = (
   const url = `${SERVER_URL}/get-filtred-products/${slug1}/${slug2}?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
   return axios.get(url);
 };
+// !
 // !FILTRED GAMES
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
@@ -352,7 +356,7 @@ export const getFiltredAccountGamesService = (
   const url = `${SERVER_URL}/get-filtred-games/${category}?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
   return axios.get(url);
 };
-
+// !
 // ? USERINFO
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
@@ -360,6 +364,7 @@ export const addUserInfoService = (data: UserInfoProps) => {
   const url = `${SERVER_URL}/add-user-info`;
   return axios.post(url, data);
 };
+// !
 // ?UPDATEuSER
 //* @desc  confirm comment
 //* @route POST http://localhost:5000/api/confirm-comment/:commentId
@@ -466,4 +471,27 @@ export const getUserFavoriteService = (userId: string) => {
 export const remUserFavoriteService = (userId: string, itemId: string) => {
   const url = `${SERVER_URL}/remove-user-favorite`;
   return axios.post(url, { userId, itemId });
+};
+// * zarin
+//* @desc  REMOVE FAVORITES
+//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const zarinpalService = (
+  amount: number,
+  description: string,
+  callbackUrl: string
+) => {
+  const url = `${SERVER_URL}/payment`;
+  return axios.post(url, { amount, description, callbackUrl });
+};
+//? @desc  zarinCheck
+//? @route POST http://localhost:5000/api/confirm-comment/:commentId
+export const zarinpalCheckService = (
+  authority: string,
+  status: string,
+  orderId: string
+) => {
+  const url = `${SERVER_URL}/payment-callback`;
+  return axios.get(url, {
+    params: { Authority: authority, Status: status, orderId },
+  });
 };
