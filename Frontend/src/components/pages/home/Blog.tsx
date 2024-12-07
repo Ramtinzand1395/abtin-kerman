@@ -8,10 +8,11 @@ import { clearError, fetchBlogs } from "../../../features/blog/blogSlice";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import Spiner from "../../utils/Spiner";
+import { AppDispatch, RootState } from "../../../app/store";
 const Blog: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { loading, blogs, error } = useSelector((state) => state.blog);
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading, blogs, error } = useSelector((state:RootState) => state.blog);
 
   useEffect(() => {
     dispatch(fetchBlogs({ pageNumber: 1, sortOrder: "newestFirst" }));

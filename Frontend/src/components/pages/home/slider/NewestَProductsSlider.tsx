@@ -16,10 +16,11 @@ import {
   fetchProducts,
 } from "../../../../features/product/productSlice";
 import Spiner from "../../../utils/Spiner";
+import { AppDispatch, RootState } from "../../../../app/store";
 
 const NewestProductsSlider: React.FC = () => {
-  const dispatch = useDispatch();
-  const { loading, products, error } = useSelector((state) => state.product);
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading, products, error } = useSelector((state:RootState) => state.product);
 
   useEffect(() => {
     dispatch(fetchProducts({ pageNumber: 1, orderDesc: "newestFirst" }));

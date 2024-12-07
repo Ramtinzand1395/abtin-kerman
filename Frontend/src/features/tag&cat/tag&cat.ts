@@ -54,7 +54,7 @@ export const fetchCats = createAsyncThunk(
 // Async thunk to add a category
 export const addCategory = createAsyncThunk(
   "cats&tags/addCategory",
-  async (category: Category, { rejectWithValue }) => {
+  async (category: string, { rejectWithValue }) => {
     try {
       const { data } = await addCategoriesService(category);
       return data;
@@ -67,7 +67,7 @@ export const addCategory = createAsyncThunk(
 // Async thunk to add a tag
 export const addTag = createAsyncThunk(
   "cats&tags/addTag",
-  async (Tag: Tag, { rejectWithValue }) => {
+  async (Tag: string, { rejectWithValue }) => {
     try {
       const { data } = await addTagService(Tag);
       return data;

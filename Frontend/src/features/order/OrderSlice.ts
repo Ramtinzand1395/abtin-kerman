@@ -1,6 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-import { toast } from "react-toastify";
 import { Order } from "../../types";
 import { getUserOrdersService } from "../../services/ApiServices";
 
@@ -8,14 +6,14 @@ interface orderState {
   userOrders: Order[] | null;
   loading: boolean;
   error: string | null;
-  totallPage: number | null;
+  totallPage: number ;
 }
 
 const initialState: orderState = {
   loading: false,
   userOrders: null,
   error: null,
-  totallPage: null,
+  totallPage: 1,
 };
 
 // Async thunk to fetch user orders

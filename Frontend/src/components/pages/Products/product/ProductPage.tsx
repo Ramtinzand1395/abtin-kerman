@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  addUserFavoritesService,
-  getProductService,
-  getUserFavoriteService,
-} from "../../../../services/ApiServices";
+import { addUserFavoritesService } from "../../../../services/ApiServices";
 import { useParams } from "react-router-dom";
 import BtnIcon from "../../../utils/BtnIcon";
 import ConnectedProducts from "../../../utils/ConnectedProducts";
-import { decodedUser, FavoritesProps, Product } from "../../../../types";
+import { decodedUser, FavoritesProps } from "../../../../types";
 import Tabs from "../../../utils/tab/Tabs";
 import { useShopingcard } from "../../../context/ShopingCard";
 import { toast } from "react-toastify";
@@ -20,20 +16,22 @@ import {
   fetchProduct,
 } from "../../../../features/product/productSlice";
 import Spiner from "../../../utils/Spiner";
+import { AppDispatch, RootState } from "../../../../app/store";
 
 const ProductPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const { loading, products, error } = useSelector((state) => state.product);
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading, product, error } = useSelector(
+    (state: RootState) => state.product
+  );
 
   const { InceraseCardQty, removeFromCard, DecreaseCardQty, getItemqty } =
     useShopingcard();
-
 
   const [Favorites, setFavorites] = useState<FavoritesProps[]>([]);
   const { productId } = useParams();
 
   useEffect(() => {
-    dispatch(fetchProduct(productId));
+    productId && dispatch(fetchProduct(productId));
   }, [dispatch]);
 
   useEffect(() => {
@@ -43,29 +41,29 @@ const ProductPage: React.FC = () => {
     }
   }, [error, dispatch]);
   const [currentImage, setCurrentImage] = useState<string>(
-    products?.primaryImage?.direction
+    product?.primaryImage?.direction || ""
   );
 
   const handleAddToCart = () => {
     const data = {
-      title: products?.title || "",
-      image: products?.primaryImage || {
+      title: product?.title || "",
+      image: product?.primaryImage || {
         imageName: "",
         direction: "",
         createdAt: "",
         _id: "",
       },
-      mainQty: products?.quantity || 0,
-      price: products?.price || 0,
-      features: products?.features || [],
-      tags: products?.tags || [],
+      mainQty: product?.quantity || 0,
+      price: product?.price || 0,
+      features: product?.features || [],
+      tags: product?.tags || [],
     };
-    products?._id && InceraseCardQty(products?._id, null, data);
+    product?._id && InceraseCardQty(product?._id, null, data);
   };
   const handleImageClick = (imageDirection: string) => {
     setCurrentImage(imageDirection);
   };
-  const qty = products?._id && getItemqty(products?._id);
+  const qty = product?._id && getItemqty(product?._id);
 
   const CopyLinkButton = () => {
     const url = window.location.href;
@@ -112,7 +110,7 @@ const ProductPage: React.FC = () => {
   return (
     <div className="md:container md:mx-auto mx-2">
       <Helmet>
-        <title>{products?.title}</title>
+        <title>{product?.title}</title>
         <meta name="description" content="Browse our product." />
       </Helmet>
       <div className="grid grid-cols-12 gap-5">
@@ -238,7 +236,7 @@ const ProductPage: React.FC = () => {
               className="w-full h-full object-contain max-w-[300px] max-h-[300px] my-5"
             />
             <div className=" items-center hidden md:flex">
-              {products?.additionalImages?.map((img) => (
+              {product?.additionalImages?.map((img) => (
                 <img
                   key={img._id}
                   // src={`http://localhost:5000/${img?.direction}`}
@@ -252,12 +250,12 @@ const ProductPage: React.FC = () => {
               <img
                 // src={`http://localhost:5000/${products?.primaryImage?.direction}`}
                 //! change
-                src={`${products?.primaryImage?.direction}`}
+                src={`${product?.primaryImage?.direction}`}
                 alt=""
                 className="w-full h-full object-contain max-w-[70px] max-h-[70px] border-2 border-primary p-2 mx-2 cursor-pointer"
                 onClick={() =>
-                  products?.primaryImage?.direction &&
-                  handleImageClick(products?.primaryImage?.direction)
+                  product?.primaryImage?.direction &&
+                  handleImageClick(product?.primaryImage?.direction)
                 }
               />
             </div>
@@ -265,10 +263,10 @@ const ProductPage: React.FC = () => {
 
           <div className="">
             <div className="flex flex-col">
-              <h3 className="my-2 text-primary">{products?.title}</h3>
+              <h3 className="my-2 text-primary">{product?.title}</h3>
               <label className="text-secondery mb-10">
                 نظرات کاربران :
-                <span className="mr-2">{products?.comments?.length}</span>
+                <span className="mr-2">{product?.comments?.length}</span>
                 نظر
               </label>
             </div>
@@ -278,7 +276,7 @@ const ProductPage: React.FC = () => {
             </label>
             <div className="border-2 border-secondery rounded-lg w-full md:w-[30vw] p-3 mt-4">
               <ul>
-                {products?.Specifications?.map((feature, index) => (
+                {product?.Specifications?.map((feature, index) => (
                   <li className="my-4 border-b-2 p-1" key={index}>
                     <span className="text-gray-600">{feature.key}:</span>{" "}
                     {feature.value}
@@ -287,7 +285,7 @@ const ProductPage: React.FC = () => {
               </ul>
             </div>
             <div className="flex items-center">
-              {products?.tags?.map((tag) => (
+              {product?.tags?.map((tag) => (
                 <p key={tag._id} className="m-2 text-secondery mt-5">
                   {tag.tagName}#
                 </p>
@@ -309,10 +307,8 @@ const ProductPage: React.FC = () => {
           md:block
           "
           >
-            <p className="font-bold">{products?.title}</p>
-            <p className="text-sm text-gray-400 mt-5">
-              {products?.description}
-            </p>
+            <p className="font-bold">{product?.title}</p>
+            <p className="text-sm text-gray-400 mt-5">{product?.description}</p>
           </div>
           <div
             className="
@@ -332,27 +328,27 @@ const ProductPage: React.FC = () => {
             </p>
             <p
               className={`font-tanha mb-2 bg-blue-50  p-5 rounded-xl ${
-                products?.inStock ? "text-green-700" : "text-red-700"
+                product?.inStock ? "text-green-700" : "text-red-700"
               }`}
             >
               وضعیت انبار :{" "}
-              {products?.inStock
-                ? `  ${products?.quantity} عدد  موجود در انبار `
+              {product?.inStock
+                ? `  ${product?.quantity} عدد  موجود در انبار `
                 : "موجود نیست"}
             </p>
           </div>
           <div className="flex flex-col">
             <p className="font-semibold  text-xl mb-2">
-              {products?.price} تومان
+              {product?.price} تومان
             </p>
             {qty && qty > 0 ? (
               <div className="flex items-center justify-around border-2 rounded-lg py-2 w-32 bg-white">
-                {qty < Number(products.quantity) ? (
+                {qty < Number(product.quantity) ? (
                   <svg
                     className="cursor-pointer text-secondery"
                     onClick={() =>
-                      products._id &&
-                      InceraseCardQty(products._id, null, {
+                      product._id &&
+                      InceraseCardQty(product._id, null, {
                         title: "",
                         image: {
                           imageName: "",
@@ -388,9 +384,7 @@ const ProductPage: React.FC = () => {
                 {qty === 1 ? (
                   <svg
                     className="cursor-pointer text-secondery"
-                    onClick={() =>
-                      products?._id && removeFromCard(products?._id)
-                    }
+                    onClick={() => product?._id && removeFromCard(product?._id)}
                     width="20px"
                     height="20px"
                     viewBox="0 0 24 24"
@@ -432,7 +426,7 @@ const ProductPage: React.FC = () => {
                   <svg
                     className="cursor-pointer text-secondery"
                     onClick={() =>
-                      products?._id && DecreaseCardQty(products?._id)
+                      product?._id && DecreaseCardQty(product?._id)
                     }
                     width="20px"
                     height="20px"
@@ -476,7 +470,7 @@ const ProductPage: React.FC = () => {
           </div>
         </div>
       </div>
-      {products && <Tabs Product={products} />}
+      {product && <Tabs Product={product} />}
       <ConnectedProducts />
     </div>
   );

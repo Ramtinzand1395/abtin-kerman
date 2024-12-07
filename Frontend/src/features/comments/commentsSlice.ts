@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { Comment, CommentStrProps } from "../../types";
 import {
@@ -87,14 +87,11 @@ const commentsSlice = createSlice({
       .addCase(fetchComments.pending, (state) => {
         state.loading = true;
       })
-      .addCase(
-        fetchComments.fulfilled,
-        (state, action: PayloadAction<Comment[]>) => {
-          state.loading = false;
-          state.comments = action.payload.data;
-          state.error = null;
-        }
-      )
+      .addCase(fetchComments.fulfilled, (state, action) => {
+        state.loading = false;
+        state.comments = action.payload.data;
+        state.error = null;
+      })
       .addCase(fetchComments.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -105,14 +102,11 @@ const commentsSlice = createSlice({
       .addCase(addComments.pending, (state) => {
         state.loading = true;
       })
-      .addCase(
-        addComments.fulfilled,
-        (state, action: PayloadAction<Comment[]>) => {
-          state.loading = false;
-          state.error = null;
-          toast.success(action.payload.message);
-        }
-      )
+      .addCase(addComments.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        toast.success(action.payload.message);
+      })
       .addCase(addComments.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;

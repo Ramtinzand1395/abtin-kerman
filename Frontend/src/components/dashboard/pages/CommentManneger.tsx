@@ -13,10 +13,11 @@ import {
 } from "../../../features/comments/commentsSlice";
 import Spiner from "../../utils/Spiner";
 import { Helmet } from "react-helmet";
+import { AppDispatch, RootState } from "../../../app/store";
 
 const CommentManneger: React.FC = () => {
-  const dispatch = useDispatch();
-  const { comments, loading, error } = useSelector((state) => state.comment);
+  const dispatch = useDispatch<AppDispatch>();
+  const { comments, loading, error } = useSelector((state:RootState) => state.comment);
 
   useEffect(() => {
     dispatch(fetchComments());

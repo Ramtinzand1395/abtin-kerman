@@ -54,6 +54,7 @@ export interface Comment {
   // ! حتما بعدا بررسی بشه
   relatedData?: Product | GameData;
 }
+
 export interface Feature {
   key: string;
   value: string;

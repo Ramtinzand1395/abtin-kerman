@@ -5,14 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearError, fetchBlog } from "../../../features/blog/blogSlice";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet";
+import { AppDispatch, RootState } from "../../../app/store";
 
 const Blog: React.FC = () => {
-  const { blogId } = useParams();
-  const dispatch = useDispatch();
-  const { loading, blogs, error } = useSelector((state) => state.blog);
+  const { blogId } = useParams<{ blogId: string }>();
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading, blog, error } = useSelector(
+    (state: RootState) => state.blog
+  );
 
   useEffect(() => {
-    dispatch(fetchBlog(blogId));
+    blogId && dispatch(fetchBlog(blogId));
   }, [dispatch]);
 
   useEffect(() => {
@@ -23,16 +26,17 @@ const Blog: React.FC = () => {
   }, [error, dispatch]);
 
   if (loading) return <Spiner />;
+
   return (
     <>
       <Helmet>
-      <title>{blogs.title}</title>
-      <meta name="description" content="explore the blog" />
+        <title>{blog?.title}</title>
+        <meta name="description" content="explore the blog" />
       </Helmet>
 
       <div
         dangerouslySetInnerHTML={{
-          __html: blogs?.body || "",
+          __html: blog?.body || "",
         }}
         className="p-5 rounded-xl bg-white"
       ></div>

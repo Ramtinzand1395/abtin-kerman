@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 
 interface ProductState {
   products: Product[] | null;
+  product: Product | null;
   loading: boolean;
   error: string | null;
   totallPage: number | null;
@@ -19,6 +20,7 @@ interface ProductState {
 const initialState: ProductState = {
   loading: false,
   products: null,
+  product: null,
   error: null,
   totallPage: null,
 };
@@ -124,7 +126,7 @@ const productSlice = createSlice({
       .addCase(fetchProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.products = action.payload;
+        state.product = action.payload;
       })
       .addCase(fetchProduct.rejected, (state, action) => {
         state.loading = false;

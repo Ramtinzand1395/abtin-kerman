@@ -3,13 +3,12 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 
 import "ckeditor5/ckeditor5.css";
-import { createBlogService } from "../../../services/ApiServices";
-import { toast } from "react-toastify";
 import { Weblog } from "../../../types";
 import EditorImageModall from "./EditorImageModall";
 import { Editor, EventInfo } from "ckeditor5";
 import { useDispatch } from "react-redux";
 import { addBlog } from "../../../features/blog/blogSlice";
+import { AppDispatch } from "../../../app/store";
 const Ckeditor = () => {
   const [WeblogData, setWeblogData] = useState<Weblog>({
     title: "",
@@ -36,7 +35,7 @@ const Ckeditor = () => {
       body: data,
     }));
   };
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const handleAddBlog = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(addBlog(WeblogData));

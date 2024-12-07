@@ -10,6 +10,7 @@ import {
 
 interface blogState {
   blogs: Weblog[] | null;
+  blog: Weblog | null;
   loading: boolean;
   error: string | null;
   totallPage: number | null;
@@ -18,6 +19,7 @@ interface blogState {
 const initialState: blogState = {
   loading: false,
   blogs: null,
+  blog:null,
   error: null,
   totallPage: null,
 };
@@ -123,7 +125,7 @@ const blogSlice = createSlice({
       .addCase(fetchBlog.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.blogs = action.payload.blog;
+        state.blog = action.payload.blog;
       })
       .addCase(fetchBlog.rejected, (state, action) => {
         state.loading = false;

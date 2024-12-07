@@ -11,12 +11,13 @@ import {
 } from "../../../../features/order/OrderSlice";
 import { toast } from "react-toastify";
 import Spiner from "../../../utils/Spiner";
+import { AppDispatch, RootState } from "../../../../app/store";
 
 const UserOrders: React.FC = () => {
   const { userId } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { loading, userOrders, error, totallPage } = useSelector(
-    (state) => state.order
+    (state: RootState) => state.order
   );
 
   const [orderDesc, setOrderDesc] = useState("newestFirst");
@@ -25,9 +26,10 @@ const UserOrders: React.FC = () => {
   const [SelectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   useEffect(() => {
-    dispatch(
-      fetchUserOrders({ userId, pageNumber: 1, orderDesc: "newestFirst" })
-    );
+    userId &&
+      dispatch(
+        fetchUserOrders({ userId, pageNumber: 1, orderDesc: "newestFirst" })
+      );
   }, [dispatch, orderDesc, pageNumber, userId]);
 
   useEffect(() => {
@@ -36,21 +38,6 @@ const UserOrders: React.FC = () => {
       dispatch(clearError());
     }
   }, [error, dispatch]);
-  // console.log("first");
-  // useEffect(() => {
-  //   const getOrders = async () => {
-  //     if (userId) {
-  //       const { data } = await getUserOrdersService(
-  //         userId,
-  //         pageNumber,
-  //         orderDesc
-  //       );
-  //       setOrders(data.userOrders);
-  //       setTotalPages(data.totalPages);
-  //     }
-  //   };
-  //   getOrders();
-  // }, [orderDesc, pageNumber, userId]);
 
   const calculateTotalPrice = (items: OrderItems[]) => {
     return items.reduce((total, item) => {
@@ -63,7 +50,7 @@ const UserOrders: React.FC = () => {
   };
 
   if (loading) return <Spiner />;
-console.log(userOrders)
+
   return (
     <div className=" w-full md:container md:mx-auto mx-2">
       <Helmet>

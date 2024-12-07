@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import { Category, Tag } from "../../../types";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../../app/store";
+import { AppDispatch, RootState } from "../../../app/store";
 import {
   addCategory,
   addTag,
@@ -18,7 +18,7 @@ import Spiner from "../../utils/Spiner";
 const Tags: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { categories, tags, loading, error } = useSelector(
-    (state) => state.cats_tags
+    (state:RootState) => state.cats_tags
   );
 
   const [Tag, setTag] = useState("");

@@ -12,12 +12,13 @@ import BtnTow from "../BtnTow";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { addComments } from "../../../features/comments/commentsSlice";
+import { AppDispatch } from "../../../app/store";
 
 interface CommentsTabProps {
   Product: Product | GameData;
 }
 const CommentsTab: React.FC<CommentsTabProps> = ({ Product }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>(); 
   const location = useLocation();
   const { gameId, productId } = useParams();
 
