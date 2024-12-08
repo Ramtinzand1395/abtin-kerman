@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 // *
 interface AddImageModallProps {
   Product: Product;
@@ -7,36 +7,42 @@ interface AddImageModallProps {
 }
 import { Product, ImageType } from "../../types";
 // *
-import { GetImageService } from "../../services/ApiServices";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../app/store";
+import { toast } from "react-toastify";
+import { clearError, fetchImages } from "../../features/gallery/imageSlice";
+import Spiner from "../utils/Spiner";
 
 const AddImageModallProduct: React.FC<AddImageModallProps> = ({
   setOpenAddImageModall,
   setProduct,
   Product,
 }) => {
-  const [Images, setImages] = useState<ImageType[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { images, loading, error } = useSelector(
+    (state: RootState) => state.gallery
+  );
+
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // Stop event propagation to prevent closing the modal when clicked inside
     event.stopPropagation();
   };
-  useEffect(() => {
-    const getImage = async () => {
-      try {
-        const { data } = await GetImageService();
-        setImages(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getImage();
-    // Prevent body scroll when the modal is open
-    document.body.style.overflow = "hidden";
 
-    // Re-enable body scroll when the modal is closed
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchImages());
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, []);
+  }, [dispatch]);
+
   const togglePrimaryImage = (image: ImageType) => {
     if (Product.primaryImage?._id === image._id) {
       // If the selected image is already the primary, deselect it
@@ -71,6 +77,8 @@ const AddImageModallProduct: React.FC<AddImageModallProps> = ({
     });
   };
 
+  if (loading) return <Spiner />;
+
   return (
     <div
       onClick={() => setOpenAddImageModall(false)}
@@ -96,7 +104,7 @@ const AddImageModallProduct: React.FC<AddImageModallProps> = ({
           </svg>
         </button>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
-          {Images?.map((image) => (
+          {images?.map((image) => (
             <div key={image.imageName} className="relative">
               <img
                 onClick={() => toggleAdditionalImage(image)}

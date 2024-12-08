@@ -1,6 +1,5 @@
 import takhfif from "../../../../assets/discountpng.parspng.com-6.png";
-// import OffSwiperSlide_1 from "./OffSwiperSlide_1";
-// swiper core styles
+
 import "swiper/css";
 // modules styles
 import "swiper/css/navigation";
@@ -8,26 +7,31 @@ import "swiper/css/pagination";
 import "swiper/css/bundle";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import { useEffect, useState } from "react";
-import { GameData } from "../../../../types";
-import { getGamesService } from "../../../../services/ApiServices";
+import { useEffect } from "react";
 import OffSwiperSlide_1 from "./OffSwiperSlide_1";
+import { AppDispatch, RootState } from "../../../../app/store";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { clearError, fetchGames } from "../../../../features/game/gameSlice";
+import Spiner from "../../../utils/Spiner";
 const SpesialOffers = () => {
-  const [Games, setGames] = useState<GameData[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { games, loading, error } = useSelector(
+    (state: RootState) => state.game
+  );
 
   useEffect(() => {
-    const getGames = async () => {
-      const pageNumber = 1;
-      const orderDesc = "newestFirst";
-      try {
-        const { data } = await getGamesService(pageNumber, orderDesc);
-        setGames(data.games);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getGames();
-  }, []);
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchGames({ pageNumber: 1, orderDesc: "newestFirst" }));
+  }, [dispatch]);
+
+  if (loading) return <Spiner />;
   return (
     <div className="w-full flex items-center h-[40vh] bg-primary p-5 rounded-2xl">
       <div className="flex items-center justify-center flex-col bg-primary w-40 h-auto p-5">
@@ -38,12 +42,6 @@ const SpesialOffers = () => {
       </div>
 
       <Swiper
-        style={
-          {
-            // "--swiper-navigation-color": "#f54952",
-            // "--swiper-navigation-size": "30px",
-          }
-        }
         className="rounded-2xl"
         modules={[Navigation]}
         freeMode={true}
@@ -52,9 +50,6 @@ const SpesialOffers = () => {
         navigation={true}
         autoplay={{
           delay: 2000,
-          // pauseOnMouseEnter: "true",
-          // waitForTransition: "false",
-          // disableOnInteraction: "false",
         }}
         breakpoints={{
           "@0.00": {
@@ -75,7 +70,7 @@ const SpesialOffers = () => {
           },
         }}
       >
-        {Games.map((item, index) => (
+        {games?.map((item, index) => (
           <SwiperSlide key={index}>
             <OffSwiperSlide_1 item={item} />
           </SwiperSlide>

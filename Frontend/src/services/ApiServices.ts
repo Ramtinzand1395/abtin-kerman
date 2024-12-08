@@ -41,7 +41,7 @@ type cardItemType = {
 type AddOrderData = {
   CardItems: cardItemType[];
   userId: string;
-  totalPrice:number
+  totalPrice: number;
 };
 
 type changeStatus = {
@@ -59,7 +59,7 @@ const SERVER_URL = "http://localhost:5000/api";
 const token = localStorage.getItem("User");
 
 // @desc  create OR add User
-// @route PUT http://localhost:5000/api/login
+// @route PUT  https://api.kermanatari.ir/api
 export const LoginService = ({
   email,
   profile,
@@ -69,15 +69,15 @@ export const LoginService = ({
 };
 
 // @desc  create OR add User
-// @route PUT http://localhost:5000/api/login
+// @route PUT  https://api.kermanatari.ir/api
 export const SmsService = () => {
   const url = `${SERVER_URL}/loginSms`;
   return axios.get(url);
 };
-// *ریداکس
-// !UploadServices
-// @desc  create OR add User
-// @route PUT http://localhost:5000/api/login
+
+// *IMAGE SERVIce
+//? @desc  upload image
+//? @route POST https://api.kermanatari.ir/api/upload-image
 export const UploadImageService = (formData: FormData) => {
   const url = `${SERVER_URL}/upload-image`;
   const config = {
@@ -86,19 +86,18 @@ export const UploadImageService = (formData: FormData) => {
       Authorization: token,
     },
   };
-
   return axios.post(url, formData, config);
 };
-// *ریداکس
-// @desc  create OR add User
-// @route PUT http://localhost:5000/api/login
+//? @desc  get image
+//? @route GET https://api.kermanatari.ir/api/get-image
 export const GetImageService = () => {
   const url = `${SERVER_URL}/get-image`;
   return axios.get(url);
 };
-// ? GAME  Services
-//* @desc  create game
-//* @route POST http://localhost:5000/api/login
+
+// * GAME  Services
+//? @desc  create game
+//? @route POST https://api.kermanatari.ir/api/add-game
 export const addGameService = (data: GameData) => {
   const url = `${SERVER_URL}/add-game`;
 
@@ -109,21 +108,20 @@ export const addGameService = (data: GameData) => {
     },
   });
 };
-
-//* @desc  get game
-//* @route GET http://localhost:5000/api/login
+//? @desc  get games
+//? @route GET https://api.kermanatari.ir/api/get-game?pageNumber=${pageNumber}&sortOrder=${sortOrder}
 export const getGamesService = (pageNumber: number, sortOrder: string) => {
   const url = `${SERVER_URL}/get-game?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
   return axios.get(url);
 };
 //? @desc  get game
-//? @route GET http://localhost:5000/api/login
+//? @route GET https://api.kermanatari.ir/api/get-singleGame/${gameId}
 export const getSingleGameService = (gameId: string) => {
   const url = `${SERVER_URL}/get-singleGame/${gameId}`;
   return axios.get(url);
 };
 //? @desc  update game
-//? @route PUT http://localhost:5000/api/update-game
+//? @route PUT https://api.kermanatari.ir/api/update-game
 export const updateGameService = (data: GameData) => {
   const url = `${SERVER_URL}/update-game`;
   return axios.put(url, data, {
@@ -134,7 +132,7 @@ export const updateGameService = (data: GameData) => {
   });
 };
 //? @desc  delete game
-//? @route DELETE http://localhost:5000/api/update-game
+//? @route DELETE https://api.kermanatari.ir/api/delete-game
 export const deleteGameService = (id: string) => {
   const url = `${SERVER_URL}/delete-game`;
   return axios.delete(url, {
@@ -146,9 +144,59 @@ export const deleteGameService = (id: string) => {
     },
   });
 };
-// !TAGS  Services
-//? @desc  create OR add User
-//? @route PUT http://localhost:5000/api/login
+
+//* PRODUCT  Services
+//? @desc  create PRODUCT
+//? @route POST http://localhost:5000/api/add-product
+export const addProductService = (data: Product) => {
+  const url = `${SERVER_URL}/add-product`;
+  return axios.post(url, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  });
+};
+
+//? @desc  get products
+//? @route GET http://localhost:5000/api/get-products
+export const getProductsService = (pageNumber: number, sortOrder: string) => {
+  const url = `${SERVER_URL}/get-products?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
+  return axios.get(url);
+};
+//? @desc  get product
+//? @route GET  https://api.kermanatari.ir/api/get-product/${productId}
+export const getProductService = (productId: string) => {
+  const url = `${SERVER_URL}/get-product/${productId}`;
+  return axios.get(url);
+};
+//? @desc  update products
+//? @route PUT http://localhost:5000/api/update-game
+export const updateProductService = (data: Product) => {
+  const url = `${SERVER_URL}/update-product`;
+  return axios.put(url, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  });
+};
+//? @desc  delete products
+//? @route DELETE http://localhost:5000/api/delete-product
+export const deleteProductService = (id: string) => {
+  const url = `${SERVER_URL}/delete-product`;
+  return axios.delete(url, {
+    data: { productId: id },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  });
+};
+
+//* TAGS  Services
+//? @desc  create OR add Tags
+//? @route POST https://api.kermanatari.ir/api/add-tag
 export const addTagService = (data: string) => {
   const url = `${SERVER_URL}/add-tag`;
   return axios.post(
@@ -162,15 +210,14 @@ export const addTagService = (data: string) => {
     }
   );
 };
-
-//? @desc  create OR add User
-//? @route PUT http://localhost:5000/api/login
+//? @desc  get TAGS
+//? @route PUT https://api.kermanatari.ir/api/get-tag
 export const getTagService = () => {
   const url = `${SERVER_URL}/get-tag`;
   return axios.get(url);
 };
-//? @desc  create OR add User
-//? @route PUT http://localhost:5000/api/login
+//? @desc  DElete Tags
+//? @route DELETE  https://api.kermanatari.ir/api/del-tag
 export const delTagService = (id: string) => {
   const url = `${SERVER_URL}/del-tag`;
   return axios.delete(url, {
@@ -182,9 +229,10 @@ export const delTagService = (id: string) => {
     },
   });
 };
-// !Categories  Services
-//? @desc  create OR add User
-//? @route PUT http://localhost:5000/api/login
+
+//* Categories  Services
+//? @desc  create OR add Categories
+//? @route POST  https://api.kermanatari.ir/api/add-Categories
 export const addCategoriesService = (data: string) => {
   const url = `${SERVER_URL}/add-Categories`;
   return axios.post(
@@ -198,15 +246,14 @@ export const addCategoriesService = (data: string) => {
     }
   );
 };
-
-//? @desc  create OR add User
-//? @route PUT http://localhost:5000/api/login
+//? @desc  get Categories
+//? @route GET  https://api.kermanatari.ir/api/get-Categories
 export const getCategoriesService = () => {
   const url = `${SERVER_URL}/get-Categories`;
   return axios.get(url);
 };
-//? @desc  create OR add User
-//? @route PUT http://localhost:5000/api/login
+//? @desc  delete Categories
+//? @route DELETE  https://api.kermanatari.ir/api/del-cat
 export const delCatService = (id: string) => {
   const url = `${SERVER_URL}/del-cat`;
   return axios.delete(url, {
@@ -218,70 +265,23 @@ export const delCatService = (id: string) => {
     },
   });
 };
-// ? PRODUCT  Services
-//* @desc  create PRODUCT
-//* @route POST http://localhost:5000/api/add-product
-export const addProductService = (data: Product) => {
-  const url = `${SERVER_URL}/add-product`;
-  return axios.post(url, data, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token,
-    },
-  });
-};
 
-//* @desc  get products
-//* @route GET http://localhost:5000/api/get-products
-export const getProductsService = (pageNumber: number, sortOrder: string) => {
-  const url = `${SERVER_URL}/get-products?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
-  return axios.get(url);
-};
-//* @desc  get product
-//* @route GET http://localhost:5000/api/login
-export const getProductService = (productId: string) => {
-  const url = `${SERVER_URL}/get-product/${productId}`;
-  return axios.get(url);
-};
-// //* @desc  update game
-// //* @route PUT http://localhost:5000/api/update-game
-export const updateProductService = (data: Product) => {
-  const url = `${SERVER_URL}/update-product`;
-  return axios.put(url, data, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token,
-    },
-  });
-};
-// //? @desc  delete game
-// //? @route DELETE http://localhost:5000/api/update-game
-export const deleteProductService = (id: string) => {
-  const url = `${SERVER_URL}/delete-product`;
-  return axios.delete(url, {
-    data: { productId: id },
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token,
-    },
-  });
-};
-
-//* @desc  add comment
-//* @route post http://localhost:5000/api/update-game
+//* COMMENTS SERVICES
+//? @desc  add comment
+//? @route post http://localhost:5000/api/add-comment
 export const addCommentService = (data: CommentStrProps) => {
   const url = `${SERVER_URL}/add-comment`;
   return axios.post(url, data);
 };
-//* @desc  delete game
-//* @route DELETE http://localhost:5000/api/update-game
+//? @desc  get Comments
+//? @route GET http://localhost:5000/api/get-comments
 export const getCommentsService = () => {
   const url = `${SERVER_URL}/get-comments`;
   return axios.get(url);
 };
 
-//* @desc  delete comment
-//* @route DELETE http://localhost:5000/api/delete-comment
+//? @desc  delete comment
+//? @route DELETE http://localhost:5000/api/delete-comment/${commentId}
 export const deleteCommentService = (commentId: string) => {
   const url = `${SERVER_URL}/delete-comment/${commentId}`;
   return axios.delete(url, {
@@ -291,8 +291,8 @@ export const deleteCommentService = (commentId: string) => {
     },
   });
 };
-//* @desc  confirm comment
-//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+//? @desc  confirm comment
+//? @route POST http://localhost:5000/api/confirm-comment/:commentId
 export const confirmCommentService = (commentId: string) => {
   const url = `${SERVER_URL}/confirm-comment/${commentId}`;
   return axios.post(
@@ -306,9 +306,9 @@ export const confirmCommentService = (commentId: string) => {
     }
   );
 };
-// ?BLOG
-//* @desc  confirm comment
-//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+//* BLOG
+//? @desc  create or add Blog
+//? @route POST http://localhost:5000/api/create-blog
 export const createBlogService = (WeblogData: Weblog) => {
   const url = `${SERVER_URL}/create-blog`;
   return axios.post(url, WeblogData, {
@@ -318,15 +318,14 @@ export const createBlogService = (WeblogData: Weblog) => {
     },
   });
 };
-//* @desc  confirm comment
-//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+//? @desc  get Blogs
+//? @route GET http://localhost:5000/api/get-blogs?pageNumber=${pageNumber}&sortOrder=${sortOrder}
 export const getBlogsService = (pageNumber: number, sortOrder: string) => {
   const url = `${SERVER_URL}/get-blogs?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
   return axios.get(url);
 };
-// *blog
-//* @desc  confirm comment
-//* @route POST http://localhost:5000/api/confirm-comment/:commentId
+//* @desc  get Blog
+//* @route GET http://localhost:5000/api/get-blog/${blogId}
 export const getBlogService = (blogId: string | undefined) => {
   const url = `${SERVER_URL}/get-blog/${blogId}`;
   return axios.get(url);

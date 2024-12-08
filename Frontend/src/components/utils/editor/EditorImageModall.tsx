@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {  ImageType, Weblog } from "../../../types";
-import { GetImageService } from "../../../services/ApiServices";
+import { AppDispatch, RootState } from "../../../app/store";
+import { toast } from "react-toastify";
+import { clearError, fetchImages } from "../../../features/gallery/imageSlice";
+import Spiner from "../Spiner";
+import { useDispatch, useSelector } from "react-redux";
 interface EditorImageModallrops {
   WeblogData: Weblog;
   setWeblogData: React.Dispatch<React.SetStateAction<Weblog>>;
@@ -11,29 +15,30 @@ const EditorImageModall: React.FC<EditorImageModallrops> = ({
   setWeblogData,
   setOpenAddImageModall,
 }) => {
-  const [Images, setImages] = useState<ImageType[]>([]);
+   const dispatch = useDispatch<AppDispatch>();
+  const { images, loading, error } = useSelector(
+    (state: RootState) => state.gallery
+  );
+
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    // Stop event propagation to prevent closing the modal when clicked inside
     event.stopPropagation();
   };
-  useEffect(() => {
-    const getImage = async () => {
-      try {
-        const { data } = await GetImageService();
-        setImages(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getImage();
-    // Prevent body scroll when the modal is open
-    document.body.style.overflow = "hidden";
 
-    // Re-enable body scroll when the modal is closed
+ useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
+  
+  useEffect(() => {
+    dispatch(fetchImages());
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, []);
+  }, [dispatch]);
+ 
   const togglePrimaryImage = (image: ImageType) => {
     if (WeblogData.primaryImage?._id === image._id) {
       // If the selected image is already the primary, deselect it
@@ -49,6 +54,9 @@ const EditorImageModall: React.FC<EditorImageModallrops> = ({
       }));
     }
   };
+
+  if (loading) return <Spiner />
+
   return (
     <div
       onClick={() => setOpenAddImageModall(false)}
@@ -74,7 +82,7 @@ const EditorImageModall: React.FC<EditorImageModallrops> = ({
           </svg>
         </button>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
-          {Images.map((image) => (
+          {images?.map((image) => (
             <div key={image.imageName} className="relative">
               <img
                 onClick={() => togglePrimaryImage(image)}

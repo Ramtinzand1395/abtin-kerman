@@ -74,7 +74,7 @@ const Ckeditor = () => {
             >
               <path
                 d="M6 12H18M12 6V18"
-                stroke="#fff"
+                stroke="#000"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
