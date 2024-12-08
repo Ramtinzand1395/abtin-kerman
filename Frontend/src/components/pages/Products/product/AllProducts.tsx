@@ -13,16 +13,16 @@ const ShopingCard = React.lazy(() => import("../../../utils/ShopingCard"));
 import { Helmet } from "react-helmet";
 const AllProducts: React.FC = () => {
   const [sortOrder, setSortOrder] = useState("");
-  const { slug1 = "" , slug2 ="" } = useParams();
+  const { slug1 = "", slug2 = "" } = useParams();
 
   const [pageNumber, setPageNumber] = useState(1);
   const { FiltredProducts, hasMore, loading } = usePaggination(
     pageNumber,
     slug1,
     slug2,
-    sortOrder,
+    sortOrder
   );
- 
+
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastProductRef = useCallback(
@@ -41,7 +41,7 @@ const AllProducts: React.FC = () => {
 
   useEffect(() => {
     setPageNumber(1);
-  }, [slug1 , slug2, sortOrder]);
+  }, [slug1, slug2, sortOrder]);
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(event.target.value);
@@ -65,13 +65,21 @@ const AllProducts: React.FC = () => {
           onChange={handleSortChange}
           className="p-2 border border-gray-300 rounded"
         >
-          <option value="highToLow">گرانترین</option>
-          <option value="lowToHigh">ارزان ترین</option>
+          {loading ? (
+            <Spiner />
+          ) : (
+            <>
+              <option value="lowToHigh">ارزان ترین</option>
+              <option value="highToLow">گرانترین</option>
+              <option value="newestFirst">جدید ترین</option>
+              <option value="oldestFirst">قدیمی ترین</option>
+            </>
+          )}
         </select>
       </div>
 
       {/* Products Grid */}
-      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-10">
+      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 my-10">
         <Suspense fallback={<Spiner />}>
           {FiltredProducts &&
             FiltredProducts?.map((product, index) => (

@@ -187,10 +187,25 @@ exports.handleFilterProducts = async (req, res, next) => {
   const { slug1, slug2 } = req.params;
   const { pageNumber = 1, sortOrder = "lowToHigh" } = req.query;
   const limit = 10;
-  const filter = slug2 && slug2 !== "undefined" ? { slug2 } : { slug1 };
+  const filter =
+    slug2 && slug2 !== "null" && slug2 !== "undefined" ? { slug2 } : { slug1 };
+
   try {
     const skip = (parseInt(pageNumber, 10) - 1) * limit;
-    const sortOption = sortOrder === "lowToHigh" ? { price: 1 } : { price: -1 };
+    const sortOption = (() => {
+      switch (sortOrder) {
+        case "lowToHigh":
+          return { price: 1 }; // Ascending price
+        case "highToLow":
+          return { price: -1 }; // Descending price
+        case "newestFirst":
+          return { createdAt: -1 }; // Newest first
+        case "oldestFirst":
+          return { createdAt: 1 }; // Oldest first
+        default:
+          return { price: 1 }; // Default to ascending price
+      }
+    })();
     const filteredProducts = await Products.find(filter)
       .populate("primaryImage")
       .populate("tags")

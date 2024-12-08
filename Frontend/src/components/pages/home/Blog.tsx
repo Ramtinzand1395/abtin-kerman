@@ -2,15 +2,13 @@ import React, { useEffect } from "react";
 import LeftAnimation from "../../utils/LeftAnimation";
 import Animations from "../../utils/Animations";
 import BlogCrad from "../../utils/BlogCrad";
-import BtnTow from "../../utils/BtnTow";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { clearError, fetchBlogs } from "../../../features/blog/blogSlice";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import Spiner from "../../utils/Spiner";
 import { AppDispatch, RootState } from "../../../app/store";
 const Blog: React.FC = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { loading, blogs, error } = useSelector((state:RootState) => state.blog);
 
@@ -24,10 +22,6 @@ const Blog: React.FC = () => {
       dispatch(clearError());
     }
   }, [error, dispatch]);
-
-  const navigateBlogs = () => {
-    navigate("/blogs");
-  };
 
   if (loading) return <Spiner />;
 
@@ -47,11 +41,9 @@ const Blog: React.FC = () => {
             blogs?.map((blog) => <BlogCrad key={blog._id} blog={blog} />)}
         </div>
       </LeftAnimation>
-      <BtnTow
-        ButtonColor="bg-green-500 hover:from-green-500 hover:to-green-400 hover:ring-green-400"
-        ButtonText={" همه مقالات"}
-        onClick={navigateBlogs}
-      />
+      <Link to={"/blogs"}>
+      <button type="button" className="moreBtn mb-20">مشاهده بیشتر</button>
+      </Link>
     </div>
   );
 };

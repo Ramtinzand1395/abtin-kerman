@@ -275,3 +275,12 @@ body {
   background: linear-gradient(270deg, rgba(59, 59, 241, 0.681) 0%, rgb(59, 205, 241,0.681) 60%);
   color: rgb(0, 0, 0);
 }
+
+.banerBG{
+  background-image: url("./assets/32.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-shadow: "1px 1px 0 black, -1px 1px 0 black, 1px -1px 0 black, -1px -1px 0 black",
+
+}

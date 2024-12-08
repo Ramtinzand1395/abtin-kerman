@@ -31,7 +31,7 @@ const NewestAccountGame: React.FC = () => {
   return (
     <div>
       <Animations>
-        <div className="flex items-center mغ-10 mb-2">
+        <div className="flex items-center my-10 mb-2">
           <h2 className="font-bold text-lg lg:text-2xl whitespace-nowrap ml-5">
             جدید ترین بازی ها
           </h2>{" "}

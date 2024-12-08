@@ -340,8 +340,8 @@ export const getFiltredProductsService = (
   pageNumber: number,
   sortOrder: string
 ) => {
-  console.log(slug1, slug2, "category");
-  const url = `${SERVER_URL}/get-filtred-products/${slug1}/${slug2}?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
+  // console.log(slug1, slug2, "category");
+  const url = `${SERVER_URL}/get-filtred-products/${slug1}/${slug2 ? slug2 : null}?pageNumber=${pageNumber}&sortOrder=${sortOrder}`;
   return axios.get(url);
 };
 // !
