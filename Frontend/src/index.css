@@ -282,5 +282,12 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   text-shadow: "1px 1px 0 black, -1px 1px 0 black, 1px -1px 0 black, -1px -1px 0 black",
+}
 
+.banerBG2{
+  background-image: url("./assets/baner/_c42918c2-8bc9-4ce6-88d8-275a36144fb6.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-shadow: "1px 1px 0 black, -1px 1px 0 black, 1px -1px 0 black, -1px -1px 0 black",
 }
