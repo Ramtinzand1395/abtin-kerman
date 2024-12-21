@@ -34,7 +34,8 @@ const Card: React.FC<CardItemProps> = ({
           </div>
         )}
         {/* img */}
-        <img src={image} className="w-full h-[25vh]" alt="" />
+        <img   width={"400px"}
+        height={"400px"} src={image} className="w-full h-[25vh]" alt="" />
         {/* title */}
         <div className="flex items-center justify-between flex-col text-center h-full">
           <h3 className="font-bold text-lg my-5">{title}</h3>

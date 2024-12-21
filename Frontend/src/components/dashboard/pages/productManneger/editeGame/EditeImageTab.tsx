@@ -27,6 +27,8 @@ const EditeImageTab: React.FC<EditeImageTabProps> = ({
       <img
         // src={`http://localhost:5000/${GameData.primaryImage?.direction} `}
           //! change
+          width={"400px"}
+          height={"400px"}
           src={`${GameData.primaryImage?.direction}`}
         alt=""
         className="w-[30vh] h-[30vh]"
@@ -46,6 +48,8 @@ const EditeImageTab: React.FC<EditeImageTabProps> = ({
             key={img._id}
             // src={`http://localhost:5000/${img.direction} `}
               //! change
+              width={"400px"}
+              height={"400px"}
           src={`${img.direction}`}
             alt=""
             className="w-full h-[20vh]"

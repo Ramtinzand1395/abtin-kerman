@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
       <div className="md:col-span-3 text-white flex flex-col items-start justify-evenly">
         {" "}
         <div className="flex items-center ">
-          <img src={logo} className="w-[5vw] h-[5vw] rounded-full" alt="Logo" />
+          <img  width={"400px"} src={logo} className="w-[5vw] h-[5vw] rounded-full" alt="Logo" />
           <h2 className="font-light md:font-bold mb-5 md:mb-0 mr-2 text-white whitespace-nowrap">
             کرمان آتاری
           </h2>
@@ -60,7 +60,7 @@ const Footer: React.FC = () => {
           target="_blank"
           href="https://trustseal.enamad.ir/?id=548723&Code=UJmsLirlKx1oaaJJZOS0H4Gcbq9qPU8Q"
         >
-          <img
+          <img               height={"400px"}
             referrerPolicy="origin"
             src="https://trustseal.enamad.ir/logo.aspx?id=548723&Code=UJmsLirlKx1oaaJJZOS0H4Gcbq9qPU8Q"
             alt=""

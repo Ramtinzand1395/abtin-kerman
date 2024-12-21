@@ -9,6 +9,8 @@ const BlogCrad: React.FC<BlogCradProps> = ({ blog }) => {
   return (
     <div className="flex flex-col rounded-t-lg shadowhand  justify-between ">
       <img
+        width={"400px"}
+        height={"400px"}
         // src={`http://localhost:5000/${primaryImage?.direction}`}
         //! change
         src={`${primaryImage?.direction}`}

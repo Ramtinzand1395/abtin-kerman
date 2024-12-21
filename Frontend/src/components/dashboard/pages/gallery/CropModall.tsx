@@ -102,7 +102,8 @@ const CropModall: React.FC<CropModallProps> = ({ setCropedImage, originalFile, I
           onChange={(newCrop) => setCrop(newCrop)}
           onComplete={handleCropComplete}
         >
-          <img src={ImgSrc} alt="upload" onLoad={onImgLoad} ref={imgRef} />
+          <img src={ImgSrc} alt="upload" onLoad={onImgLoad} ref={imgRef}  width={"400px"}
+              height={"400px"} />
         </ReactCrop>
         <button onClick={generateCroppedImage}>Crop Image</button>
         <canvas ref={previewCanvasRef} style={{ display: "none" }} />

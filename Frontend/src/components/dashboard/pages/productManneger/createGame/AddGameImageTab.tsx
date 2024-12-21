@@ -60,6 +60,8 @@ const AddGameImageTab: React.FC<AddGameImageTabProps> = ({
           {GameData.primaryImage?._id ? (
             <div className="">
               <img
+               width={"400px"}
+               height={"400px"}
                 onClick={() => removePrimaryImage()}
                 className="rounded-lg"
                 // src={`http://localhost:5000/${GameData.primaryImage.direction}`}
@@ -82,6 +84,8 @@ const AddGameImageTab: React.FC<AddGameImageTabProps> = ({
                 {GameData.additionalImages.map((img, index) => (
                   <div key={img._id} className="">
                     <img
+                     width={"400px"}
+                     height={"400px"}
                       key={index}
                       onClick={() => removeAdditionalImage(img)}
                       className="rounded-lg"

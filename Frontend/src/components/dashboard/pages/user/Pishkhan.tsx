@@ -130,6 +130,8 @@ const Pishkhan: React.FC = () => {
           {/* TOP */}
           <div className="flex items-center">
             <img
+             width={"400px"}
+             height={"400px"}
               className="rounded-full w-20 h-20"
               src={User?.profile}
               alt=""

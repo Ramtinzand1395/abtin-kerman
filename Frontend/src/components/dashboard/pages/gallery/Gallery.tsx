@@ -63,7 +63,8 @@ const Gallery: React.FC = () => {
       </button>
       <div className="grid grid-cols-5 gap-5">
         {images?.map((url) => (
-          <img key={url._id} src={`${url.direction}`} alt="" />
+          <img  width={"400px"}
+          height={"400px"} key={url._id} src={`${url.direction}`} alt="" />
         ))}
       </div>
       {errors && <p>{errors}</p>}

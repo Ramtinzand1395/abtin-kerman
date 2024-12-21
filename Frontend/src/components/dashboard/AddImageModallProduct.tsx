@@ -107,6 +107,8 @@ const AddImageModallProduct: React.FC<AddImageModallProps> = ({
           {images?.map((image) => (
             <div key={image.imageName} className="relative">
               <img
+               width={"400px"}
+               height={"400px"}
                 onClick={() => toggleAdditionalImage(image)}
                 className={`w-full h-[20vh] rounded-lg cursor-pointer p-1 ${
                   Product?.additionalImages?.some(

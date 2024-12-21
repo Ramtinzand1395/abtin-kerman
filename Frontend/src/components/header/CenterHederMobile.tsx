@@ -82,7 +82,8 @@ const CenterHederMobile: React.FC<CenterHederMobileProps> = ({
         {/* Logo */}
         <div className="flex items-center text-2xl">
           <h2 className="font-bold mr-2">کرمان آتاری</h2>
-          <img src={logo} className="w-10 h-10 " alt="Logo" />
+          <img  width={"400px"}
+              height={"400px"} src={logo} className="w-10 h-10 " alt="Logo" />
         </div>
       </div>
     </div>

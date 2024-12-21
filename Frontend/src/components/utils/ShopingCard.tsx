@@ -24,6 +24,8 @@ const ShopingCard: React.FC<CardItemProps> = ({
       <img
           // src={`http://localhost:5000/${primaryImage?.direction}`}
           //! change
+          width={"400px"}
+          height={"400px"}
           src={`${primaryImage?.direction}`}
           className="w-full  mb-2 object-contain rounded-lg  max-h-[40vh] "
           alt={primaryImage?.imageName}

@@ -7,7 +7,8 @@ const CenterHederMonitor: React.FC = () => {
     <div className="mx-2 flex items-center justify-between gap-5 my-2">
       {/* Logo */}
       <div className="flex items-center text-2xl">
-        <img src={logo} className="w-14 h-14" alt="Logo" />
+        <img  width={"400px"}
+              height={"400px"} src={logo} className="w-14 h-14" alt="Logo" />
         <h2 className="mx-2 whitespace-nowrap text-primary">کرمان آتاری</h2>
         {/* Search */}
         <div className="">

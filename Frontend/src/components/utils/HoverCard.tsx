@@ -16,6 +16,8 @@ const HoverCard: React.FC<HoverCardprops> = ({ card }) => {
           <div className="card">
             <div className="wrapper">
               <img
+                width={"400px"}
+                height={"400px"}
                 title="cover-image"
                 src={card.image1}
                 className="cover-image rounded-2xl"
@@ -24,7 +26,8 @@ const HoverCard: React.FC<HoverCardprops> = ({ card }) => {
             {/* <p className="title text-center font-bold text-2xl text-white text-balance align-text-bottom">
               {card.title}
             </p> */}
-            <img title="character" src={card.image2} className="character " />
+            <img   width={"400px"}
+        height={"400px"} title="character" src={card.image2} className="character " />
           </div>
         </div>
       </div>

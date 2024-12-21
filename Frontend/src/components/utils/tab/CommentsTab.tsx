@@ -96,6 +96,8 @@ const CommentsTab: React.FC<CommentsTabProps> = ({ Product }) => {
                 >
                   <div className="flex items-center my-5">
                     <img
+                      width={"400px"}
+                      height={"400px"}
                       className="w-10 h-10 rounded-full ml-5"
                       src={comment?.user?.profile}
                       alt="User Profile"

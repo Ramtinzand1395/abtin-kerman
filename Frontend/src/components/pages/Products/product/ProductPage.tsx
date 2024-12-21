@@ -229,6 +229,8 @@ const ProductPage: React.FC = () => {
               </button>
             </div>
             <img
+              width={"400px"}
+              height={"400px"}
               // src={`http://localhost:5000/${currentImage}`}
               //! change
               src={`${currentImage}`}
@@ -238,6 +240,8 @@ const ProductPage: React.FC = () => {
             <div className=" items-center hidden md:flex">
               {product?.additionalImages?.map((img) => (
                 <img
+                  width={"400px"}
+                  height={"400px"}
                   key={img._id}
                   // src={`http://localhost:5000/${img?.direction}`}
                   //! change
@@ -248,6 +252,8 @@ const ProductPage: React.FC = () => {
                 />
               ))}
               <img
+                width={"400px"}
+                height={"400px"}
                 // src={`http://localhost:5000/${products?.primaryImage?.direction}`}
                 //! change
                 src={`${product?.primaryImage?.direction}`}

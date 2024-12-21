@@ -35,7 +35,8 @@ const SpesialOffers = () => {
   return (
     <div className="w-full flex items-center h-[40vh] bg-primary p-5 rounded-2xl">
       <div className="flex items-center justify-center flex-col bg-primary w-40 h-auto p-5">
-        <img src={takhfif} className="" alt="" />
+        <img   width={"400px"}
+        height={"400px"} src={takhfif} className="" alt="" />
         <button className="bg-[#f54952] font-tanha text-white rounded-lg py-1 px-4 text-sm whitespace-nowrap">
           مشاهده همه
         </button>

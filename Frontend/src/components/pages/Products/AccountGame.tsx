@@ -12,7 +12,9 @@ import { toast } from "react-toastify";
 
 const AccountGame: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { game, loading, error } = useSelector((state:RootState) => state.game);
+  const { game, loading, error } = useSelector(
+    (state: RootState) => state.game
+  );
   // !Context
   const { InceraseCardQty, CardItems } = useShopingcard();
   const { gameId } = useParams();
@@ -100,6 +102,8 @@ const AccountGame: React.FC = () => {
         {/* Game picture */}
         <div className="">
           <img
+            width={"400px"}
+            height={"400px"}
             // src={`http://localhost:5000/${currentImage}`}
             //! change
             src={`${currentImage}`}
@@ -109,6 +113,8 @@ const AccountGame: React.FC = () => {
           <div className=" items-center hidden md:flex mb-10">
             {game?.additionalImages?.map((img) => (
               <img
+                width={"400px"}
+                height={"400px"}
                 key={img._id}
                 // src={`http://localhost:5000/${img?.direction}`}
                 //! change
@@ -119,6 +125,8 @@ const AccountGame: React.FC = () => {
               />
             ))}
             <img
+              width={"400px"}
+              height={"400px"}
               // src={`http://localhost:5000/${game?.primaryImage?.direction}`}
               //! change
               src={`${game?.primaryImage?.direction}`}

@@ -91,6 +91,8 @@ const Ckeditor = () => {
         )}
         {WeblogData?.primaryImage?.direction && (
           <img
+          width={"400px"}
+          height={"400px"}
             onClick={() => removePrimaryImage()}
             className="w-[20vh] h-[20vh] rounded-lg"
             // src={`http://localhost:5000/${WeblogData?.primaryImage?.direction}`}

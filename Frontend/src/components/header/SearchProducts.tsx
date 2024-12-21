@@ -61,6 +61,8 @@ const SearchProducts: React.FC = () => {
               >
                 <li className="px-4 py-2 hover:bg-gray-200 flex items-center border-b-2 p-2 justify-between">
                   <img
+                   width={"400px"}
+                   height={"400px"}
                     className="w-10 h-10 rounded-md"
                     src={product.primaryImage.direction}
                     alt={product.primaryImage.imageName}

@@ -124,6 +124,8 @@ const ProductsTable: React.FC = () => {
                         <img
                           // src={`http://localhost:5000/${data.primaryImage?.direction}`}
                           //! change
+                          width={"400px"}
+                          height={"400px"}
                           src={`${data.primaryImage?.direction}`}
                           className="w-14 h-14 rounded-lg ml-5"
                           alt=""

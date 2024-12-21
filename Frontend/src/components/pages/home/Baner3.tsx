@@ -19,16 +19,20 @@ const Baner3: React.FC = () => {
         </h4>
         <div className="flex items-center justify-around">
           <div className="bg-white rounded-md p-2">
-            <img src={img1} className="w-20 h-20" alt="" />
+            <img  width={"400px"}
+              height={"400px"} src={img1} className="w-20 h-20" alt="" />
           </div>
           <div className="bg-white rounded-md p-2">
-            <img src={img2} className="w-20 h-20" alt="" />
+            <img  width={"400px"}
+              height={"400px"} src={img2} className="w-20 h-20" alt="" />
           </div>
           <div className="bg-white rounded-md p-2">
-            <img src={img3} className="w-20 h-20" alt="" />
+            <img  width={"400px"}
+              height={"400px"} src={img3} className="w-20 h-20" alt="" />
           </div>
           <div className="bg-white rounded-md p-2">
-            <img src={img4} className="w-20 h-20" alt="" />
+            <img  width={"400px"}
+              height={"400px"} src={img4} className="w-20 h-20" alt="" />
           </div>
         </div>
       </div>

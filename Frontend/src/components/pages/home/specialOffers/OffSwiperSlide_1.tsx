@@ -2,12 +2,18 @@ import React from "react";
 import { GameData } from "../../../../types";
 
 interface OffSwiperSlide_1Props {
-  item:GameData
+  item: GameData;
 }
-const OffSwiperSlide_1:React.FC<OffSwiperSlide_1Props> = ({ item }) => {
+const OffSwiperSlide_1: React.FC<OffSwiperSlide_1Props> = ({ item }) => {
   return (
     <div className="p-3 font-tanha">
-      <img src={item.primaryImage?.direction} className="rounded-lg  w-full" alt="" />
+      <img
+        width={"400px"}
+        height={"400px"}
+        src={item.primaryImage?.direction}
+        className="rounded-lg  w-full"
+        alt=""
+      />
       <h3 className="text-base mt-2 text-start">{item.title}</h3>
       {/* <span className="text-red-500 text-xs">{item.}</span>
       <div className="flex items-center justify-between mt-2">

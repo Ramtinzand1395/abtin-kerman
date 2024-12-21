@@ -22,6 +22,8 @@ const ShoppingCardData: React.FC = () => {
             <img
               // src={`http://localhost:5000/${item.data.image.direction}`}
               //! change
+              width={"400px"}
+              height={"400px"}
               src={`${item.data.image.direction}`}
               className="w-40 h-auto"
               alt={item.data.image.imageName}

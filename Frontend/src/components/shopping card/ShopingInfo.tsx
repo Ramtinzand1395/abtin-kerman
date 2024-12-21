@@ -156,6 +156,8 @@ const ShopingInfo: React.FC = () => {
               >
                 <div className="flex flex-col items-center h-72 ml-5">
                   <img
+                    width={"400px"}
+                    height={"400px"}
                     // src={`http://localhost:5000/${item.data.image.direction}`}
                     //! change
                     src={`${item.data.image.direction}`}

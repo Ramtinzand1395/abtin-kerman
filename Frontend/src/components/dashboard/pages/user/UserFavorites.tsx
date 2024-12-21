@@ -68,6 +68,8 @@ const UserFavorites: React.FC = () => {
               >
                 <div className="">
                   <img
+                   width={"400px"}
+                   height={"400px"}
                     className="w-full h-52"
                     src={fav.itemId?.primaryImage?.direction}
                     alt={fav.itemId?.primaryImage?.imageName}

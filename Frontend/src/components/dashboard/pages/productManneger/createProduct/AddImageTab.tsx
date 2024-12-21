@@ -51,6 +51,8 @@ const AddImageTab: React.FC<AddImageTabProps> = ({
                 className="w-[20vh] h-[20vh] rounded-lg"
                 // src={`http://localhost:5000/${Product.primaryImage.direction}`}
                 //! change
+                width={"400px"}
+                height={"400px"}
                 src={`${Product?.primaryImage?.direction}`}
                 alt=""
               />
@@ -71,6 +73,8 @@ const AddImageTab: React.FC<AddImageTabProps> = ({
                     <img
                       key={index}
                       className="w-[20vh] h-[20vh] rounded-lg"
+                      width={"400px"}
+                      height={"400px"}
                       // src={`http://localhost:5000/${img.direction}`}
                       //! change
                       src={`${img.direction}`}
