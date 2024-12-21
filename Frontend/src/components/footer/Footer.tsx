@@ -55,19 +55,19 @@ const Footer: React.FC = () => {
         <p>آدرس فروشگاه فیزیکی</p>
         <p>مورد آزمایشی</p>
         <p>مورد آزمایشی دو</p>
-        {/* <a
-          referrerpolicy="origin"
+        <a
+          referrerPolicy="origin"
           target="_blank"
           href="https://trustseal.enamad.ir/?id=548723&Code=UJmsLirlKx1oaaJJZOS0H4Gcbq9qPU8Q"
         >
           <img
-            referrerpolicy="origin"
+            referrerPolicy="origin"
             src="https://trustseal.enamad.ir/logo.aspx?id=548723&Code=UJmsLirlKx1oaaJJZOS0H4Gcbq9qPU8Q"
             alt=""
             
-            code="UJmsLirlKx1oaaJJZOS0H4Gcbq9qPU8Q"
+            data-code="UJmsLirlKx1oaaJJZOS0H4Gcbq9qPU8Q"
           />
-        </a> */}
+        </a>
       </div>
     </div>
   );
