@@ -277,7 +277,7 @@ body {
 }
 
 .banerBG{
-  background-image: url("./assets/32.png");
+  background-image: url("./assets/baner/32.webp");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -285,7 +285,7 @@ body {
 }
 
 .banerBG2{
-  background-image: url("./assets/baner/_c42918c2-8bc9-4ce6-88d8-275a36144fb6.jpg");
+  background-image: url("./assets/baner/_c42918c2-8bc9-4ce6-88d8-275a36144fb6.webp");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
