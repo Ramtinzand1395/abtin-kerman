@@ -52,6 +52,9 @@ export default defineConfig({
         start_url: "/",
         orientation: "portrait",
       },
+      workbox: {
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024, // Increase limit to 4 MiB
+      },
     }),
   ],
 });
