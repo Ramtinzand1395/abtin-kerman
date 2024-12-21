@@ -11,8 +11,13 @@ export default defineConfig({
       manifest: {
         name: "KermanAtari",
         short_name: "KermanAtari",
-        description: "An app that can show the weather forecast for your city.",
+        description: "Online shop for plastations games and consols",
         icons: [
+          {
+            src: "./atari-seeklogo.svg",
+            sizes: "192x192",
+            type: "image/svg+xml",
+          },
           {
             src: "./icon-192x192.png",
             sizes: "192x192",

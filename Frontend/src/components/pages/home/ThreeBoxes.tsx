@@ -1,9 +1,9 @@
 import React from "react";
 import Animations from "../../utils/Animations";
-import box1 from "../../../assets/Box1.png";
-import box2 from "../../../assets/Box2.png";
-import box3 from "../../../assets/Box3.png";
-import box4 from "../../../assets/Box4.png";
+import box1 from "../../../assets/Box1.webp";
+import box2 from "../../../assets/Box2.webp";
+import box3 from "../../../assets/Box3.webp";
+import box4 from "../../../assets/Box4.webp";
 
 const ThreeBoxes: React.FC = () => {
 

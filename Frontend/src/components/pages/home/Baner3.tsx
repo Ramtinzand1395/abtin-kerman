@@ -1,7 +1,7 @@
 import React from "react";
-import img1 from "../../../assets/baner/3671710.png";
-import img2 from "../../../assets/baner/81lu8l0IcL._AC_SL1500_.png";
-import img3 from "../../../assets/baner/fc-25-ps5-cover.jpg";
+import img1 from "../../../assets/baner/3671710.webp";
+import img2 from "../../../assets/baner/81lu8l0IcL._AC_SL1500_.webp";
+import img3 from "../../../assets/baner/fc-25-ps5-cover.webp";
 import img4 from "../../../assets/baner/fflgu1jr_thumb2.webp";
 
 const Baner3: React.FC = () => {

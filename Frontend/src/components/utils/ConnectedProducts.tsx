@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../utils/Card";
-import img from "../../assets/_24c0f808-1d10-4db6-85a5-ed48e14014cf.jpg";
+import img from "../../assets/_24c0f808-1d10-4db6-85a5-ed48e14014cf.webp";
 
 const ConnectedProducts: React.FC = () => {
   const CardIthem = [
